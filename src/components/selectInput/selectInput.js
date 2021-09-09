@@ -58,7 +58,14 @@ class SelectInput extends Component {
       value: this.getNameById(id),
       showDatalist: false,
     });
-  } 
+  }
+
+  handlerClr = () => {
+    this.setState({
+      value: '',
+      showDatalist: false,
+    });
+  }
 
   render() {
     const {value, names, showDatalist} = this.state;
@@ -77,6 +84,7 @@ class SelectInput extends Component {
         <Input 
           value={value}
           handlerInput = {this.handlerInput}
+          handlerClr = {this.handlerClr}
         />
         {datalist}
       </div>

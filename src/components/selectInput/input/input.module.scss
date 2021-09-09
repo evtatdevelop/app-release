@@ -1,8 +1,31 @@
+$height: 28px;
+
+.inputBox {
+  width: 100%;
+  height: $height;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input {
   width: 100%;
-  padding: 5px 25px 5px 5px;
+  padding: 5px $height 5px 5px;
   border: 1px solid #978f8f;
+  position: absolute;
   border-radius: 3px;
-  position: relative;
 
+}
+
+.clrButton {
+  width: $height;
+  height: $height;
+  position: absolute;
+  color: gray;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 24px;
+  right: 0;
+  cursor: pointer;
 }

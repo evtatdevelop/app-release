@@ -1,15 +1,25 @@
 import classes from './input.module.scss';
 
 const Input = (props) => {
-  const {value, handlerInput} = props;
-  // console.log(value);
+  const {value, handlerInput, handlerClr} = props;
   
-  return <input 
-    className={classes.input} 
-    placeholder="Search"
-    onInput={(e) => handlerInput(e)}
-    value={value}
-  />
+  return (
+    <div className={classes.inputBox}>
+      <input 
+        className={classes.input} 
+        placeholder="Search"
+        onInput={(e) => handlerInput(e)}
+        value={value}
+      />
+      {value 
+        ? <button 
+            type="button" 
+            className={classes.clrButton}
+            onClick={handlerClr}
+          >&times;</button> 
+        : null}
+    </div>  
+  )
 }
 
 export default Input;
