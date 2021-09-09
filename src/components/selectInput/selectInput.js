@@ -3,6 +3,7 @@ import classes from './selectInput.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
+import Service from '../../Service';
 
 class SelectInput extends Component {
 
@@ -31,13 +32,25 @@ class SelectInput extends Component {
       },
     ],
     value: '',
-    showDatalist: true,
+    showDatalist: false,
+  }
+
+  getNames() {
+    const service = new Service();
+    return service.getAxiosResource();
   }
 
   getNameById = (id) => {
     const names = this.state.names.filter(item => item.id === id);
     const [{first_name, last_name, email}] = names;
     return `${first_name} ${last_name} (${email})`;
+  }
+
+  handlerInput = (e) => {
+    this.setState({
+      value: e.target.value,
+      showDatalist: true,
+    });
   }
 
   handlerClick = (id) => {
@@ -50,6 +63,8 @@ class SelectInput extends Component {
   render() {
     const {value, names, showDatalist} = this.state;
 
+    // console.log(this.getNames());
+
     const datalist = showDatalist
       ? <DataList 
           names = {names}
@@ -59,7 +74,10 @@ class SelectInput extends Component {
 
     return (
       <div className={classes.selectInput}>
-        <Input value={value}/>
+        <Input 
+          value={value}
+          handlerInput = {this.handlerInput}
+        />
         {datalist}
       </div>
     )
