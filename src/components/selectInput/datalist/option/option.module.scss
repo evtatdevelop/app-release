@@ -1,0 +1,12 @@
+.option {
+  width: 100%;
+  font: inherit;
+  cursor: pointer;
+  padding: 3px 5px;
+  margin-bottom: 1px;
+
+
+  &:hover {
+    background-color: lightblue;
+  }
+}
