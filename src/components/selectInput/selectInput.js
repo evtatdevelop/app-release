@@ -17,34 +17,33 @@ class SelectInput extends Component {
   getNames(search) {
     const service = new Service();
     const res = service.getAxiosResource(search);
+    let showDatalist = true;
     res.then(data => {
       if (!data) {
-        this.setState({
-          data: [],
-          showDatalist: false
-        })
-        return;
+        data = [];
+        showDatalist = false;
       };
-      this.setState({names: data})
+
+      this.setState({
+        names: data,
+        showDatalist,
+      });
     });
   }
 
   getNameById = (id) => {
     const names = this.state.names.filter(item => item.id === id);
-    const [{first_name, last_name, email}] = names;
-    return `${first_name} ${last_name} (${email})`;
+    const [{first_name, last_name, middle_name, email}] = names;
+    return `${last_name} ${first_name} ${middle_name} (${email})`;
   }
 
   handlerInput = (e) => {
     clearTimeout(this.state.timerId);
+    const {value} = e.target;
     const timerId = setTimeout(() => this.getNames(this.state.value), 500);
     this.setState({
-      timerId
-    })
-    
-    this.setState({
-      value: e.target.value,
-      showDatalist: true,
+      timerId,
+      value,
     });
   }
 
@@ -86,16 +85,5 @@ class SelectInput extends Component {
 
   }
 }
-
-// const SelectInput = (props) => {
-//   const {names} = props;
-  
-//   return (
-//       <div className={classes.selectInput}>
-//         <Input/>
-//         <DataList names = {names}/>
-//       </div>
-//   )
-// }
 
 export default SelectInput;

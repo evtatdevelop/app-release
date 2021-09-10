@@ -2,8 +2,10 @@
   width: 100%;
   font: inherit;
   cursor: pointer;
-  padding: 3px 5px;
+  padding: 5px;
   margin-bottom: 1px;
+  border-bottom: 1px solid transparent;
+  background-color: rgb(204, 227, 235);
 
 
   &:hover {

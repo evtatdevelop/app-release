@@ -4,19 +4,18 @@ import Option from "./option";
 const DataList = (props) => {
   const {names, handlerClick} = props;
 
-  const list = 
+  return (
     <ul className={classes.datalist}>
       { 
-        names.map((item) => <Option 
-        key={item.id} 
-        {...item}       
-        handlerClick = {handlerClick}
-        /> ) 
+        names.map((item) => 
+          <Option 
+            key={item.id} 
+            {...item}       
+            handlerClick = {handlerClick}
+          />
+        ) 
       }
-    </ul>;
-
-  return (
-    list
+    </ul>
   )
 }
 
