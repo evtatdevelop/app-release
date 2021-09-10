@@ -8,36 +8,25 @@ import Service from '../../Service';
 class SelectInput extends Component {
 
   state = {
-    names: [
-      {
-        id: 1833,
-        first_name: 'Evgenii',
-        last_name: 'Tatarenko',
-        login: 'TatarenkoEG',
-        email: 'tatarenkoeg@suek.ru',
-      },
-      {
-        id: 1835,
-        first_name: 'Segei',
-        last_name: 'Furs',
-        login: 'FursSV',
-        email: 'furssvg@suek.ru',
-      },
-      {
-        id: 1837,
-        first_name: 'Kramorova',
-        last_name: 'Olga',
-        login: 'CramorovaOV',
-        email: 'kramorovaov@suek.ru',
-      },
-    ],
+    names: [],
     value: '',
     showDatalist: false,
+    timerId: null,
   }
 
-  getNames() {
+  getNames(search) {
     const service = new Service();
-    return service.getAxiosResource();
+    const res = service.getAxiosResource(search);
+    res.then(data => {
+      if (!data) {
+        this.setState({
+          data: [],
+          showDatalist: false
+        })
+        return;
+      };
+      this.setState({names: data})
+    });
   }
 
   getNameById = (id) => {
@@ -47,6 +36,12 @@ class SelectInput extends Component {
   }
 
   handlerInput = (e) => {
+    clearTimeout(this.state.timerId);
+    const timerId = setTimeout(() => this.getNames(this.state.value), 500);
+    this.setState({
+      timerId
+    })
+    
     this.setState({
       value: e.target.value,
       showDatalist: true,
@@ -64,13 +59,12 @@ class SelectInput extends Component {
     this.setState({
       value: '',
       showDatalist: false,
+      names: [],
     });
   }
 
   render() {
     const {value, names, showDatalist} = this.state;
-
-    // console.log(this.getNames());
 
     const datalist = showDatalist
       ? <DataList 
