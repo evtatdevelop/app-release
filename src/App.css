@@ -10,3 +10,9 @@ h1 {
   margin-bottom: 8px;
 }
 
+.mainForm {
+  min-width: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

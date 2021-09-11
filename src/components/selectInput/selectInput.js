@@ -3,7 +3,7 @@ import classes from './selectInput.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
-import Service from '../../Service';
+// import Service from '../../Service';
 
 class SelectInput extends Component {
 
@@ -15,8 +15,10 @@ class SelectInput extends Component {
   }
 
   getNames(search) {
-    const service = new Service();
-    const res = service.getAxiosResource(search);
+    const res = this.props.handlerNames(search);
+    // const service = new Service();
+    // const res = service.getAxiosResource(search);
+
     let showDatalist = true;
     res.then(data => {
       if (!data) {
