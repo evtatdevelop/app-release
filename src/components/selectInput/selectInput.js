@@ -3,7 +3,6 @@ import classes from './selectInput.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
-// import Service from '../../Service';
 
 class SelectInput extends Component {
 
@@ -15,17 +14,13 @@ class SelectInput extends Component {
   }
 
   getNames(search) {
-    const res = this.props.handlerNames(search);
-    // const service = new Service();
-    // const res = service.getAxiosResource(search);
-
     let showDatalist = true;
+    const res = this.props.handlerNames(search);
     res.then(data => {
       if (!data) {
         data = [];
         showDatalist = false;
       };
-
       this.setState({
         names: data,
         showDatalist,
@@ -50,6 +45,7 @@ class SelectInput extends Component {
   }
 
   handlerClick = (id) => {
+    this.props.getUserData(id);
     this.setState({
       value: this.getNameById(id),
       showDatalist: false,
@@ -57,10 +53,13 @@ class SelectInput extends Component {
   }
 
   handlerClr = () => {
+    this.props.clearUserData();
+
     this.setState({
       value: '',
       showDatalist: false,
       names: [],
+      timerId: null,
     });
   }
 
