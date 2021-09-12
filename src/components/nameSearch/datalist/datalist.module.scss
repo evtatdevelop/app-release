@@ -9,4 +9,18 @@
   border: 1px solid #978f8f;
   border-radius: 3px;
   z-index: 9;
+  background-color: white;
 }
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {}
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {}
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {}

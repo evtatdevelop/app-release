@@ -4,7 +4,6 @@
   cursor: pointer;
   padding: 5px;
   margin-bottom: 1px;
-  border-bottom: 1px solid transparent;
   background-color: rgb(204, 227, 235);
 
 
@@ -12,3 +11,16 @@
     background-color: lightblue;
   }
 }
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {}
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {}
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {}

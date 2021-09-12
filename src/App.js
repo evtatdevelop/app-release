@@ -39,29 +39,37 @@ export default class App extends Component {
       Object.keys(data).length !== 0
       ? <RowBox>
         <div>
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">Email</label>
-            <p>: {data.email}</p>
+          <div className="testData">
+            <label className="rowLabel">Email: </label>
+            <p>{data.email}</p>
           </div>  
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">AD account</label>
-            <p>: {data.ad_user}</p>
+          <div className="testData">
+            <label className="rowLabel">AD account: </label>
+            <p>{data.ad_user}</p>
           </div>  
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">Company</label>
-            <p>: {data.company ? data.company.name: null}</p>
+          <div className="testData">
+            <label className="rowLabel">Company: </label>
+            <p>{data.company ? data.company.name: null}</p>
           </div>  
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">Subdivision</label>
-            <p>: {data.branch ? data.branch.name: null}</p>
+         <div className="testData">
+            <label className="rowLabel">Subdivision: </label>
+            <p>{data.branch ? data.branch.name: null}</p>
           </div>  
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">Department</label>
-            <p>: {data.div_name}</p>
+          <div className="testData">
+            <label className="rowLabel">Department: </label>
+            <p>{data.div_name}</p>
           </div>  
-          <div style={{display: "flex"}}>
-            <label className="rowLabel">Position</label>
-            <p>: {data.position_name}</p>
+          <div className="testData">
+            <label className="rowLabel">Position: </label>
+            <p>{data.position_name}</p>
+          </div>  
+          <div className="testData">
+            <label className="rowLabel">Location: </label>
+            <p>{data.location}</p>
+          </div>  
+          <div className="testData">
+            <label className="rowLabel">Phone number: </label>
+            <p>{data.phone1}</p>
           </div>  
         </div>
       </RowBox>
@@ -70,6 +78,8 @@ export default class App extends Component {
   }
 
   render() {
+    const {systemData, userData} = this.state;
+
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -83,16 +93,16 @@ export default class App extends Component {
                 clearUserData = {this.clearUserData}
               />
             </RowBox>
-            {this.showTestData(this.state.userData)}
+            {this.showTestData(userData)}
           </FormSet>
 
           <FormSet label="System info">
             <RowBox><div>
-              {Object.entries(this.state.systemData).map(option => {
+              {Object.entries(systemData).map((option, index) => {
                 return (
-                  <div style={{display: "flex"}}>
-                    <label className="rowLabel">{option[0]}</label>
-                    <p>: {option[1]}</p>
+                  <div key={index} className="testData">
+                    <label className="rowLabel">{`${option[0]}: `}</label>
+                    <p>{option[1]}</p>
                   </div>
                 )
               })}

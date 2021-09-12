@@ -11,10 +11,15 @@ $height: 28px;
 
 .input {
   width: 100%;
-  padding: 5px $height 5px 5px;
+  padding: 5px $height+1 5px 5px;
   border: 1px solid #978f8f;
   position: absolute;
   border-radius: 3px;
+
+  &:focus,
+  &:active {
+    outline: 2px solid lightblue;
+  } 
 
 }
 
@@ -25,8 +30,29 @@ $height: 28px;
   color: gray;
   background-color: transparent;
   border: none;
+  border-radius: 3px;
   padding: 0;
   font-size: 24px;
-  right: 0;
+  right: 1px;
   cursor: pointer;
+
+  &:focus {
+    background-color: lightblue;
+  }
+  &:active {
+    background-color: transparent;
+  }
 }
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {}
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {}
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {}
