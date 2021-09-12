@@ -28,5 +28,11 @@ export default class Service {
     return await this.getResource(`http://services/?data=user&id=${id}&key=CrgFJ2MlXCB1JZXw94kqzg3fZZL1wK`);
     // return await this.getResource(`https://request-tst.sibgenco.local/services/?data=user&id=${id}&key=CrgFJ2MlXCB1JZXw94kqzg3fZZL1wK`);
   }
+
+  async getDataSystem(id) {
+    // console.log(id);
+    return await this.getResource(`http://services/?data=system&id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`);
+    // return await this.getResource(`https://request-tst.sibgenco.local/services/?data=system&id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`);
+  }
   
 }
