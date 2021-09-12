@@ -34,6 +34,15 @@ export default class NameSearch extends Component {
     return `${last_name} ${first_name} ${middle_name} (${email})`;
   }
 
+  clearSarch() {
+    this.setState({
+      value: '',
+      showDatalist: false,
+      names: [],
+      timerId: null,
+    });
+  }
+
   handlerInput = (e) => {
     clearTimeout(this.state.timerId);
     const {value} = e.target;
@@ -54,13 +63,31 @@ export default class NameSearch extends Component {
 
   handlerClr = () => {
     this.props.clearUserData();
+    this.clearSarch();
+  }
 
-    this.setState({
-      value: '',
-      showDatalist: false,
-      names: [],
-      timerId: null,
-    });
+  onKeyUp = (e, id = 0) => {
+    switch (e.code) {
+      case 'Escape': 
+        this.clearSarch();
+        break;
+
+      case 'ArrowDown': 
+        console.log(e.code);
+        break;
+
+      case 'ArrowUp': 
+        console.log(e.code);
+        break;
+
+      case 'Enter': 
+        if (e.target.nodeName ==='LI') {
+          this.handlerClick(id);
+        }
+        break;
+      
+      default: return;  
+    }
   }
 
   render() {
@@ -70,6 +97,7 @@ export default class NameSearch extends Component {
       ? <DataList 
           names = {names}
           handlerClick = {this.handlerClick}
+          handlerKeyUp = {this.onKeyUp}
         />
       : null;  
 
@@ -79,6 +107,7 @@ export default class NameSearch extends Component {
           value={value}
           handlerInput = {this.handlerInput}
           handlerClr = {this.handlerClr}
+          onKeyUp = {this.onKeyUp}
         />
         {datalist}
       </div>

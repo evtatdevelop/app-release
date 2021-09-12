@@ -1,12 +1,14 @@
 import classes from './option.module.scss'
 
 const Option = (props) => {
-  const {id, first_name, last_name, email, handlerClick, middle_name} = props;
+  const {id, first_name, last_name, email, handlerClick, middle_name, handlerKeyUp} = props;
   return (
     <li
+      tabIndex="0"
       className={classes.option}
       value={id}
       onClick={() => handlerClick(id)}
+      onKeyUp={(e) => handlerKeyUp(e, id)}
     >
       {`${last_name} ${first_name} ${middle_name} (${email})`}
     </li>
