@@ -1,10 +1,10 @@
 // import React from 'react';
-import classes from './selectInput.module.scss';
+import classes from './nameSearch.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
 
-class SelectInput extends Component {
+export default class NameSearch extends Component {
 
   state = {
     names: [],
@@ -74,7 +74,7 @@ class SelectInput extends Component {
       : null;  
 
     return (
-      <div className={classes.selectInput}>
+      <div className={classes.nameSearch}>
         <Input 
           value={value}
           handlerInput = {this.handlerInput}
@@ -86,5 +86,3 @@ class SelectInput extends Component {
 
   }
 }
-
-export default SelectInput;

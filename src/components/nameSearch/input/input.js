@@ -7,7 +7,7 @@ const Input = (props) => {
     <div className={classes.inputBox}>
       <input 
         className={classes.input} 
-        placeholder="Name search"
+        placeholder="Search"
         onInput={(e) => handlerInput(e)}
         value={value}
       />
