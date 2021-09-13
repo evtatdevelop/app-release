@@ -19,6 +19,7 @@ const Input = (props) => {
             type="button" 
             className={classes.clrButton}
             onClick={handlerClr}
+            aria-label="Clear search"
           >&times;</button> 
         : null}
     </div>  

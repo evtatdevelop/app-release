@@ -7,6 +7,8 @@ import { Component } from 'react';
 export default class NameSearch extends Component {
 
   state = {
+    requestNames: [],
+    requestValue: '',
     names: [],
     value: '',
     showDatalist: false,
@@ -23,9 +25,18 @@ export default class NameSearch extends Component {
       };
       this.setState({
         names: data,
+        requestNames: data,
+        requestValue: search,
         showDatalist,
       });
     });
+  }
+
+  filterNames(search) {
+    const names = this.state.requestNames.filter(item => `${item.last_name} ${item.first_name} ${item.middle_name}`.toUpperCase().includes(search.toUpperCase()))
+    this.setState({
+      names
+    })
   }
 
   getNameById = (id) => {
@@ -37,8 +48,10 @@ export default class NameSearch extends Component {
   clearSarch() {
     this.setState({
       value: '',
+      requestValue: '',
       showDatalist: false,
       names: [],
+      requestNames: [],
       timerId: null,
     });
   }
@@ -46,10 +59,18 @@ export default class NameSearch extends Component {
   handlerInput = (e) => {
     clearTimeout(this.state.timerId);
     const {value} = e.target;
-    const timerId = setTimeout(() => this.getNames(this.state.value), 500);
+    const timerId = setTimeout(() => {
+      if (
+        this.state.requestNames.length === 0 
+        || this.state.requestValue.length > this.state.value.length) {
+        this.getNames(this.state.value)
+      } else {
+        this.filterNames(this.state.value)
+      }
+    }, 500);
     this.setState({
       timerId,
-      value,
+      value
     });
   }
 

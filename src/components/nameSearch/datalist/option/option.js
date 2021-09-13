@@ -9,6 +9,7 @@ const Option = (props) => {
       value={id}
       onClick={() => handlerClick(id)}
       onKeyUp={(e) => handlerKeyUp(e, id)}
+      aria-label={`${last_name} ${first_name} ${middle_name} (${email})`}
     >
       {`${last_name} ${first_name} ${middle_name} (${email})`}
     </li>

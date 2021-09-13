@@ -13,7 +13,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.getSystemData(21);
+    this.getSystemData(`${window.location.protocol}//${window.location.hostname}/`, `${window.location.pathname}`);
   }
 
   getUsersName = (search) => {
@@ -25,8 +25,8 @@ export default class App extends Component {
     .then(userData => this.setState({userData}));
   }
 
-  getSystemData = (id) => {
-    new Service().getDataSystem(id)
+  getSystemData = (url, path) => {
+    new Service().getDataSystem(url, path)
     .then(systemData => this.setState({systemData}));
   }
 
