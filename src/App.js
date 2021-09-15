@@ -1,25 +1,25 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import NameSearch from './components/nameSearch';
 import RowBox from './components/rowBox';
 import FormSet from './components/formSet';
 import Service from './Service';
 import Button from './components/button';
+import Message from './components/message/message';
 
 export default class App extends Component {
+
+  nameUser = React.createRef();
 
   state = {
     systemData: {},
     userData: {},
+    showMessage: false,
   }
 
   componentDidMount() {
     this.getSystemData(`${window.location.protocol}//${window.location.hostname}/`, `${window.location.pathname}`);
   }
-
-  // getUsersName = (search) => {
-  //   return new Service().getAxiosResource(search);
-  // }
 
   getUserData = (id) => {
     new Service().getDataUser(id)
@@ -54,21 +54,38 @@ export default class App extends Component {
     )
   }
 
+  onShowMessage() {
+    this.setState({showMessage: true});
+    setTimeout(() => {
+      this.setState({showMessage: false});
+    }, 3000);
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.clearUserData();
+    this.nameUser.current.clearSarch();
+
+    this.onShowMessage();
+  } 
+
   render() {
-    const {systemData, userData} = this.state;
+    const {systemData, userData, showMessage} = this.state;
 
     return (
       <div className="App">
         <h1>Test page</h1>
-        <form className="mainForm">
+        <form 
+          className="mainForm"
+          onSubmit={this.onSubmit}
+        >
           <FormSet label="Employee info">         
             <RowBox>
               <label className="rowLabel" htmlFor='userName'>Employee name</label>
               <NameSearch
+                ref = {this.nameUser}
                 id = "userName"
-                // handlerNames = {this.getUsersName}
                 getUserData = {this.getUserData}
-                clearUserData = {this.clearUserData}
               />
             </RowBox>
             {this.showTestData(userData)}
@@ -91,6 +108,8 @@ export default class App extends Component {
             label = "Applay"
             type = "submit"
           />
+
+          { showMessage ? <Message message={'Submit'}/> : null }
 
         </form>
       </div>

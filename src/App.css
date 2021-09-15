@@ -1,4 +1,5 @@
 .App {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,6 +41,7 @@ h1 {
 
   .testData {
     flex-direction: row;
+    font-size: 8px;
   }
 }
 

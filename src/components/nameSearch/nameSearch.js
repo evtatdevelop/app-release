@@ -49,7 +49,7 @@ export default class NameSearch extends Component {
     return `${last_name} ${first_name} ${middle_name} (${email})`;
   }
 
-  clearSarch() {
+  clearSarch = () => {
     this.setState({
       value: '',
       requestValue: '',
@@ -84,11 +84,6 @@ export default class NameSearch extends Component {
       value: this.getNameById(id),
       showDatalist: false,
     });
-  }
-
-  handlerClr = () => {
-    this.props.clearUserData();
-    this.clearSarch();
   }
 
   onKeyUp = (e, id = 0) => {
@@ -132,7 +127,7 @@ export default class NameSearch extends Component {
           id = {this.props.id}
           value = {value}
           handlerInput = {this.handlerInput}
-          handlerClr = {this.handlerClr}
+          handlerClr = {this.clearSarch}
           onKeyUp = {this.onKeyUp}
         />
         {datalist}

@@ -1,0 +1,39 @@
+.message {
+  font: inherit;
+  position: fixed;
+  width: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  border: 2px solid lightblue;
+  border-radius: 5px;
+  padding: 20px 10px;
+  background-color: rgba(204, 227, 235, $alpha: .9);
+  top: 50%;
+  transform: translateY(-50%);
+  color: #424242;
+  text-align: center;
+  
+  // transform: opacity, .5s;
+  animation: message 100ms ease-in-out forwards;
+}
+
+@keyframes message {
+  from {
+    opacity: .3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {}
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {}
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {}
