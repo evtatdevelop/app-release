@@ -3,7 +3,7 @@ import classes from './nameSearch.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
-
+import Service from '../../Service';
 export default class NameSearch extends Component {
 
   state = {
@@ -15,9 +15,13 @@ export default class NameSearch extends Component {
     timerId: null,
   }
 
+  getUsersName = (search) => {
+    return new Service().getAxiosResource(search);
+  }
+
   getNames(search) {
     let showDatalist = true;
-    const res = this.props.handlerNames(search);
+    const res = this.getUsersName(search);
     res.then(data => {
       if (!data) {
         data = [];
@@ -124,8 +128,9 @@ export default class NameSearch extends Component {
 
     return (
       <div className={classes.nameSearch}>
-        <Input 
-          value={value}
+        <Input
+          id = {this.props.id}
+          value = {value}
           handlerInput = {this.handlerInput}
           handlerClr = {this.handlerClr}
           onKeyUp = {this.onKeyUp}

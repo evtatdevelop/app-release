@@ -1,11 +1,12 @@
 import classes from './input.module.scss';
 
 const Input = (props) => {
-  const {value, handlerInput, handlerClr, onKeyUp} = props;
+  const {id, value, handlerInput, handlerClr, onKeyUp} = props;
   
   return (
     <div className={classes.inputBox}>
-      <input 
+      <input
+        id = {id}
         className={classes.input} 
         placeholder="Search"
         onInput={(e) => handlerInput(e)}
