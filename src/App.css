@@ -28,7 +28,7 @@ h1 {
 
 .testData {
   display: flex;
-  flex-direction: column;
+  font-size: 8px;
 }
 
 
@@ -39,10 +39,6 @@ h1 {
     margin-bottom: none;
   }
 
-  .testData {
-    flex-direction: row;
-    font-size: 8px;
-  }
 }
 
 
@@ -51,6 +47,9 @@ h1 {
   .rowLabel {
     white-space: nowrap;
     margin-right: 20px;
+  }
+  .testData {
+    font-size: 10px;
   }
 }
 

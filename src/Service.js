@@ -39,5 +39,26 @@ export default class Service {
     // return await this.getResource(`http://services/?data=system&id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`);
     // return await this.getResource(`https://request-tst.sibgenco.local/services/?data=system&id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`);
   }
+
+
+
+  async postResource(url, data) {
+    const res = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    })
+    // .then((response) => response.json())
+    // .then((myJson) => console.log(myJson))
+    // .catch(error => console.error('ERROR', error));
+    return await res.json(); 
+  }
+
+  async postForm(data) {
+    return await this.postResource('http://services/?data=oredr&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS', data)
+    // return await this.postResource('https://request-tst.sibgenco.local/services/?data=oredr&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS', data)
+  }
   
 }

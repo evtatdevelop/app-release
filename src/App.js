@@ -15,6 +15,7 @@ export default class App extends Component {
     systemData: {},
     userData: {},
     showMessage: false,
+    dataMessage: {},
   }
 
   componentDidMount() {
@@ -55,22 +56,29 @@ export default class App extends Component {
   }
 
   onShowMessage() {
-    this.setState({showMessage: true});
+    this.setState({
+      showMessage: true,
+    });
     setTimeout(() => {
       this.setState({showMessage: false});
-    }, 3000);
+    }, 5000);
   }
 
   onSubmit = (e) => {
     e.preventDefault();
+    new Service().postForm(this.state.userData)
+      .then(dataMessage => {
+        this.setState({dataMessage})
+        this.onShowMessage();
+      })
+    
     this.clearUserData();
-    this.nameUser.current.clearSarch();
-
-    this.onShowMessage();
+    this.nameUser.current.clearSarch(); 
   } 
 
+  
   render() {
-    const {systemData, userData, showMessage} = this.state;
+    const {systemData, userData, showMessage, dataMessage} = this.state;
 
     return (
       <div className="App">
@@ -105,11 +113,19 @@ export default class App extends Component {
           </FormSet>
 
           <Button
-            label = "Applay"
+            label = "Apply"
             type = "submit"
           />
 
-          { showMessage ? <Message message={'Submit'}/> : null }
+          { showMessage 
+            ? <Message>
+              {dataMessage
+                ? Object.entries(dataMessage).map((row, index) => {
+                  return <p key={index} >{row[0]}: {row[1]}</p>
+                })
+                : null} 
+            </Message>
+            : null }
 
         </form>
       </div>
