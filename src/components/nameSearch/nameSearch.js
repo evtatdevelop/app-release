@@ -3,7 +3,7 @@ import classes from './nameSearch.module.scss';
 import Input from './input';
 import DataList from './datalist';
 import { Component } from 'react';
-import Service from '../../Service';
+import Service from '../../services';
 export default class NameSearch extends Component {
 
   state = {
@@ -15,21 +15,17 @@ export default class NameSearch extends Component {
     timerId: null,
   }
 
-  getUsersName = (search) => {
-    return new Service().getAxiosResource(search);
-  }
-
   getNames(search) {
     let showDatalist = true;
-    const res = this.getUsersName(search);
-    res.then(data => {
-      if (!data) {
-        data = [];
+    const res = new Service().getNames(search);
+    res.then(names => {
+      if (!names) {
+        names = [];
         showDatalist = false;
       };
       this.setState({
-        names: data,
-        requestNames: data,
+        names,
+        requestNames: names,
         requestValue: search,
         showDatalist,
       });
@@ -37,10 +33,11 @@ export default class NameSearch extends Component {
   }
 
   filterNames(search) {
-    const names = this.state.requestNames.filter(item => `${item.last_name} ${item.first_name} ${item.middle_name}`.toUpperCase().includes(search.toUpperCase()))
-    this.setState({
-      names
-    })
+    const names = this.state.requestNames
+      .filter(item => `${item.last_name} ${item.first_name} ${item.middle_name}`
+      .toUpperCase()
+      .includes(search.toUpperCase()))
+    this.setState({names})
   }
 
   getNameById = (id) => {
@@ -90,14 +87,6 @@ export default class NameSearch extends Component {
     switch (e.code) {
       case 'Escape': 
         this.clearSarch();
-        break;
-
-      case 'ArrowDown': 
-        console.log(e.code);
-        break;
-
-      case 'ArrowUp': 
-        console.log(e.code);
         break;
 
       case 'Enter': 
