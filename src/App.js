@@ -6,6 +6,7 @@ import FormSet from './components/formSet';
 import Service from './services';
 import Button from './components/button';
 import Message from './components/message/message';
+import Input from './components/input';
 
 export default class App extends Component {
 
@@ -16,6 +17,9 @@ export default class App extends Component {
     userData: {},
     showMessage: false,
     submitRequest: {},
+    email: '',
+    company: '',
+    branch: '',
   }
 
   componentDidMount() {
@@ -27,7 +31,14 @@ export default class App extends Component {
 
   getUserData = (id) => {
     new Service().getDataUser(id)
-    .then(userData => this.setState({userData}));
+    .then(userData => {
+      this.setState({
+        userData,
+        email: userData.email,
+        company: userData.company.name,
+        branch: userData.branch.name,
+      })
+    });
   }
 
   getSystemData = (url, path) => {
@@ -35,7 +46,7 @@ export default class App extends Component {
     .then(systemData => this.setState({systemData}));
   }
 
-  clearUserData  = () => this.setState({userData: {}})
+  // clearUserData  = () => this.setState({userData: {}});
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -45,33 +56,56 @@ export default class App extends Component {
         this.setState({submitRequest})
         this.showMessage(5000);
       })  
-    this.clearUserData();
+    // this.clearUserData();
+    this.clear();
     this.nameUser.current.clearSarch(); 
   } 
 
   showMessage(time) {
     this.setState({showMessage: true});
     setTimeout(() => this.setState({
-        showMessage: false,
-        dataSubmit: {}
+      showMessage: false,
+      submitRequest: {},
     }), time);
   }
 
+  clear() {
+    this.setState({
+      userData: {},
+      email: '',
+      company: '',
+      branch: '',
+    });
+  }
 
-
-  showTestData = data => {
-    const component = Object.entries(data).map((row, index) => {
-      if (typeof row[1] !== 'object') return (
-          <div key={index} className="testData">
-            <label className="rowLabel">{row[0]}: </label><p>{row[1]}</p>
-          </div>
-      ); else return null;   
+  handlerEmail = e => {
+    const {value} = e.target;
+    this.setState({
+        email: value,
     })
-    return (Object.keys(data).length !== 0 ? <RowBox><div>{component}</div></RowBox> : null)
+  }
+
+  handlerCompany = e => {
+    const {value} = e.target;
+    this.setState({
+        company: value,
+    })
+  }
+
+  handlerBranch = e => {
+    const {value} = e.target;
+    this.setState({
+        branch: value,
+    })
+  }
+
+  onKeyUp = e => {
+    // console.log(e.code);
+    return
   }
 
   render() {
-    const {userData, showMessage, submitRequest} = this.state;
+    const {showMessage, submitRequest} = this.state;
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -88,7 +122,43 @@ export default class App extends Component {
                 getUserData = {this.getUserData}
               />
             </RowBox>
-            {this.showTestData(userData)}
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='userEmail'>Employee email</label>
+              <Input
+                id = "userEmail"
+                value = {this.state.email}
+                handlerInput = {this.handlerEmail}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder=""
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='company'>Company</label>
+              <Input
+                id = "company"
+                value = {this.state.company}
+                handlerInput = {this.handlerCompany}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder=""
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='branch'>Branch</label>
+              <Input
+                id = "branch"
+                value = {this.state.branch}
+                handlerInput = {this.handlerBranch}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder=""
+              />
+            </RowBox>
+
           </FormSet>
 
           <Button label = "Apply" type = "submit"/>

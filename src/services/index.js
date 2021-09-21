@@ -1,7 +1,7 @@
 export default class Service {
   constructor() {
-    // this._apiBase = 'http:/';
-    this._apiBase = 'https://request-tst.sibgenco.local';
+    this._apiBase = 'http:/';
+    // this._apiBase = 'https://request-tst.sibgenco.local';
   }
 
   async getResource(url) {
@@ -50,10 +50,9 @@ export default class Service {
   getDataSystemById(id) { 
     id = 21; // test data
     return this.getResource(
-      `${this._apiBase}/services/?data=system&id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`
+      `${this._apiBase}/services/?data=system&asz24_id=${id}&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`
     );
   }
-
 
   async postForm(data) {
     return await this.postResource(

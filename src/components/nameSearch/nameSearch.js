@@ -1,6 +1,7 @@
 // import React from 'react';
 import classes from './nameSearch.module.scss';
-import Input from './input';
+// import Input from './input';
+import Input from '../input';
 import DataList from './datalist';
 import { Component } from 'react';
 import Service from '../../services';
@@ -85,7 +86,7 @@ export default class NameSearch extends Component {
 
   onKeyUp = (e, id = 0) => {
     switch (e.code) {
-      case 'Escape': 
+       case 'Escape': 
         this.clearSarch();
         break;
 
@@ -118,6 +119,8 @@ export default class NameSearch extends Component {
           handlerInput = {this.handlerInput}
           handlerClr = {this.clearSarch}
           onKeyUp = {this.onKeyUp}
+          placeholder="User name"
+          autofocus
         />
         {datalist}
       </div>
