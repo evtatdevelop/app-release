@@ -107,49 +107,12 @@ export default class App extends Component {
     });
   }
 
-  handlerEmail = e => {
-    const {value} = e.target;
-    this.setState({email: value})
-  }
-  handlerAd = e => {
-    const {value} = e.target;
-    this.setState({ad_user: value})
-  }
-  handlerCompany = e => {
-    const {value} = e.target;
-    this.setState({company: value})
-  }
-  handlerBranch = e => {
-    const {value} = e.target;
-    this.setState({branch: value})
-  }
-  handlerDivision = e => {
-    const {value} = e.target;
-    this.setState({div_name: value})
-  }
-  handlerPosition = e => {
-    const {value} = e.target;
-    this.setState({position_name: value})
-  }
-  handlerLocation = e => {
-    const {value} = e.target;
-    this.setState({location: value})
-  }
-  handlerPhone = e => {
-    const {value} = e.target;
-    this.setState({phone: value})
-  }
-  handlerClr = () => {
-    this.setState({phone: ''})
-  }
-  handlerSapBranch = e => {
-    const {value} = e.target;
-    this.setState({sap_branch: value})
-  }
-
-  onKeyUp = e => {
-    // console.log(e.code);
-    return
+  handlerInput = (e, prop) => this.setState({[prop]: e.target.value});
+  handlerClr = prop => this.setState({[prop]: ''});
+  onKeyUp = (e, prop) => {
+    if (e.code === 'Escape') {
+      this.handlerClr(prop)
+    }
   }
 
   render() {
@@ -175,12 +138,13 @@ export default class App extends Component {
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='userEmail'>Employee email</label>
+              <label className="rowLabel" htmlFor='email'>Email</label>
               <Input
-                id = "userEmail"
+                id = "email"
                 value = {this.state.email}
-                handlerInput = {this.handlerEmail}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'email')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'email')}
+                handlerClr ={() => this.handlerClr('email')}
                 readonly
                 placeholder="E-mail of the employee"
                 arialabel="Employee email"
@@ -188,12 +152,13 @@ export default class App extends Component {
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='adAccount'>AD account</label>
+              <label className="rowLabel" htmlFor='ad_user'>AD account</label>
               <Input
-                id = "adAccount"
+                id = "ad_user"
                 value = {this.state.ad_user}
-                handlerInput = {this.handlerAd}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'ad_user')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'ad_user')}
+                handlerClr ={() => this.handlerClr('ad_user')}
                 readonly
                 placeholder="Active Directory account"
                 arialabel="AD account"
@@ -205,8 +170,9 @@ export default class App extends Component {
               <Input
                 id = "company"
                 value = {this.state.company}
-                handlerInput = {this.handlerCompany}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'company')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'company')}
+                handlerClr ={() => this.handlerClr('company')}
                 readonly
                 placeholder="Сompany the employee works"
                 arialabel="Company"
@@ -218,8 +184,9 @@ export default class App extends Component {
               <Input
                 id = "branch"
                 value = {this.state.branch}
-                handlerInput = {this.handlerBranch}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'branch')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'branch')}
+                handlerClr ={() => this.handlerClr('branch')}
                 readonly
                 placeholder="Division of the company"
                 arialabel="Division"
@@ -227,12 +194,13 @@ export default class App extends Component {
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='division'>Department</label>
+              <label className="rowLabel" htmlFor='div_name'>Department</label>
               <Input
-                id = "division"
+                id = "div_name"
                 value = {this.state.div_name}
-                handlerInput = {this.handlerDivision}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'div_name')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'div_name')}
+                handlerClr ={() => this.handlerClr('div_name')}
                 readonly
                 placeholder="Department the employee works"
                 arialabel="Department"
@@ -240,12 +208,13 @@ export default class App extends Component {
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='position'>Position</label>
+              <label className="rowLabel" htmlFor='position_name'>Position</label>
               <Input
-                id = "position"
+                id = "position_name"
                 value = {this.state.position_name}
-                handlerInput = {this.handlerPosition}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'position_name')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'position_name')}
+                handlerClr ={() => this.handlerClr('position_name')}
                 readonly
                 placeholder="Employee's position"
                 arialabel="Position"
@@ -257,8 +226,9 @@ export default class App extends Component {
               <Input
                 id = "location"
                 value = {this.state.location}
-                handlerInput = {this.handlerLocation}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'location')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'location')}
+                handlerClr ={() => this.handlerClr('location')}
                 readonly
                 placeholder="Office adress"
                 arialabel="Location"
@@ -270,21 +240,22 @@ export default class App extends Component {
               <Input
                 id = "phone"
                 value = {this.state.phone}
-                handlerInput = {this.handlerPhone}
-                onKeyUp = {this.onKeyUp}
-                handlerClr ={this.handlerClr}
+                handlerInput = {(e) => this.handlerInput(e, 'phone')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'phone')}
+                handlerClr ={() => this.handlerClr('phone')}
                 placeholder="Сontact number"
                 arialabel="Phone"
               />
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='sapBranch'>SAP branch</label>
+              <label className="rowLabel" htmlFor='sap_branch'>SAP branch</label>
               <Input
-                id = "sapBranch"
+                id = "sap_branch"
                 value = {this.state.sap_branch}
-                handlerInput = {this.handlerSapBranch}
-                onKeyUp = {this.onKeyUp}
+                handlerInput = {(e) => this.handlerInput(e, 'sap_branch')}
+                onKeyUp = {(e) => this.onKeyUp(e, 'sap_branch')}
+                handlerClr ={() => this.handlerClr('sap_branch')}
                 readonly
                 placeholder="Account in SAP system"
                 arialabel="SAP branch"
