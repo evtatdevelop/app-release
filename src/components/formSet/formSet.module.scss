@@ -14,7 +14,12 @@
 
 
 /* Tablet portrait */
-@media screen and (min-width: 600px) {}
+@media screen and (min-width: 600px) {
+  .formSet {
+    padding-left: 1%;
+    padding-right: 1%;
+  }  
+}
 
 /* Tablet landscape */
 @media screen and (min-width: 760px) {}

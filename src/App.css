@@ -35,6 +35,7 @@ h1 {
 /* Tablet portrait */
 @media screen and (min-width: 600px) {
   .rowLabel {
+    width: 30%;
     margin-right: 10px;
     margin-bottom: none;
   }

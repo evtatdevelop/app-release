@@ -18,8 +18,14 @@ export default class App extends Component {
     showMessage: false,
     submitRequest: {},
     email: '',
+    ad_user: '',
     company: '',
     branch: '',
+    div_name: '',
+    position_name: '',
+    location: '',
+    phone: '',
+    sap_branch: '',
   }
 
   componentDidMount() {
@@ -35,8 +41,14 @@ export default class App extends Component {
       this.setState({
         userData,
         email: userData.email,
+        ad_user: userData.ad_user,
         company: userData.company.name,
         branch: userData.branch.name,
+        div_name: userData.div_name,
+        position_name: userData.position_name,
+        location: userData.location,
+        phone: userData.phone1,
+        sap_branch: userData.sap_branch.name,
       })
     });
   }
@@ -46,11 +58,22 @@ export default class App extends Component {
     .then(systemData => this.setState({systemData}));
   }
 
-  // clearUserData  = () => this.setState({userData: {}});
-
   onSubmit = (e) => {
+    const{systemData, userData, email, ad_user, company, branch, div_name, position_name, location, phone, sap_branch} = this.state;
     e.preventDefault();
-    const postData = {...this.state.systemData, ...this.state.userData};
+    const postData = {
+      ...systemData,
+      ...userData,
+      email,
+      ad_user,
+      company,
+      branch,
+      div_name,
+      position_name,
+      location,
+      phone,
+      sap_branch,
+    };
     new Service().postForm(postData)
       .then(submitRequest => {
         this.setState({submitRequest})
@@ -69,34 +92,59 @@ export default class App extends Component {
     }), time);
   }
 
-  clear() {
+  clear = () => {
     this.setState({
       userData: {},
       email: '',
+      ad_user: '',
       company: '',
       branch: '',
+      div_name: '',
+      position_name: '',
+      location: '',
+      phone: '',
+      sap_branch: '',
     });
   }
 
   handlerEmail = e => {
     const {value} = e.target;
-    this.setState({
-        email: value,
-    })
+    this.setState({email: value})
   }
-
+  handlerAd = e => {
+    const {value} = e.target;
+    this.setState({ad_user: value})
+  }
   handlerCompany = e => {
     const {value} = e.target;
-    this.setState({
-        company: value,
-    })
+    this.setState({company: value})
   }
-
   handlerBranch = e => {
     const {value} = e.target;
-    this.setState({
-        branch: value,
-    })
+    this.setState({branch: value})
+  }
+  handlerDivision = e => {
+    const {value} = e.target;
+    this.setState({div_name: value})
+  }
+  handlerPosition = e => {
+    const {value} = e.target;
+    this.setState({position_name: value})
+  }
+  handlerLocation = e => {
+    const {value} = e.target;
+    this.setState({location: value})
+  }
+  handlerPhone = e => {
+    const {value} = e.target;
+    this.setState({phone: value})
+  }
+  handlerClr = () => {
+    this.setState({phone: ''})
+  }
+  handlerSapBranch = e => {
+    const {value} = e.target;
+    this.setState({sap_branch: value})
   }
 
   onKeyUp = e => {
@@ -120,6 +168,9 @@ export default class App extends Component {
                 ref = {this.nameUser}
                 id = "userName"
                 getUserData = {this.getUserData}
+                clear = {this.clear}
+                placeholder="Search for employee name"
+                arialabel="Employee name"
               />
             </RowBox>
 
@@ -131,7 +182,21 @@ export default class App extends Component {
                 handlerInput = {this.handlerEmail}
                 onKeyUp = {this.onKeyUp}
                 readonly
-                placeholder=""
+                placeholder="E-mail of the employee"
+                arialabel="Employee email"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='adAccount'>AD account</label>
+              <Input
+                id = "adAccount"
+                value = {this.state.ad_user}
+                handlerInput = {this.handlerAd}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder="Active Directory account"
+                arialabel="AD account"
               />
             </RowBox>
 
@@ -143,19 +208,86 @@ export default class App extends Component {
                 handlerInput = {this.handlerCompany}
                 onKeyUp = {this.onKeyUp}
                 readonly
-                placeholder=""
+                placeholder="Сompany the employee works"
+                arialabel="Company"
               />
             </RowBox>
 
             <RowBox>
-              <label className="rowLabel" htmlFor='branch'>Branch</label>
+              <label className="rowLabel" htmlFor='branch'>Division</label>
               <Input
                 id = "branch"
                 value = {this.state.branch}
                 handlerInput = {this.handlerBranch}
                 onKeyUp = {this.onKeyUp}
                 readonly
-                placeholder=""
+                placeholder="Division of the company"
+                arialabel="Division"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='division'>Department</label>
+              <Input
+                id = "division"
+                value = {this.state.div_name}
+                handlerInput = {this.handlerDivision}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder="Department the employee works"
+                arialabel="Department"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='position'>Position</label>
+              <Input
+                id = "position"
+                value = {this.state.position_name}
+                handlerInput = {this.handlerPosition}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder="Employee's position"
+                arialabel="Position"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='location'>Location</label>
+              <Input
+                id = "location"
+                value = {this.state.location}
+                handlerInput = {this.handlerLocation}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder="Office adress"
+                arialabel="Location"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='phone'>Phone</label>
+              <Input
+                id = "phone"
+                value = {this.state.phone}
+                handlerInput = {this.handlerPhone}
+                onKeyUp = {this.onKeyUp}
+                handlerClr ={this.handlerClr}
+                placeholder="Сontact number"
+                arialabel="Phone"
+              />
+            </RowBox>
+
+            <RowBox>
+              <label className="rowLabel" htmlFor='sapBranch'>SAP branch</label>
+              <Input
+                id = "sapBranch"
+                value = {this.state.sap_branch}
+                handlerInput = {this.handlerSapBranch}
+                onKeyUp = {this.onKeyUp}
+                readonly
+                placeholder="Account in SAP system"
+                arialabel="SAP branch"
               />
             </RowBox>
 

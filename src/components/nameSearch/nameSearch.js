@@ -56,6 +56,7 @@ export default class NameSearch extends Component {
       requestNames: [],
       timerId: null,
     });
+    this.props.clear();
   }
 
   handlerInput = (e) => {
@@ -102,6 +103,7 @@ export default class NameSearch extends Component {
 
   render() {
     const {value, names, showDatalist} = this.state;
+    const {id, placeholder, arialabel} = this.props;
 
     const datalist = showDatalist
       ? <DataList 
@@ -114,13 +116,14 @@ export default class NameSearch extends Component {
     return (
       <div className={classes.nameSearch}>
         <Input
-          id = {this.props.id}
+          id = {id}
           value = {value}
           handlerInput = {this.handlerInput}
           handlerClr = {this.clearSarch}
           onKeyUp = {this.onKeyUp}
-          placeholder="User name"
+          placeholder={placeholder}
           autofocus
+          arialabel={arialabel}
         />
         {datalist}
       </div>
