@@ -54,6 +54,15 @@ export default class Service {
     );
   }
 
+  getCompanies() {
+    return this.getResource(
+      `${this._apiBase}/services/?data=companies&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`
+    );
+  }
+
+
+
+
   async postForm(data) {
     return await this.postResource(
       `${this._apiBase}/services/?data=oredr&key=N7Ej1YO2kqFH2FnqNiKA6tm980bwMS`

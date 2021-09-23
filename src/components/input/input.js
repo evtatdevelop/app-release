@@ -1,7 +1,7 @@
 import classes from './input.module.scss';
 
 const Input = (props) => {
-  const {id, value, handlerInput, handlerClr, onKeyUp, readonly, placeholder, autofocus, arialabel} = props;
+  const {id, value, handlerInput, handlerClr, onKeyUp, readonly, placeholder, autofocus, arialabel, handlerClick} = props;
   
   return (
     <div className={classes.inputBox}>
@@ -15,6 +15,7 @@ const Input = (props) => {
         autoFocus={autofocus}
         aria-label={arialabel}
         readOnly={readonly}
+        onClick={handlerClick}
       />
       {value && !readonly
         ? <button 

@@ -5,6 +5,7 @@ import Input from '../input';
 import DataList from './datalist';
 import { Component } from 'react';
 import Service from '../../services';
+import Spinner from '../spinner';
 export default class NameSearch extends Component {
 
   state = {
@@ -14,10 +15,12 @@ export default class NameSearch extends Component {
     value: '',
     showDatalist: false,
     timerId: null,
+    loading: false,
   }
 
   getNames(search) {
     let showDatalist = true;
+    this.loading();
     const res = new Service().getNames(search);
     res.then(names => {
       if (!names) {
@@ -29,9 +32,12 @@ export default class NameSearch extends Component {
         requestNames: names,
         requestValue: search,
         showDatalist,
+        loading: false,
       });
     });
   }
+
+  loading = () => this.setState({loading: true});
 
   filterNames(search) {
     const names = this.state.requestNames
@@ -55,6 +61,7 @@ export default class NameSearch extends Component {
       names: [],
       requestNames: [],
       timerId: null,
+      loading: false,
     });
     this.props.clear();
   }
@@ -102,7 +109,7 @@ export default class NameSearch extends Component {
   }
 
   render() {
-    const {value, names, showDatalist} = this.state;
+    const {value, names, showDatalist, loading} = this.state;
     const {id, placeholder, arialabel} = this.props;
 
     const datalist = showDatalist
@@ -126,6 +133,7 @@ export default class NameSearch extends Component {
           arialabel={arialabel}
         />
         {datalist}
+        {loading ? <div className={classes.spinerNames}><Spinner/></div> : null}
       </div>
     )
 

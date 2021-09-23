@@ -4,7 +4,7 @@ import Input from '../input';
 
 
 const InputDataUser = (props) => {
-  const {value, option, label, readonly, placeholder, handlerInput, handlerClr} = props;
+  const {value, option, label, readonly, placeholder, handlerInput, handlerClr, handlerClick} = props;
   
   const onKeyUp = e => {
     if (e.code === 'Escape') {
@@ -24,6 +24,7 @@ const InputDataUser = (props) => {
         readonly = {readonly}
         placeholder = {placeholder}
         arialabel = {label}
+        handlerClick = {handlerClick}
       />
     </RowBox>
   )

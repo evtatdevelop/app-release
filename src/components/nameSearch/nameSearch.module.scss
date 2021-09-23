@@ -2,7 +2,10 @@
   width: 100%;
   position: relative;
 }
-  
+.spinerNames svg {
+  position: absolute;
+  height: 70px;
+} 
 
 /* Tablet portrait */
 @media screen and (min-width: 600px) {}

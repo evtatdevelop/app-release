@@ -1,5 +1,8 @@
 .App {
   position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,8 +49,9 @@ h1 {
 /* Tablet landscape */
 @media screen and (min-width: 760px) {
   .rowLabel {
+    width: 25%;
     white-space: nowrap;
-    margin-right: 20px;
+    /* margin-right: 20px; */
   }
   .testData {
     font-size: 10px;
@@ -56,8 +60,16 @@ h1 {
 
 
 /* Desktop */
-@media screen and (min-width: 1024px) {}
+@media screen and (min-width: 1024px) {
+  .rowLabel {
+    width: 20%;
+  }
+}
 
 
 /* WW Desktop */
-@media screen and (min-width: 1200px) {}
+@media screen and (min-width: 1200px) {
+  .rowLabel {
+    width: 15%;
+  }
+}
