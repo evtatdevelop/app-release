@@ -24,7 +24,7 @@ const InputDataUser = (props) => {
         readonly = {readonly}
         placeholder = {placeholder}
         arialabel = {label}
-        handlerClick = {handlerClick}
+        handlerClick = {() => handlerClick(option)}
       />
     </RowBox>
   )

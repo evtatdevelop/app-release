@@ -16,11 +16,14 @@ export default class App extends Component {
   state = {
     systemData: {},
     userData: {},
+
     showSpiner: false,
     error: false,
-    showMessage: false,
-    submitRequest: {},
+    msgShow: false,
+    msgData: {},
+    
     companyList: {},
+    
     email: '',
     ad_user: '',
     company_name: '',
@@ -35,6 +38,8 @@ export default class App extends Component {
   clear = () => {
     this.setState({
       userData: {},
+      showSpiner: false,
+
       email: '',
       ad_user: '',
       company_name: '',
@@ -55,32 +60,25 @@ export default class App extends Component {
     this.getCompanies();
   }
 
-  showSpiner = () => {this.setState({showSpiner: true})}
-  hideSpiner = () => {this.setState({showSpiner: false})}
-
   getUserData = (id) => {
     this.showSpiner();
     new Service().getDataUser(id)
-    .then(userData => {
-      this.setState({
-        userData,
-        email: userData.email,
-        ad_user: userData.ad_user,
-        company_name: userData.company.name,
-        branch_name: userData.branch.name,
-        div_name: userData.div_name,
-        position_name: userData.position_name,
-        location: userData.location,
-        phone: userData.phone1,
-        sap_branch_name: userData.sap_branch.name,
-      });
-      this.hideSpiner();
-    });
-  }
-
-  onError = (error) => {
-    this.setState({error: true});
-    this.hideSpiner();
+      .then(userData => {
+        this.setState({
+          userData,
+          email: userData.email,
+          ad_user: userData.ad_user,
+          company_name: userData.company.name,
+          branch_name: userData.branch.name,
+          div_name: userData.div_name,
+          position_name: userData.position_name,
+          location: userData.location,
+          phone: userData.phone1,
+          sap_branch_name: userData.sap_branch.name,
+        });
+        this.hideSpiner();
+      })
+      .catch(this.onError);
   }
 
   getSystemData = (url, path) => {
@@ -95,45 +93,56 @@ export default class App extends Component {
 
   getCompanies = () => {
     new Service().getCompanies()
-    .then(companyList => this.setState({companyList}));
+    .then(companyList => this.setState({companyList}))
+    .catch(this.onError)
   }
 
   onSubmit = (e) => {
+    e.preventDefault();
     const{systemData, userData, email, ad_user, company_name, branch_name,
        div_name, position_name, location, phone, sap_branch_name} = this.state;
-    e.preventDefault();
     const postData = {
-      ...systemData,
-      ...userData,
-      email, ad_user, company_name, branch_name, div_name, 
+      ...systemData, ...userData, email, ad_user, company_name, branch_name, div_name, 
       position_name, location, phone, sap_branch_name
     };
+
     this.showSpiner();
     new Service().postForm(postData)
       .then(submitRequest => {
-        this.setState({submitRequest})
-        this.showMessage(5000);
+        this.showMessage(5000, submitRequest);
         this.clear();
         this.nameUser.current.clearSarch(); 
         this.hideSpiner();
       })
+      .catch(this.onError)
   } 
 
-  showMessage(time) {
-    this.setState({showMessage: true});
+  onError = (error) => {
+    this.setState({error: true});
+    this.hideSpiner();
+    this.showMessage(5000, {Error: 'Something goes wrong!'})
+  }
+
+  showMessage(time, msgData) {
+    this.setState({
+      msgData,
+      msgShow: true,
+    });
     setTimeout(() => this.setState({
-      showMessage: false,
-      submitRequest: {},
+      msgShow: false,
+      msgData: {},
     }), time);
   }
 
+  showSpiner = () => {this.setState({showSpiner: true})}
+  hideSpiner = () => {this.setState({showSpiner: false})}
+
   handlerInput = (e, prop) => this.setState({[prop]: e.target.value});
   handlerClr = prop => this.setState({[prop]: ''});
-  handlerClick = () => this.showMessage(5000);
+  handlerClick = (prop) => this.showMessage(5000, {select: prop});
  
   render() {
-    const {showMessage, submitRequest, showSpiner} = this.state;
-
+    const {msgShow, msgData, showSpiner} = this.state;
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -166,7 +175,7 @@ export default class App extends Component {
                 arialabel = {input.arialabel}
                 handlerInput = {this.handlerInput}
                 handlerClr = {this.handlerClr}
-                handlerClick = {input.handlerClick ? this.handlerClick : null}
+                handlerClick = {input.handlerClick ? this.handlerClick : ()=>{return}}
               />
             )}
 
@@ -174,8 +183,7 @@ export default class App extends Component {
 
           <Button label = "Apply" type = "submit"/>
 
-          { showMessage ? <Message data = {submitRequest}/> : null }
-
+          { msgShow ? <Message data = {msgData}/> : null }
           {showSpiner ? <Spinner className="spinner"/> : null}
 
         </form>
