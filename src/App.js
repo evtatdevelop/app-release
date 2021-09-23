@@ -13,17 +13,17 @@ export default class App extends Component {
 
   nameUser = React.createRef();
 
+  service = new Service();
+
   state = {
     systemData: {},
     userData: {},
 
     showSpiner: false,
-    error: false,
-    msgShow: false,
+    msgTime: 0,
     msgData: {},
-    
-    companyList: {},
-    
+    // error: false,
+   
     email: '',
     ad_user: '',
     company_name: '',
@@ -33,6 +33,8 @@ export default class App extends Component {
     location: '',
     phone: '',
     sap_branch_name: '',
+
+    companyList: {},
   }
 
   clear = () => {
@@ -62,7 +64,7 @@ export default class App extends Component {
 
   getUserData = (id) => {
     this.showSpiner();
-    new Service().getDataUser(id)
+    this.service.getDataUser(id)
       .then(userData => {
         this.setState({
           userData,
@@ -83,7 +85,7 @@ export default class App extends Component {
 
   getSystemData = (url, path) => {
     this.showSpiner();
-    new Service().getDataSystem(url, path)
+    this.service.getDataSystem(url, path)
       .then(systemData => {
         this.setState({systemData});
         this.hideSpiner();
@@ -92,7 +94,7 @@ export default class App extends Component {
   }
 
   getCompanies = () => {
-    new Service().getCompanies()
+    this.service.getCompanies()
     .then(companyList => this.setState({companyList}))
     .catch(this.onError)
   }
@@ -107,7 +109,7 @@ export default class App extends Component {
     };
 
     this.showSpiner();
-    new Service().postForm(postData)
+    this.service.postForm(postData)
       .then(submitRequest => {
         this.showMessage(5000, submitRequest);
         this.clear();
@@ -117,32 +119,23 @@ export default class App extends Component {
       .catch(this.onError)
   } 
 
-  onError = (error) => {
-    this.setState({error: true});
+  onError = () => {
+    // this.setState({error: true});
     this.hideSpiner();
-    this.showMessage(5000, {Error: 'Something goes wrong!'})
+    this.showMessage(3000, {Error: 'Something goes wrong!'})
   }
 
-  showMessage(time, msgData) {
-    this.setState({
-      msgData,
-      msgShow: true,
-    });
-    setTimeout(() => this.setState({
-      msgShow: false,
-      msgData: {},
-    }), time);
-  }
+  showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
 
   showSpiner = () => {this.setState({showSpiner: true})}
   hideSpiner = () => {this.setState({showSpiner: false})}
 
   handlerInput = (e, prop) => this.setState({[prop]: e.target.value});
   handlerClr = prop => this.setState({[prop]: ''});
-  handlerClick = (prop) => this.showMessage(5000, {select: prop});
+  handlerClick = (prop) => this.showMessage(3000, {select: prop});
  
   render() {
-    const {msgShow, msgData, showSpiner} = this.state;
+    const {msgTime, msgData, showSpiner} = this.state;
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -183,7 +176,8 @@ export default class App extends Component {
 
           <Button label = "Apply" type = "submit"/>
 
-          { msgShow ? <Message data = {msgData}/> : null }
+          <Message data = {msgData} time = {msgTime}/>
+
           {showSpiner ? <Spinner className="spinner"/> : null}
 
         </form>
