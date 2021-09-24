@@ -10,6 +10,7 @@ import InputDataUser from './components/InputDataUser';
 import userDataInputs from './components/InputDataUser/inputsUserDataList';
 import Spinner from './components/spinner';
 import Window from './components/window';
+import Error from './components/Error';
 export default class App extends Component {
 
   nameUser = React.createRef();
@@ -20,10 +21,10 @@ export default class App extends Component {
     systemData: {},
     userData: {},
 
-    showSpiner: false,
+    loading: false,
+    error: false,
     msgTime: 0,
     msgData: {},
-    // error: false,
     showWindow: false,
    
     email: '',
@@ -42,7 +43,7 @@ export default class App extends Component {
   clear = () => {
     this.setState({
       userData: {},
-      showSpiner: false,
+      loading: false,
 
       email: '',
       ad_user: '',
@@ -56,6 +57,12 @@ export default class App extends Component {
     });
   }
 
+  componentDidCatch() {
+    console.log('Samething goes wrong!');
+    this.setState({error: true})
+  }
+  
+
   componentDidMount() {
     this.getSystemData(
       `${window.location.protocol}//${window.location.hostname}/`,
@@ -65,7 +72,7 @@ export default class App extends Component {
   }
 
   getUserData = (id) => {
-    this.showSpiner();
+    this.loading();
     this.service.getDataUser(id)
       .then(userData => {
         this.setState({
@@ -80,17 +87,17 @@ export default class App extends Component {
           phone: userData.phone1,
           sap_branch_name: userData.sap_branch.name,
         });
-        this.hideSpiner();
+        this.noLoading();
       })
       .catch(this.onError);
   }
 
   getSystemData = (url, path) => {
-    this.showSpiner();
+    this.loading();
     this.service.getDataSystem(url, path)
       .then(systemData => {
         this.setState({systemData});
-        this.hideSpiner();
+        this.noLoading();
       })
       .catch(this.onError)
   }
@@ -110,38 +117,38 @@ export default class App extends Component {
       position_name, location, phone, sap_branch_name
     };
 
-    this.showSpiner();
+    this.loading();
     this.service.postForm(postData)
       .then(submitRequest => {
         this.showMessage(5000, submitRequest);
         this.clear();
         this.nameUser.current.clearSarch(); 
-        this.hideSpiner();
+        this.noLoading();
       })
       .catch(this.onError)
   } 
 
   onError = () => {
-    // this.setState({error: true});
-    this.hideSpiner();
-    this.showMessage(3000, {Error: 'Something goes wrong!'})
+    this.setState({error: true});
+    this.noLoading();
   }
 
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
 
-  showSpiner = () => {this.setState({showSpiner: true})}
-  hideSpiner = () => {this.setState({showSpiner: false})}
+  loading = () => {this.setState({loading: true})}
+  noLoading = () => {this.setState({loading: false})}
 
   handlerInput = (e, prop) => this.setState({[prop]: e.target.value});
   handlerClr = prop => this.setState({[prop]: ''});
-  handlerClick = (prop) => {
-    // this.showMessage(3000, {select: prop})
-    this.setState({showWindow: true});
-  }
+  handlerClick = (prop) => this.setState({showWindow: true});
+  
   handlerCloseWin = () => this.setState({showWindow: false});
  
   render() {
-    const {msgTime, msgData, showSpiner, showWindow} = this.state;
+    const {msgTime, msgData, loading, showWindow, error} = this.state;
+    
+    if (error) return <Error/>;
+
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -186,7 +193,7 @@ export default class App extends Component {
 
           {showWindow ? <Window handlerCloseWin={this.handlerCloseWin}/> : null}
 
-          {showSpiner ? <Spinner className="spinner"/> : null}
+          {loading ? <Spinner className="spinner"/> : null}
 
         </form>
       </div>
