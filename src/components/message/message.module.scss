@@ -5,7 +5,7 @@
   min-width: 300px;
   max-width: 500px;
   border: 2px solid lightblue;
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 20px 10px;
   background-color: rgba(204, 227, 235, $alpha: .9);
   top: 50%;
@@ -14,12 +14,12 @@
   text-align: center;
   
   // transform: opacity, .5s;
-  animation: message 100ms ease-in-out forwards;
+  animation: message 200ms ease-in-out forwards;
 }
 
 @keyframes message {
   from {
-    opacity: .3;
+    opacity: .1;
   }
   to {
     opacity: 1;

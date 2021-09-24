@@ -9,6 +9,7 @@ import Message from './components/message/message';
 import InputDataUser from './components/InputDataUser';
 import userDataInputs from './components/InputDataUser/inputsUserDataList';
 import Spinner from './components/spinner';
+import Window from './components/window';
 export default class App extends Component {
 
   nameUser = React.createRef();
@@ -23,6 +24,7 @@ export default class App extends Component {
     msgTime: 0,
     msgData: {},
     // error: false,
+    showWindow: false,
    
     email: '',
     ad_user: '',
@@ -132,10 +134,14 @@ export default class App extends Component {
 
   handlerInput = (e, prop) => this.setState({[prop]: e.target.value});
   handlerClr = prop => this.setState({[prop]: ''});
-  handlerClick = (prop) => this.showMessage(3000, {select: prop});
+  handlerClick = (prop) => {
+    // this.showMessage(3000, {select: prop})
+    this.setState({showWindow: true});
+  }
+  handlerCloseWin = () => this.setState({showWindow: false});
  
   render() {
-    const {msgTime, msgData, showSpiner} = this.state;
+    const {msgTime, msgData, showSpiner, showWindow} = this.state;
     return (
       <div className="App">
         <h1>Test page</h1>
@@ -177,6 +183,8 @@ export default class App extends Component {
           <Button label = "Apply" type = "submit"/>
 
           <Message data = {msgData} time = {msgTime}/>
+
+          {showWindow ? <Window handlerCloseWin={this.handlerCloseWin}/> : null}
 
           {showSpiner ? <Spinner className="spinner"/> : null}
 
