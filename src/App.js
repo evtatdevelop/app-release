@@ -11,6 +11,7 @@ import userDataInputs from './components/InputDataUser/inputsUserDataList';
 import Spinner from './components/spinner';
 import Window from './components/window';
 import Error from './components/Error';
+import WindowData from './components/windowData';
 
 export default class App extends Component {
 
@@ -23,9 +24,9 @@ export default class App extends Component {
   stateInit = {
     userData: {},
     postData: this.postDataInit,
-    companyList: {},    
-    branchList: {},    
-    DivisionList: {},    
+    windowData: [], typeWindowData: '',
+    hrs01_id: '', 
+    hrs05_id: '',
     loading: false,
     error: false,
     showWindow: false,
@@ -46,7 +47,7 @@ export default class App extends Component {
       `${window.location.protocol}//${window.location.hostname}/`,
       `${window.location.pathname}`
     );
-    this.getCompanies();
+    // this.getCompanies();
   }
 
   getSystemData = (url, path) => {
@@ -80,9 +81,18 @@ export default class App extends Component {
       .catch(this.onError);
   }
 
-  getCompanies = () => {
-    this.service.getCompanies()
-    .then(companyList => this.setState({companyList}))
+  getWindowData = (handler, data) => {
+    console.log(this.state[data]);
+    this.loading();
+    this.service[handler](this.state[data])
+    .then(windowData => {
+      this.setState({
+        windowData,
+        typeWindowData: handler,
+      })
+      this.showWindow();
+      this.noLoading();    
+    })
     .catch(this.onError)
   }
 
@@ -121,7 +131,9 @@ export default class App extends Component {
     this.setState({error: true});
     this.noLoading();
   }
-  
+
+
+
   render() {
     const {msgTime, msgData, loading, showWindow, error} = this.state;
     
@@ -155,7 +167,10 @@ export default class App extends Component {
                 placeholder = {input.placeholder}
                 handlerInput = {this.handlerInput}
                 handlerClr = {this.handlerClr}
-                handlerClick = {input.handlerClick ? this.showWindow : ()=>{return}}
+                handlerClick = {input.handlerClick 
+                  ? () => this.getWindowData(input.handlerClick, input.prop)
+                  : ()=>{return}
+                }
               />
             )}
 
@@ -164,11 +179,22 @@ export default class App extends Component {
           <Button label = "Apply" type = "submit"/>
           <Message data = {msgData} time = {msgTime}/>
           {loading ? <Spinner className="spinner"/> : null}
-          {showWindow ? <Window handlerCloseWin={this.hideWindow}/> : null}
-          
+          {showWindow 
+            ? <Window handlerCloseWin={this.hideWindow}>
+                <WindowData
+                  data = {this.state.windowData}
+                  type = {this.state.typeWindowData}
+                />
+              </Window>
+            : null
+          }
+        
         </form>
       </div>
     );
   }
+
+
+
 
 }

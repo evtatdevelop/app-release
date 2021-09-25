@@ -15,7 +15,7 @@ class Window extends Component {
           >&times;</button>
         </header>
         <main>
-        
+          {this.props.children}
         </main>
         
       </section>
