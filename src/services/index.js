@@ -63,12 +63,14 @@ export default class Service {
   }
 
   getBranches(id) {
+    console.log(id);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=branches&hrs01_id=${id}&${this._key}`
     );
   }
 
   getDivisions(id) {
+    console.log(id);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=divisions&hrs05_id=${id}&${this._key}`
     );

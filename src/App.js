@@ -24,7 +24,7 @@ export default class App extends Component {
   stateInit = {
     userData: {},
     postData: this.postDataInit,
-    windowData: [], typeWindowData: '',
+    windowData: [], setWindow: '', setValueWindow: '',
     hrs01_id: '', 
     hrs05_id: '',
     loading: false,
@@ -81,14 +81,14 @@ export default class App extends Component {
       .catch(this.onError);
   }
 
-  getWindowData = (handler, data) => {
-    console.log(this.state[data]);
+  getWindowData = (handler, data, set, option) => {
     this.loading();
     this.service[handler](this.state[data])
     .then(windowData => {
       this.setState({
         windowData,
-        typeWindowData: handler,
+        setWindow: set,
+        setValueWindow: option,
       })
       this.showWindow();
       this.noLoading();    
@@ -121,7 +121,9 @@ export default class App extends Component {
     this.setState({postData})
   };
 
-  clear = () => this.setState({...this.state, ...this.stateInit,});
+  clear = () => this.setState(
+    {...this.state, ...this.stateInit}
+  );
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
@@ -132,16 +134,38 @@ export default class App extends Component {
     this.noLoading();
   }
 
+  handlerWindowClick = (set, data) => {
+    this.setState({[set]: data});
+    this.hideWindow();
 
+    // TODO
+    let id = 'id';
+    let name = 'name';
+    if (set === 'idpath') {
+      id = 'idpath';
+      name = 'division_path'
+    }
+
+    const value = this.state.windowData.filter(item => item[id] === data);
+    const postData = this.state.postData;
+    postData[this.state.setValueWindow] = value[0][name];
+    this.setState({
+      [set]: data,
+      postData,
+    });
+    // console.log(value);
+  }
+
+  handlerWidowKeyUp = (e, id) => console.log(e, id);
 
   render() {
-    const {msgTime, msgData, loading, showWindow, error} = this.state;
+    const {systemData:{asz22_full_name}, msgTime, msgData, loading, showWindow, error} = this.state;
     
     if (error) return <Error/>;
 
     return (
       <div className="App">
-        <h1>Test page</h1>
+        <h1>{asz22_full_name}</h1>
         <form className="mainForm" onSubmit={this.onSubmit}>
 
           <FormSet label="Employee info">            
@@ -168,7 +192,7 @@ export default class App extends Component {
                 handlerInput = {this.handlerInput}
                 handlerClr = {this.handlerClr}
                 handlerClick = {input.handlerClick 
-                  ? () => this.getWindowData(input.handlerClick, input.prop)
+                  ? () => this.getWindowData(input.handlerClick, input.prop, input.set, input.option)
                   : ()=>{return}
                 }
               />
@@ -183,7 +207,9 @@ export default class App extends Component {
             ? <Window handlerCloseWin={this.hideWindow}>
                 <WindowData
                   data = {this.state.windowData}
-                  type = {this.state.typeWindowData}
+                  set = {this.state.setWindow}
+                  handlerClick = {this.handlerWindowClick}
+                  handlerKeyUp = {this.handlerWidowKeyUp}
                 />
               </Window>
             : null
