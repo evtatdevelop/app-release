@@ -1,5 +1,5 @@
-import RowBox from '../rowBox';
-import Input from '../input';
+import RowBox from '../../rowBox';
+import Input from '../../input';
 
 const InputDataUser = (props) => {
   const {value, option, label, readonly, placeholder, handlerInput, handlerClr, handlerClick} = props;

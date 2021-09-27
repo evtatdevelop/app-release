@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import NameSearch from '../nameSearch';
 import RowBox from '../rowBox';
 import Service from '../../services';
-import InputDataUser from '../InputDataUser';
-import userDataInputs from '../InputDataUser/inputsUserDataList';
+import InputDataUser from './InputDataUser';
+import userDataInputs from './InputDataUser/inputsUserDataList';
 import Spinner from '../spinner';
 import Window from '../window';
 import Error from '../Error';
-import WindowData from '../windowData';
+import WindowData from './windowData';
 
 export default class UserData extends Component {
 

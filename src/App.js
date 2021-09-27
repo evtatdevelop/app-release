@@ -11,15 +11,14 @@ import UserData from './components/userData';
 export default class App extends Component {
 
   userData = React.createRef();
-
   service = new Service();
 
   state = {
     systemData: {},
-    msgTime: 0, msgData: {},
-    loading: false,
-    error: false,
     postUserData: {},
+    loading: false,
+    msgTime: 0, msgData: {},
+    error: false,
   }
 
   componentDidCatch() {
@@ -43,6 +42,8 @@ export default class App extends Component {
       .catch(this.onError)
   }
 
+  handlerUserData = (postUserData) => this.setState({postUserData});
+
   onSubmit = (e) => {
     e.preventDefault();
     this.loading();
@@ -61,15 +62,16 @@ export default class App extends Component {
     });
     this.userData.current.clearUserData();
   };
+
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
+
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
+
   onError = () => {
     this.setState({error: true});
     this.noLoading();
   }
-
-  handlerUserData = (postUserData) => this.setState({postUserData});
 
   render() {
     const {systemData:{asz22_full_name}, msgTime, msgData, loading, error} = this.state;
