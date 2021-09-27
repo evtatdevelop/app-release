@@ -63,7 +63,7 @@ export default class NameSearch extends Component {
       timerId: null,
       loading: false,
     });
-    this.props.clear();
+    if (this.props.outClear) this.props.outClear();
   }
 
   handlerInput = (e) => {
