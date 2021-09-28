@@ -7,6 +7,8 @@ import Message from './components/message/message';
 import Spinner from './components/spinner';
 import Error from './components/Error';
 import UserData from './components/userData';
+import NameSearch from './components/nameSearch';
+import RowBox from './components/rowBox';
 
 export default class App extends Component {
 
@@ -88,6 +90,21 @@ export default class App extends Component {
               ref = {this.userData}
               handlerUserData = {this.handlerUserData}
             />  
+          </FormSet>
+
+          <FormSet label="Supervisor info">            
+            <RowBox>
+              <label className="rowLabel" htmlFor='bossName'>Supervisor</label>
+              <NameSearch
+                id = "bossName"
+                // ref = {this.nameBosshRef}
+                getUserData = {() => {return}}
+                clear = {() => {return}}
+                outClear = {() => {return}}
+                placeholder="Search for employee supervisor"
+                arialabel="Supervisor name"
+              />
+            </RowBox>
           </FormSet>
 
           <Button label = "Apply" type = "submit"/>

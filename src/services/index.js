@@ -69,11 +69,17 @@ export default class Service {
     );
   }
 
-  getDivisions(id) {
+  async getDivisions(id) {
     console.log(id);
-    return this.getResource(
+    const res = await this.getResource(
       `${this._apiBase}${this._service}/?data=divisions&hrs05_id=${id}&${this._key}`
     );
+    return res.map(item => {
+      return{
+        id: item.idpath,
+        name: item.division_path,
+      }
+    })
   }
 
 
@@ -84,5 +90,6 @@ export default class Service {
       `${this._apiBase}${this._service}/?data=oredr&${this._key}`
     , data);
   }
-  
+
+
 }

@@ -96,25 +96,28 @@ export default class UserData extends Component {
   handlerWindowClick = (set, data) => {
     this.setState({[set]: data});
     this.hideWindow();
-
-    // TODO
-    let id = 'id';
-    let name = 'name';
-    if (set === 'idpath') {
-      id = 'idpath';
-      name = 'division_path'
-    }
-
-    const value = this.state.windowData.filter(item => item[id] === data);
+    const value = this.state.windowData.filter(item => item.id === data);
     const postData = this.state.postData;
-    postData[this.state.setValueWindow] = value[0][name];
+    postData[this.state.setValueWindow] = value[0].name;
     this.setState({
       [set]: data,
       postData,
     });
   }
 
-  handlerWidowKeyUp = (e, id) => console.log(e, id);
+  handlerWidowKeyUp = (e, set, id) => {
+    switch (e.code) {
+      case 'Escape': 
+       this.hideWindow();
+       break;
+     case 'Enter':
+       if (e.target.nodeName ==='LI') {
+         this.handlerWindowClick(set, id);
+       }
+       break;  
+     default: return;  
+   }
+  };
   upUserData = (postData) => this.props.handlerUserData(postData);
 
   render() {
