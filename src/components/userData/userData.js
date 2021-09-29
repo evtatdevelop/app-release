@@ -37,6 +37,9 @@ export default class UserData extends Component {
                 branch: {name: branch_name}, div_name, position_name,
                 location, phone1: phone, sap_branch: {name: sap_branch_name},
               } = userData;
+          
+        userData.company_name = userData.company ? userData.company.name : null;
+        userData.branch_name = userData.branch ? userData.branch.name : null;
 
         this.setState({
           userData,
@@ -52,6 +55,8 @@ export default class UserData extends Component {
   }
 
   getWindowData = (handler, data, set, option) => {
+    if (this.state.userData[option]) return;
+
     this.loading();
     this.service[handler](this.state[data])
     .then(windowData => {
@@ -67,12 +72,17 @@ export default class UserData extends Component {
   }
 
   handlerInput = (e, prop) => {
+    if (this.state.userData[prop]) return;
+
+    console.log(prop);
     const postData = this.state.postData;
     postData[prop] = e.target.value;
     this.setState({postData})
   };
 
   handlerClr = prop => {
+    if (this.state.userData[prop]) return;
+
     const postData = this.state.postData;
     postData[prop] = '';
     this.setState({postData})
