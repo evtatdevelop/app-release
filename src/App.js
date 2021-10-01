@@ -45,6 +45,7 @@ export default class App extends Component {
   }
 
   handlerUserData = (postUserData) => this.setState({postUserData});
+  handlerClrUserData = () => this.setState({postUserData: {}});
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -89,6 +90,7 @@ export default class App extends Component {
             <UserData 
               ref = {this.userData}
               handlerUserData = {this.handlerUserData}
+              handlerClrUserData = {this.handlerClrUserData}
             />  
           </FormSet>
 

@@ -33,18 +33,31 @@ export default class UserData extends Component {
     this.loading();
     this.service.getDataUser(id)
       .then(userData => {
-        const {email, ad_user, company: {name: company_name},
-                branch: {name: branch_name}, div_name, position_name,
-                location, phone1: phone, sap_branch: {name: sap_branch_name},
-              } = userData;
+        const { email, 
+                ad_user, 
+                company: {name: company_name},
+                branch: {name: branch_name}, 
+                div_name, 
+                position_name,
+                location, 
+                phone1: phone, 
+                sap_branch: {name: sap_branch_name}
+        } = userData;
           
         userData.company_name = userData.company ? userData.company.name : null;
         userData.branch_name = userData.branch ? userData.branch.name : null;
 
         this.setState({
           userData,
-          postData: { email, ad_user, company_name, branch_name, div_name,
-                      position_name, location, phone, sap_branch_name,
+          postData: { email: email ?? '', 
+                      ad_user: ad_user ?? '', 
+                      company_name: company_name ?? '', 
+                      branch_name: branch_name ?? '', 
+                      div_name: div_name ?? '',
+                      position_name: position_name ?? '', 
+                      location: location ?? '', 
+                      phone: phone ?? '', 
+                      sap_branch_name: sap_branch_name ?? '',
                     }
         });
 
@@ -55,7 +68,9 @@ export default class UserData extends Component {
   }
 
   getWindowData = (handler, data, set, option) => {
-    if (this.state.userData[option]) return;
+    if (   this.state.userData[option] 
+        || Object.keys(this.state.userData).length === 0
+       ) return;
 
     this.loading();
     this.service[handler](this.state[data])
@@ -74,7 +89,7 @@ export default class UserData extends Component {
   handlerInput = (e, prop) => {
     if (this.state.userData[prop]) return;
 
-    console.log(prop);
+    // console.log(prop);
     const postData = this.state.postData;
     postData[prop] = e.target.value;
     this.setState({postData})
@@ -89,7 +104,10 @@ export default class UserData extends Component {
   };
 
 
-  outClear = () => this.setState({...this.stateInit});;
+  outClear = () => {
+    this.setState({...this.stateInit})
+    this.props.handlerClrUserData();
+  };
   clearUserData = () => {
     this.nameSearchRef.current.clearSarch();
     this.outClear();
@@ -185,8 +203,5 @@ export default class UserData extends Component {
       </>
     );
   }
-
-
-
 
 }
