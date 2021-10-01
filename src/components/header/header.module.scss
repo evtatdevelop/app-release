@@ -1,0 +1,150 @@
+.header {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  min-height: 80px;
+
+  .appHeader {
+    margin: auto;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+
+    .leftSide{
+      display: flex;
+
+      .menu {
+        position: relative;
+        align-items: center;
+        width: 29px;
+        height: 28px;
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        margin-top: -3px;
+        margin-right: 5px;
+        padding: 0;
+        cursor: pointer;
+
+        &::before {
+          content: "\2014";
+          position: absolute;
+          top: 0px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        &::after{
+          content: "\2014";
+          position: absolute;
+          bottom: 0px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      .systemName {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        .headerTopLine {
+          display: flex;
+          h1 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+          }
+          .langs {
+            width: 29px;
+            height: 28px;
+            background-color: transparent;
+            border: none;
+            margin: 0;
+            padding: 0;
+            margin-left: auto;
+            cursor: pointer;
+          }
+        }
+        h3 {
+          font-size: 14px;
+          font-weight: 700;
+          color: rgb(84, 86, 87);
+        }      
+      }      
+    }
+
+    .ownerName {
+      font-size: 14px;
+      text-align: right;
+      .userIcon {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {
+  .header {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    min-height: 100px;
+  
+    .appHeader {
+      .leftSide{
+        .menu {
+          width: 29px;
+          height: 25px;
+          margin-top: 4px;
+          margin-right: 12px;
+  
+          &::before {
+            top: 10px;
+            }
+          &::after{
+            bottom: 10px;
+          }
+        }
+        .systemName {
+          .headerTopLine {
+            h1 {
+              font-size: 24px;
+            }
+            .langs {
+              margin-left: auto;
+              margin-right: 1%;
+            }
+          }
+  
+          h3 {
+            font-size: 20px;
+          }      
+        }      
+      }
+      .ownerName {
+        font-size: 16px;
+        padding-right: 1%;
+        .userIcon {
+        font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {
+
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+}
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {
+
+}

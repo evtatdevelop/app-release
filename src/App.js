@@ -9,6 +9,7 @@ import Error from './components/Error';
 import UserData from './components/userData';
 import NameSearch from './components/nameSearch';
 import RowBox from './components/rowBox';
+import Header from './components/header';
 
 export default class App extends Component {
 
@@ -82,38 +83,43 @@ export default class App extends Component {
     if (error) return <Error/>;
 
     return (
-      <div className="App">
-        <h1>{asz22_full_name}</h1>
-        <form className="mainForm" onSubmit={this.onSubmit}>
+      <div className="App"> 
+        <Header
+          name = {asz22_full_name}
+        />
+        <main className='main'>
+          <form className="mainForm" onSubmit={this.onSubmit}>
+            <FormSet label="Employee info">            
+              <UserData 
+                ref = {this.userData}
+                handlerUserData = {this.handlerUserData}
+                handlerClrUserData = {this.handlerClrUserData}
+              />  
+            </FormSet>
+            <FormSet label="Supervisor info">            
+              <RowBox
+                id = 'bossName'
+                name = 'Supervisor'
+                label = {true}
+              >
+                <NameSearch
+                  id = "bossName"
+                  // ref = {this.nameBosshRef}
+                  getUserData = {() => {return}}
+                  clear = {() => {return}}
+                  outClear = {() => {return}}
+                  placeholder="Search for employee supervisor"
+                  arialabel="Supervisor name"
+                />
+              </RowBox>
+            </FormSet>
 
-          <FormSet label="Employee info">            
-            <UserData 
-              ref = {this.userData}
-              handlerUserData = {this.handlerUserData}
-              handlerClrUserData = {this.handlerClrUserData}
-            />  
-          </FormSet>
-
-          <FormSet label="Supervisor info">            
-            <RowBox>
-              <label className="rowLabel" htmlFor='bossName'>Supervisor</label>
-              <NameSearch
-                id = "bossName"
-                // ref = {this.nameBosshRef}
-                getUserData = {() => {return}}
-                clear = {() => {return}}
-                outClear = {() => {return}}
-                placeholder="Search for employee supervisor"
-                arialabel="Supervisor name"
-              />
-            </RowBox>
-          </FormSet>
-
-          <Button label = "Apply" type = "submit"/>
-          <Message data = {msgData} time = {msgTime}/>
-          {loading ? <Spinner className="spinner"/> : null}
-        
-        </form>
+            <Button label = "Apply" type = "submit"/>
+            <Message data = {msgData} time = {msgTime}/>
+            {loading ? <Spinner className="spinner"/> : null}
+          
+          </form>
+        </main>
       </div>
     );
   }

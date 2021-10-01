@@ -11,8 +11,11 @@ const InputDataUser = (props) => {
   }  
   
   return (
-    <RowBox>
-      <label className="rowLabel" htmlFor={option}>{label}</label>
+    <RowBox
+      id = {option}
+      name = {label}
+      label = {true}
+    >
       <Input
         id = {option}
         value = {value}

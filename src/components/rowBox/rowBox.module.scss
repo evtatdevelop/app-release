@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: flex-start;
   
+  .rowLabel {
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
 }
 
 
@@ -14,14 +18,36 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    .rowLabel {
+      width: 30%;
+      margin-right: 10px;
+      margin-bottom: none;
+    }
   }
 }
 
 /* Tablet landscape */
-@media screen and (min-width: 760px) {}
+@media screen and (min-width: 760px) {
+  .rowBox {
+    .rowLabel {
+      width: 25%;
+      white-space: nowrap;
+      /* margin-right: 20px; */
+    }
+  }
+}
 
 /* Desktop */
-@media screen and (min-width: 1024px) {}
+@media screen and (min-width: 1024px) {
+  .rowBox {
+    .rowLabel {
+      width: 20%;
+    }
+  }
+}
 
 /* WW Desktop */
-@media screen and (min-width: 1200px) {}
+@media screen and (min-width: 1200px) {
+
+}

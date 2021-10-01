@@ -155,8 +155,11 @@ export default class UserData extends Component {
 
     return (
       <>     
-        <RowBox>
-          <label className="rowLabel" htmlFor='userName'>Employee name</label>
+        <RowBox
+          id = 'userName'
+          name = 'Employee name'
+          label = {true}
+        >
           <NameSearch
             id = "userName"
             ref = {this.nameSearchRef}
