@@ -1,7 +1,8 @@
 import classes from './header.module.scss';
 
 const Header = (props) => {
-  const {name} = props;
+  const {name, remoteUser} = props;
+
   return (
     <header className={classes.header}>
       <div className={classes.appHeader}>
@@ -16,7 +17,7 @@ const Header = (props) => {
             </div>
         </div>
         
-        <p className={classes.ownerName}><span className={classes.userIcon}>&#128100;</span> Tatarenko Evgeniy</p>     
+        <p className={classes.ownerName}><span className={classes.userIcon}>&#128100;</span> {remoteUser.given_name}</p>     
       </div>
     </header>
   )

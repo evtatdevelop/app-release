@@ -41,6 +41,11 @@
           left: 50%;
           transform: translateX(-50%);
         }
+        &:hover,
+        &:focus,
+        &:active {
+          outline: 2px solid lightblue;
+        } 
       }
       .systemName {
         display: flex;
@@ -63,6 +68,12 @@
             padding: 0;
             margin-left: auto;
             cursor: pointer;
+            
+            &:hover,
+            &:focus,
+            &:active {
+              outline: 2px solid lightblue;
+            } 
           }
         }
         h3 {

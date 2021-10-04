@@ -82,7 +82,11 @@ export default class Service {
     })
   }
 
-
+  getRemoteUser() {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=remote&${this._key}`
+    );
+  }
 
 
   async postForm(data) {

@@ -17,6 +17,7 @@ export default class App extends Component {
   service = new Service();
 
   state = {
+    remoteUser: {},
     systemData: {},
     postUserData: {},
     loading: false,
@@ -33,6 +34,7 @@ export default class App extends Component {
       `${window.location.protocol}//${window.location.hostname}/`,
       `${window.location.pathname}`
     );
+    this.getRemoteUser();
   }
 
   getSystemData = (url, path) => {
@@ -41,6 +43,15 @@ export default class App extends Component {
       .then(systemData => {
         this.setState({systemData});
         this.noLoading();
+      })
+      .catch(this.onError)
+  }
+
+  getRemoteUser = () => {
+    this.service.getRemoteUser()
+      .then(remoteUser => {
+        console.log(remoteUser);
+        this.setState({remoteUser})
       })
       .catch(this.onError)
   }
@@ -78,7 +89,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {systemData:{asz22_full_name}, msgTime, msgData, loading, error} = this.state;
+    const {systemData:{asz22_full_name}, msgTime, msgData, loading, error, remoteUser} = this.state;
     
     if (error) return <Error/>;
 
@@ -86,6 +97,7 @@ export default class App extends Component {
       <div className="App"> 
         <Header
           name = {asz22_full_name}
+          remoteUser = {remoteUser}
         />
         <main className='main'>
           <form className="mainForm" onSubmit={this.onSubmit}>
