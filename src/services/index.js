@@ -6,7 +6,7 @@ export default class Service {
     // this._apiBase = 'https://request-tst.sibgenco.local';
   }
 
-  async getResource(url) {
+  getResource = async (url) => {
     const res = await fetch(url);
     if (!res.ok) {
       throw new Error(`Could non fetch ${url}. Status: ${res.status}`);
@@ -14,7 +14,7 @@ export default class Service {
     return await res.json();   
   }
 
-  async postResource(url, data) {
+  postResource = async (url, data) => {
     const res = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -29,19 +29,19 @@ export default class Service {
   }
 
 
-  getNames(search) {
+  getNames = (search) => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=names&search=${search}&system=SAP&${this._key}`
     );
   }
 
-  getDataUser(id) {
+  getDataUser = (id) => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=user&id=${id}&${this._key}`
     );
   }
 
-  getDataSystem(url, path) {
+  getDataSystem = (url, path) => {
     url = 'http://request-tst.sibgenco.local/corpsystems/'; // test data
     path = '/sap_devform/'                                  // test data
     return this.getResource(
@@ -49,27 +49,27 @@ export default class Service {
     );
   }
 
-  getDataSystemById(id) { 
+  getDataSystemById = (id) => { 
     id = 21; // test data
     return this.getResource(
       `${this._apiBase}${this._service}/?data=system&asz24_id=${id}&${this._key}`
     );
   }
 
-  getCompanies() {
+  getCompanies = () => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=companies&${this._key}`
     );
   }
 
-  getBranches(id) {
+  getBranches = (id) => {
     // console.log(id);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=branches&hrs01_id=${id}&${this._key}`
     );
   }
 
-  async getDivisions(id) {
+  getDivisions = async (id) => {
     // console.log(id);
     const res = await this.getResource(
       `${this._apiBase}${this._service}/?data=divisions&hrs05_id=${id}&${this._key}`
@@ -82,14 +82,14 @@ export default class Service {
     })
   }
 
-  getRemoteUser() {
+  getRemoteUser = () => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=remote&${this._key}`
     );
   }
 
 
-  async postForm(data) {
+  postForm = async (data) =>{
     return await this.postResource(
       `${this._apiBase}${this._service}/?data=oredr&${this._key}`
     , data);

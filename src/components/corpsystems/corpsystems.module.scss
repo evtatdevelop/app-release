@@ -1,9 +1,21 @@
-.App {
+.main {
+  position: relative;
   width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 10px;
+  color: #424242;
+
+  .mainForm {
+    width: 100%;
+    min-width: 365px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 

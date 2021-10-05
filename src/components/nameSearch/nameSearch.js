@@ -18,6 +18,7 @@ export default class NameSearch extends Component {
     loading: false,
   }
 
+  // TODO : Another query for boss (lec: 100 React Patterrns)
   getNames(search) {
     let showDatalist = true;
     this.loading();
