@@ -1,4 +1,5 @@
 import classes from './header.module.scss';
+import {Link} from 'react-router-dom';
 
 const Header = (props) => {
   const {pageName, systemName, remoteUser} = props;
@@ -10,7 +11,7 @@ const Header = (props) => {
           <button className={classes.menu}>&mdash;</button>
           <div className={classes.systemName}>
             <div className={classes.headerTopLine}>
-              <h1>{pageName}</h1>
+              <h1><Link to = '/'>{pageName}</Link></h1>
               <button className={classes.langs}>Ru</button>
             </div>
             <h3>{systemName}</h3>

@@ -1,0 +1,83 @@
+.main {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+  color: #424242;
+
+  ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    li {
+      width: 100%;
+      height: 50px;
+      border: 1px solid gray;
+      border-radius: 2px;
+      margin-bottom: 5px;
+
+      .link {
+        align-items: center;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+    }
+  }
+}
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {
+  .main {
+    ul {
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      li {
+        width: 200px;
+        min-height: 100px;
+        margin-bottom: 10px;
+
+        .link {
+          justify-content: center;
+        }
+      }  
+    }
+  }
+}
+
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {
+  .main {
+    ul {
+      li {
+        width: 250px;
+        min-height: 150px;
+        margin-bottom: 20px;
+      }  
+    }
+  }
+}
+
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+}
+
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {
+
+}

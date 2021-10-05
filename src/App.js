@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/header';
-import Corpsystems from './components/corpsystems';
+import { MainPage, Corpsystems, Workplace, Resource } from './pages';
 import Service from './services';
 import Spinner from './components/spinner';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 export default class App extends Component {
 
   service = new Service();
   state = {
-    pageName: 'Request for access to the corporate system',
+    pageName: 'Automated request management system',
     systemName: "",
     remoteUser: {},
     loading: false,
@@ -45,20 +46,32 @@ export default class App extends Component {
     const {pageName, systemName, remoteUser, loading} = this.state;
 
     return (
-      <div className="App"> 
-        <Header
-          pageName = {pageName}
-          systemName = {systemName}
-          remoteUser = {remoteUser}
-        />
+      <Router>
+        <div className="App"> 
+          <Header
+            pageName = {pageName}
+            systemName = {systemName}
+            remoteUser = {remoteUser}
+          />
 
-        <Corpsystems
-          getSystemName = {this.getSystemName}
-        />
+          <Route path='/' exact component={MainPage}/>
+          <Route path='/workplace' component={Workplace} />
+          <Route path='/resource' component={Resource} />
+          <Route path='/corpsystems/:system' render = {
+            ({match}) => {
+              const {system} = match.params;
+              return <Corpsystems 
+                system={system}
+                getSystemName = {this.getSystemName}
+              />
+            }
+          } />
+          
+          {loading ? <Spinner className="spinner"/> : null}
 
-        {loading ? <Spinner className="spinner"/> : null}
+        </div>        
+      </Router>
 
-      </div>
     );
   }
 

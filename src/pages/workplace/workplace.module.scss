@@ -1,0 +1,47 @@
+.main {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+  color: #424242;
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .mainForm {
+    width: 100%;
+    min-width: 365px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* Tablet portrait */
+@media screen and (min-width: 600px) {
+
+}
+
+
+/* Tablet landscape */
+@media screen and (min-width: 760px) {
+
+}
+
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+}
+
+
+/* WW Desktop */
+@media screen and (min-width: 1200px) {
+
+}

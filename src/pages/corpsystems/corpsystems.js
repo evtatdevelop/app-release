@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import classes from './corpsystems.module.scss';
-import FormSet from '../formSet';
+import FormSet from '../../components/formSet';
 import Service from '../../services';
-import Button from '../button';
-import Message from '../message';
-import Spinner from '../spinner';
-import Error from '../Error';
-import UserData from '../userData';
-import NameSearch from '../nameSearch';
-import RowBox from '../rowBox';
+import Button from '../../components/button';
+import Message from '../../components/message';
+import Spinner from '../../components/spinner';
+import Error from '../../components/Error';
+import UserData from '../../components/userData';
+import NameSearch from '../../components/nameSearch';
+import RowBox from '../../components/rowBox';
 
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
   service = new Service();
-
-  state = {
+  initialState = {
     remoteUser: {},
     systemData: {},
     postUserData: {},
@@ -24,16 +23,20 @@ export default class Corpsystems extends Component {
     error: false,
   }
 
+  state = {...this.initialState}
+
   componentDidCatch() {
     this.setState({error: true})
   }
   
   componentDidMount() {
-    this.getSystemData(
-      `${window.location.protocol}//${window.location.hostname}/`,
-      `${window.location.pathname}`
-    );
+    this.getSystemData('', this.props.system);
     this.getRemoteUser();
+  }
+
+  componentWillUnmount() {
+    this.setState(this.initialState) 
+    this.props.getSystemName('');
   }
 
   getSystemData = (url, path) => {
