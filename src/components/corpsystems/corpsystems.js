@@ -9,7 +9,6 @@ import Error from '../Error';
 import UserData from '../userData';
 import NameSearch from '../nameSearch';
 import RowBox from '../rowBox';
-import Header from '../header';
 
 export default class Corpsystems extends Component {
 
@@ -42,6 +41,7 @@ export default class Corpsystems extends Component {
     this.service.getDataSystem(url, path)
       .then(systemData => {
         this.setState({systemData});
+        this.props.getSystemName(systemData.asz22_full_name);
         this.noLoading();
       })
       .catch(this.onError)
@@ -50,7 +50,7 @@ export default class Corpsystems extends Component {
   getRemoteUser = () => {
     this.service.getRemoteUser()
       .then(remoteUser => {
-        console.log(remoteUser);
+        // console.log(remoteUser);
         this.setState({remoteUser})
       })
       .catch(this.onError)
@@ -89,51 +89,45 @@ export default class Corpsystems extends Component {
   }
 
   render() {
-    const {systemData:{asz22_full_name}, msgTime, msgData, loading, error, remoteUser} = this.state;
+    const {msgTime, msgData, loading, error} = this.state;
     
     if (error) return <Error/>;
 
     return (
-      <> 
-        <Header
-          name = {asz22_full_name}
-          remoteUser = {remoteUser}
-        />
-        <main className={classes.main}>
-          <form className={classes.mainForm} onSubmit={this.onSubmit}>
-            <FormSet label="Employee info">            
-              <UserData 
-                ref = {this.userData}
-                handlerUserData = {this.handlerUserData}
-                handlerClrUserData = {this.handlerClrUserData}
-              />  
-            </FormSet>
-            <FormSet label="Supervisor info">            
-              <RowBox
-                id = 'bossName'
-                name = 'Supervisor'
-                label = {true}
-              >
-                <NameSearch
-                // TODO : Another query for boss (lec: 100 React Patterrns)
-                  id = "bossName"
-                  // ref = {this.nameBosshRef}
-                  getUserData = {() => {return}}
-                  clear = {() => {return}}
-                  outClear = {() => {return}}
-                  placeholder="Search for employee supervisor"
-                  arialabel="Supervisor name"
-                />
-              </RowBox>
-            </FormSet>
+      <main className={classes.main}>
+        <form className={classes.mainForm} onSubmit={this.onSubmit}>
+          <FormSet label="Employee info">            
+            <UserData 
+              ref = {this.userData}
+              handlerUserData = {this.handlerUserData}
+              handlerClrUserData = {this.handlerClrUserData}
+            />  
+          </FormSet>
+          <FormSet label="Supervisor info">            
+            <RowBox
+              id = 'bossName'
+              name = 'Supervisor'
+              label = {true}
+            >
+              <NameSearch
+              // TODO : Another query for boss (lec: 100 React Patterrns)
+                id = "bossName"
+                // ref = {this.nameBosshRef}
+                getUserData = {() => {return}}
+                clear = {() => {return}}
+                outClear = {() => {return}}
+                placeholder="Search for employee supervisor"
+                arialabel="Supervisor name"
+              />
+            </RowBox>
+          </FormSet>
 
-            <Button label = "Apply" type = "submit"/>
-            <Message data = {msgData} time = {msgTime}/>
-            {loading ? <Spinner className="spinner"/> : null}
-          
-          </form>
-        </main>
-      </>
+          <Button label = "Apply" type = "submit"/>
+          <Message data = {msgData} time = {msgTime}/>
+          {loading ? <Spinner className="spinner"/> : null}
+        
+        </form>
+      </main>
     );
   }
 

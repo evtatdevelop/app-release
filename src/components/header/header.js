@@ -1,7 +1,7 @@
 import classes from './header.module.scss';
 
 const Header = (props) => {
-  const {name, remoteUser} = props;
+  const {pageName, systemName, remoteUser} = props;
 
   return (
     <header className={classes.header}>
@@ -10,10 +10,10 @@ const Header = (props) => {
           <button className={classes.menu}>&mdash;</button>
           <div className={classes.systemName}>
             <div className={classes.headerTopLine}>
-              <h1>Request for access to the corporate system</h1>
+              <h1>{pageName}</h1>
               <button className={classes.langs}>Ru</button>
             </div>
-            <h3>{name}</h3>
+            <h3>{systemName}</h3>
             </div>
         </div>
         

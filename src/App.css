@@ -6,26 +6,14 @@
   align-items: center;
 }
 
-
 /* Tablet portrait */
-@media screen and (min-width: 600px) {
-
-}
-
+@media screen and (min-width: 600px) {}
 
 /* Tablet landscape */
-@media screen and (min-width: 760px) {
-
-}
-
+@media screen and (min-width: 760px) {}
 
 /* Desktop */
-@media screen and (min-width: 1024px) {
-
-}
-
+@media screen and (min-width: 1024px) {}
 
 /* WW Desktop */
-@media screen and (min-width: 1200px) {
-
-}
+@media screen and (min-width: 1200px) {}
