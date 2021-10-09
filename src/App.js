@@ -13,6 +13,7 @@ export default class App extends Component {
     pageName: 'Automated request management system',
     systemName: "",
     remoteUser: {},
+    lang: 'RU',
     loading: false,
     error: false,
   }
@@ -34,9 +35,20 @@ export default class App extends Component {
       })
       .catch(this.onError)
   }
-  
+ 
   getSystemName = (systemName) => {
     this.setState({systemName})
+  }
+
+  changeLang = (app12_id, lang) => {
+    console.log(app12_id, lang);
+    this.loading();
+    this.service.setLanguage(app12_id, lang)
+      .then(lang => {
+        this.setState({lang});
+        this.noLoading();
+      })
+      .catch(this.onError)
   }
 
   loading = () => this.setState({loading: true})
@@ -44,6 +56,9 @@ export default class App extends Component {
 
   render() {
     const {pageName, systemName, remoteUser, loading} = this.state;
+    
+    // const testPath = '/app-release';
+    const testPath = '';
 
     return (
       <Router>
@@ -52,12 +67,17 @@ export default class App extends Component {
             pageName = {pageName}
             systemName = {systemName}
             remoteUser = {remoteUser}
+            changeLang = {this.changeLang}
+            lang = {this.state.lang}
           />
 
-          <Route path='/' exact component={MainPage}/>
-          <Route path='/workplace' component={Workplace} />
-          <Route path='/resource' component={Resource} />
-          <Route path='/corpsystems/:system' render = {
+          {/* <Route path={`${testPath}/`} exact component={MainPage}/> */}
+          <Route path={`${testPath}/`} exact render = {
+            () => <MainPage lang={this.state.lang}/>
+          } />
+          <Route path={`${testPath}/workplace`} component={Workplace} />
+          <Route path={`${testPath}/resource`} component={Resource} />
+          <Route path={`${testPath}/corpsystems/:system`} render = {
             ({match}) => {
               const {system} = match.params;
               return <Corpsystems 

@@ -91,6 +91,18 @@ export default class Service {
     );
   }
 
+  setLanguage = (app12_id, lang) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=userlang&app12_id=${app12_id}&lang=${lang}&${this._key}`
+    );
+  }
+
+  getMainPage = lang => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=mainpage&lang=${lang}&${this._key}`
+    );
+  }
+
 
   postForm = async (data) =>{
     return await this.postResource(

@@ -2,8 +2,8 @@ import classes from './header.module.scss';
 import {Link} from 'react-router-dom';
 
 const Header = (props) => {
-  const {pageName, systemName, remoteUser} = props;
-
+  const {pageName, systemName, remoteUser, changeLang, lang} = props;
+  const btnLabel = {EN: 'RU', RU: 'EN'}
   return (
     <header className={classes.header}>
       <div className={classes.appHeader}>
@@ -12,7 +12,10 @@ const Header = (props) => {
           <div className={classes.systemName}>
             <div className={classes.headerTopLine}>
               <h1><Link to = '/'>{pageName}</Link></h1>
-              <button className={classes.langs}>Ru</button>
+              <button
+                className={classes.langs}
+                onClick={() => changeLang(remoteUser.id, btnLabel[lang])}
+              >{btnLabel[lang]}</button>
             </div>
             <h3>{systemName}</h3>
             </div>

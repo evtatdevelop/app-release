@@ -44,7 +44,7 @@ export default class Corpsystems extends Component {
     this.service.getDataSystem(url, path)
       .then(systemData => {
         this.setState({systemData});
-        this.props.getSystemName(systemData.asz22_full_name);
+        this.props.getSystemName(systemData.system_name);
         this.noLoading();
       })
       .catch(this.onError)
