@@ -15,7 +15,7 @@ const Header = (props) => {
               <button
                 className={classes.langs}
                 onClick={() => changeLang(remoteUser.id, btnLabel[lang])}
-              >{btnLabel[lang]}</button>
+              >{ucFirst(btnLabel[lang])}</button>
             </div>
             <h3>{systemName}</h3>
             </div>
@@ -25,6 +25,11 @@ const Header = (props) => {
       </div>
     </header>
   )
+}
+
+function ucFirst(str) {
+  if (!str) return str;
+  return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
 
 export default Header;

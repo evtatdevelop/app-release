@@ -13,7 +13,7 @@ export default class App extends Component {
     pageName: 'Automated request management system',
     systemName: "",
     remoteUser: {},
-    lang: 'RU',
+    lang: 'EN',
     loading: false,
     error: false,
   }
@@ -24,6 +24,7 @@ export default class App extends Component {
   
   componentDidMount() {
     this.getRemoteUser();
+    this.getLanguage();
   }
 
   getRemoteUser = () => {
@@ -41,9 +42,19 @@ export default class App extends Component {
   }
 
   changeLang = (app12_id, lang) => {
-    console.log(app12_id, lang);
+    // console.log(app12_id, lang);
     this.loading();
     this.service.setLanguage(app12_id, lang)
+      .then(lang => {
+        this.setState({lang});
+        this.noLoading();
+      })
+      .catch(this.onError)
+  }
+
+  getLanguage = (app12_id) => {
+    this.loading();
+    this.service.getLanguage(app12_id)
       .then(lang => {
         this.setState({lang});
         this.noLoading();

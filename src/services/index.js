@@ -97,6 +97,12 @@ export default class Service {
     );
   }
 
+  getLanguage = (app12_id) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=userlang&app12_id=${app12_id}&${this._key}`
+    );
+  }
+
   getMainPage = lang => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=mainpage&lang=${lang}&${this._key}`
