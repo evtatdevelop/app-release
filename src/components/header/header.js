@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 const Header = (props) => {
   const {pageName, systemName, remoteUser, changeLang, lang} = props;
   const btnLabel = {EN: 'RU', RU: 'EN'}
+  
   return (
     <header className={classes.header}>
       <div className={classes.appHeader}>

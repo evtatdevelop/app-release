@@ -30,7 +30,7 @@ export default class Corpsystems extends Component {
   }
   
   componentDidMount() {
-    this.getSystemData('', this.props.system);
+    this.getSystemData('', this.props.system, this.props.lang);
     this.getRemoteUser();
   }
 
@@ -39,9 +39,15 @@ export default class Corpsystems extends Component {
     this.props.getSystemName('');
   }
 
-  getSystemData = (url, path) => {
+  componentDidUpdate(prevProps) {
+    if (this.props.lang !== prevProps.lang) {
+      this.getSystemData('', this.props.system, this.props.lang);
+    }
+  }
+
+  getSystemData = (url, path, lang) => {
     this.loading();
-    this.service.getDataSystem(url, path)
+    this.service.getDataSystem(url, path, lang)
       .then(systemData => {
         this.setState({systemData});
         this.props.getSystemName(systemData.system_name);

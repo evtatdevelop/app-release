@@ -24,7 +24,6 @@ export default class App extends Component {
   
   componentDidMount() {
     this.getRemoteUser();
-    this.getLanguage();
   }
 
   getRemoteUser = () => {
@@ -32,6 +31,7 @@ export default class App extends Component {
     this.service.getRemoteUser()
       .then(remoteUser => {
         this.setState({remoteUser});
+        this.getLanguage(remoteUser.id);
         this.noLoading();
       })
       .catch(this.onError)
@@ -94,6 +94,7 @@ export default class App extends Component {
               return <Corpsystems 
                 system={system}
                 getSystemName = {this.getSystemName}
+                lang = {this.state.lang}
               />
             }
           } />

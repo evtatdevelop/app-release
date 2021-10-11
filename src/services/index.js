@@ -41,14 +41,14 @@ export default class Service {
     );
   }
 
-  getDataSystem = (url, path) => {
+  getDataSystem = (url, path, lang) => {
     // url = 'http://request-tst.sibgenco.local/corpsystems/'; // test data
     // path = '/sap_devform/'                                  // test data
     url = 'http://request.sibgenco.local/corpsystems/'; // test data
     path = `/${path}/`;
-    console.log(url, path);
+    // console.log(url, path);
     return this.getResource(
-      `${this._apiBase}${this._service}/?data=system&url=${url}&path=${path}&${this._key}`
+      `${this._apiBase}${this._service}/?data=system&url=${url}&path=${path}&lang=${lang}&${this._key}`
     );
   }
 
