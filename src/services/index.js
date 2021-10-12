@@ -109,6 +109,12 @@ export default class Service {
     );
   }
 
+  getPhrase = (lang, form_name, phrase) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=phrase&form_name=${form_name}&phrase=${phrase}&lang=${lang}&${this._key}`
+    );
+  }
+
 
   postForm = async (data) =>{
     return await this.postResource(

@@ -69,9 +69,12 @@ export default class MainPage extends Component {
 
   renderLi(system) {
     const path = system.request_url.slice(29);
+    var divStyle = {
+      backgroundImage: `url(./image/${system.icon_filename})`
+    };
     return(
       <li key={path}>
-        <div className={classes.linkBox}>
+        <div className={classes.linkBox} style={divStyle}>
           <Link to = {`${this.testPath}${path}`} className={classes.link}>{system.request_name}</Link>
           <div className={classes.visualLink}></div>
         </div>  

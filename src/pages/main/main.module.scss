@@ -26,6 +26,23 @@
 
         .linkBox {
           display: inline-block;
+          background-repeat: no-repeat;
+          background-position-x: center;
+          background-size: 50%;
+          &:hover,
+          &:focus {
+            background-size: 115%;
+            transition: all .3s;
+
+            .link {
+              color: rgb(97, 170, 194);
+              background-color: rgba($color: #ffffff, $alpha: .9);
+              transition: background-color .3s;             
+            }
+            .visualLink {
+              width: 100%;
+            }
+          }
           
           .link {
             align-items: center;
@@ -37,11 +54,14 @@
             padding: 4px 0 8px 0;
             font-size: 18px;
             transition: font .3s;
+            background-color: rgba($color: #ffffff, $alpha: 0);
 
             &:hover,
             &:focus,
             &:active {
               color: rgb(97, 170, 194);
+              background-color: rgba($color: #ffffff, $alpha: .9);
+              transition: background-color .3s;
 
               & ~ .visualLink {
                 width: 100%;
@@ -156,6 +176,13 @@
             .link {
               padding: 0 3px;
               text-align: center;
+              align-items: flex-end;
+              
+              &:hover,
+              &:focus,
+              &:active {
+                color: rgb(53, 143, 173);
+              }
               
             }
             .visualLink {

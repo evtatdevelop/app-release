@@ -26,6 +26,8 @@ export default class App extends Component {
     this.getRemoteUser();
   }
 
+
+
   getRemoteUser = () => {
     this.loading();
     this.service.getRemoteUser()
@@ -47,6 +49,7 @@ export default class App extends Component {
     this.service.setLanguage(app12_id, lang)
       .then(lang => {
         this.setState({lang});
+        this.getPageName(lang);
         this.noLoading();
       })
       .catch(this.onError)
@@ -57,6 +60,17 @@ export default class App extends Component {
     this.service.getLanguage(app12_id)
       .then(lang => {
         this.setState({lang});
+        this.getPageName(lang);
+        this.noLoading();
+      })
+      .catch(this.onError)
+  }
+
+  getPageName = (lang) => {
+    this.loading();
+    this.service.getPhrase(lang, 'mainpage', 'head_systemname')
+      .then(pageName => {
+        this.setState({pageName});
         this.noLoading();
       })
       .catch(this.onError)
