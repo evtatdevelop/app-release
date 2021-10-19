@@ -105,6 +105,7 @@ export default class Corpsystems extends Component {
     return (
       <main className={classes.main}>
         <form className={classes.mainForm} onSubmit={this.onSubmit}>
+          
           <FormSet label="Employee info">            
             <UserData 
               ref = {this.userData}
@@ -112,24 +113,34 @@ export default class Corpsystems extends Component {
               handlerClrUserData = {this.handlerClrUserData}
             />  
           </FormSet>
+
           <FormSet label="Supervisor info">            
-            <RowBox
-              id = 'bossName'
-              name = 'Supervisor'
-              label = {true}
-            >
+            <RowBox id = 'bossName' name = 'Supervisor' label = {true}>
               <NameSearch
-              // TODO : Another query for boss (lec: 100 React Patterrns)
                 id = "bossName"
-                // ref = {this.nameBosshRef}
                 getUserData = {() => {return}}
                 clear = {() => {return}}
                 outClear = {() => {return}}
-                placeholder="Search for employee supervisor"
-                arialabel="Supervisor name"
+                placeholder = "Search for supervisor"
+                arialabel = "Supervisor name"
               />
             </RowBox>
           </FormSet>
+          
+          <FormSet label="Additional users">            
+            <RowBox id = 'addUsers' name = 'Search user' label = {true}>
+              <NameSearch
+                id = "addUsers"
+                getUserData = {() => {return}}
+                clear = {() => {return}}
+                outClear = {() => {return}}
+                placeholder = "Search for user"
+                arialabel = "Search for additional user"
+              />
+            </RowBox>
+          </FormSet>
+
+
 
           <Button label = "Apply" type = "submit"/>
           <Message data = {msgData} time = {msgTime}/>

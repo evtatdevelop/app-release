@@ -35,6 +35,12 @@ export default class Service {
     );
   }
 
+  getAddNames = (search, asz01_id, ids, system) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=adduser&asz01_id=${asz01_id}&ids=${ids}&search=${search}&system=${system}&${this._key}`
+    );
+  }
+
   getDataUser = (id) => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=user&id=${id}&${this._key}`
@@ -42,11 +48,8 @@ export default class Service {
   }
 
   getDataSystem = (url, path, lang) => {
-    // url = 'http://request-tst.sibgenco.local/corpsystems/'; // test data
-    // path = '/sap_devform/'                                  // test data
     url = 'http://request.sibgenco.local/corpsystems/'; // test data
     path = `/${path}/`;
-    // console.log(url, path);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=system&url=${url}&path=${path}&lang=${lang}&${this._key}`
     );

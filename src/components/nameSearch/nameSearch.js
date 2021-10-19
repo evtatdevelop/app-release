@@ -18,7 +18,7 @@ export default class NameSearch extends Component {
     loading: false,
   }
 
-  // TODO : Another query for boss (lec: 100 React Patterrns)
+  // TODO : Another query for boss (lec: 100 React Patterns)
   getNames(search) {
     let showDatalist = true;
     this.loading();
@@ -111,7 +111,7 @@ export default class NameSearch extends Component {
 
   render() {
     const {value, names, showDatalist, loading} = this.state;
-    const {id, placeholder, arialabel} = this.props;
+    const {id, placeholder, arialabel, autofocus} = this.props;
 
     const datalist = showDatalist
       ? <DataList 
@@ -129,9 +129,9 @@ export default class NameSearch extends Component {
           handlerInput = {this.handlerInput}
           handlerClr = {this.clearSarch}
           onKeyUp = {this.onKeyUp}
-          placeholder={placeholder}
-          autofocus
-          arialabel={arialabel}
+          placeholder = {placeholder}
+          autofocus = {autofocus}
+          arialabel = {arialabel}
         />
         {datalist}
         {loading ? <div className={classes.spinerNames}><Spinner/></div> : null}

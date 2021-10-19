@@ -168,6 +168,7 @@ export default class UserData extends Component {
             outClear = {this.outClear}
             placeholder="Search for employee name"
             arialabel="Employee name"
+            autofocus
           />
         </RowBox>
         

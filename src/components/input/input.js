@@ -16,6 +16,7 @@ const Input = (props) => {
         aria-label={arialabel}
         readOnly={readonly}
         onClick={handlerClick}
+        autoComplete="off"
       />
       {value && !readonly
         ? <button 
