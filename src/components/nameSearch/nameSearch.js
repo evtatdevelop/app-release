@@ -21,8 +21,20 @@ export default class NameSearch extends Component {
   // TODO : Another query for boss (lec: 100 React Patterns)
   getNames(search) {
     let showDatalist = true;
+
     this.loading();
-    const res = new Service().getNames(search);
+    
+    const service = new Service();
+    let res = null;
+    switch (this.props.mode) {
+      case 'supavisor': res = service.getNames(search); break;
+      case 'additional': 
+        const {system, ids, asz01_id} = this.props;
+        res = service.getAddNames(search, asz01_id, ids, system); 
+        break;
+      default: res = service.getNames(search); break;
+    }
+    
     res.then(names => {
       if (!names) {
         names = [];

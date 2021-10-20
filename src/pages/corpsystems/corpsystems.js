@@ -21,6 +21,7 @@ export default class Corpsystems extends Component {
     loading: false,
     msgTime: 0, msgData: {},
     error: false,
+    asz01_id: 22,
   }
 
   state = {...this.initialState}
@@ -43,6 +44,11 @@ export default class Corpsystems extends Component {
     if (this.props.lang !== prevProps.lang) {
       this.getSystemData('', this.props.system, this.props.lang);
     }
+  }
+
+  getAsz01Id = asz01_id => {
+    console.log(asz01_id);
+    this.setState({asz01_id})
   }
 
   getSystemData = (url, path, lang) => {
@@ -111,6 +117,7 @@ export default class Corpsystems extends Component {
               ref = {this.userData}
               handlerUserData = {this.handlerUserData}
               handlerClrUserData = {this.handlerClrUserData}
+              handelergetAsz01Id = {this.getAsz01Id}
             />  
           </FormSet>
 
@@ -123,11 +130,12 @@ export default class Corpsystems extends Component {
                 outClear = {() => {return}}
                 placeholder = "Search for supervisor"
                 arialabel = "Supervisor name"
+                mode = 'supavisor'
               />
             </RowBox>
           </FormSet>
           
-          <FormSet label="Additional users">            
+          <FormSet label="Additional users">
             <RowBox id = 'addUsers' name = 'Search user' label = {true}>
               <NameSearch
                 id = "addUsers"
@@ -136,6 +144,10 @@ export default class Corpsystems extends Component {
                 outClear = {() => {return}}
                 placeholder = "Search for user"
                 arialabel = "Search for additional user"
+                mode = 'additional'
+                system = {this.state.systemData.asz22_system_prefix}
+                ids = ''
+                asz01_id = {this.state.asz01_id}
               />
             </RowBox>
           </FormSet>

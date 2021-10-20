@@ -41,7 +41,7 @@ export default class UserData extends Component {
                 position_name,
                 location, 
                 phone1: phone, 
-                sap_branch: {name: sap_branch_name}
+                sap_branch: {name: sap_branch_name, asz01_id}
         } = userData;
           
         userData.company_name = userData.company ? userData.company.name : null;
@@ -61,7 +61,8 @@ export default class UserData extends Component {
                     }
         });
 
-        this.upUserData(this.state.postData)
+        this.upUserData(this.state.postData);
+        this.props.handelergetAsz01Id(asz01_id);
         this.noLoading();
       })
       .catch(this.onError);
@@ -168,6 +169,7 @@ export default class UserData extends Component {
             outClear = {this.outClear}
             placeholder="Search for employee name"
             arialabel="Employee name"
+            mode = 'employee'
             autofocus
           />
         </RowBox>

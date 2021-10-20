@@ -97,6 +97,9 @@ export default class App extends Component {
           />
 
           {/* <Route path={`${testPath}/`} exact component={MainPage}/> */}
+          {/* <Route path={`${testPath}/app-release`} exact render = {
+            () => <MainPage lang={this.state.lang}/>
+          } /> */}
           <Route path={`${testPath}/`} exact render = {
             () => <MainPage lang={this.state.lang}/>
           } />
