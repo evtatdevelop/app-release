@@ -9,11 +9,15 @@ import Error from '../../components/Error';
 import UserData from '../../components/userData';
 import NameSearch from '../../components/nameSearch';
 import RowBox from '../../components/rowBox';
+import AdditionalUsers from '../../components/additionalUsers';
 
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
+  supervisorData = React.createRef();
+  addUsersData = React.createRef();
   service = new Service();
+
   initialState = {
     remoteUser: {},
     systemData: {},
@@ -21,7 +25,7 @@ export default class Corpsystems extends Component {
     loading: false,
     msgTime: 0, msgData: {},
     error: false,
-    asz01_id: 22,
+    asz01_id: null,
   }
 
   state = {...this.initialState}
@@ -47,7 +51,6 @@ export default class Corpsystems extends Component {
   }
 
   getAsz01Id = asz01_id => {
-    console.log(asz01_id);
     this.setState({asz01_id})
   }
 
@@ -72,14 +75,36 @@ export default class Corpsystems extends Component {
   }
 
   handlerUserData = (postUserData) => this.setState({postUserData});
-  handlerClrUserData = () => this.setState({postUserData: {}});
+  handlerClrUserData = () => {
+    this.setState({postUserData: {}});
+    this.supervisorData.current.clearSarch();
+    this.addUsersData.current.clearUserList();
+  }
+
+  addSupervisor = (id) => {
+    console.log(id);
+    const postUserData = {
+      ...this.state.postUserData,
+      bossId: id,
+    }
+    this.setState({postUserData})
+  }
+
+  addUsers = (ids) => {
+    console.log(ids);
+    const postUserData = {
+      ...this.state.postUserData,
+      additionalUsers: ids,
+    }
+    this.setState({postUserData})
+  }
 
   onSubmit = (e) => {
     e.preventDefault();
     this.loading();
     this.service.postForm(this.state.postUserData)
       .then(submitRequest => {
-        this.showMessage(5000, submitRequest);
+        this.showMessage(15000, submitRequest);
         this.clearForm();
       })
       .catch(this.onError)
@@ -91,6 +116,8 @@ export default class Corpsystems extends Component {
       postUserData: {},
     });
     this.userData.current.clearUserData();
+    this.supervisorData.current.clearSarch();
+    this.addUsersData.current.clearUserList();
   };
 
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
@@ -125,9 +152,10 @@ export default class Corpsystems extends Component {
             <RowBox id = 'bossName' name = 'Supervisor' label = {true}>
               <NameSearch
                 id = "bossName"
-                getUserData = {() => {return}}
-                clear = {() => {return}}
-                outClear = {() => {return}}
+                ref = {this.supervisorData}
+                getUserData = {this.addSupervisor}
+                // clear = {() => {return}}
+                // outClear = {() => {return}}
                 placeholder = "Search for supervisor"
                 arialabel = "Supervisor name"
                 mode = 'supavisor'
@@ -135,24 +163,14 @@ export default class Corpsystems extends Component {
             </RowBox>
           </FormSet>
           
-          <FormSet label="Additional users">
-            <RowBox id = 'addUsers' name = 'Search user' label = {true}>
-              <NameSearch
-                id = "addUsers"
-                getUserData = {() => {return}}
-                clear = {() => {return}}
-                outClear = {() => {return}}
-                placeholder = "Search for user"
-                arialabel = "Search for additional user"
-                mode = 'additional'
-                system = {this.state.systemData.asz22_system_prefix}
-                ids = ''
-                asz01_id = {this.state.asz01_id}
-              />
-            </RowBox>
+          <FormSet label="Additional users (optionally)">
+             <AdditionalUsers
+              ref = {this.addUsersData}
+              system = {this.state.systemData.asz22_system_prefix}
+              asz01_id = {this.state.asz01_id}
+              handlerAddUsers = {this.addUsers}
+            />
           </FormSet>
-
-
 
           <Button label = "Apply" type = "submit"/>
           <Message data = {msgData} time = {msgTime}/>

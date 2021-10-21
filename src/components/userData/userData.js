@@ -132,6 +132,7 @@ export default class UserData extends Component {
       [set]: data,
       postData,
     });
+    this.upUserData(this.state.postData);
   }
 
   handlerWidowKeyUp = (e, set, id) => {

@@ -1,0 +1,37 @@
+.aditionalUser {
+  width: 100%;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0 3px 3px;
+
+    &:hover {
+      background-color: rgb(204, 227, 235);
+    }
+  }
+
+  button {
+    width: 28px;
+    height: 28px;
+    color: gray;
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    padding: 0;
+    margin: 0;
+    font-size: 24px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: lightblue;
+    }
+    &:focus {
+      background-color: lightblue;
+    }
+    &:active {
+      background-color: transparent;
+    }
+  }
+}

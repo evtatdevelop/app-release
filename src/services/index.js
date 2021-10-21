@@ -36,7 +36,7 @@ export default class Service {
   }
 
   getAddNames = (search, asz01_id, ids, system) => {
-    console.log(search, asz01_id, ids, system);
+    // console.log(search, asz01_id, ids, system);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=adduser&asz01_id=${asz01_id}&ids=${ids}&search=${search}&system=${system}&${this._key}`
     );
