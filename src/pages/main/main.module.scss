@@ -1,19 +1,19 @@
 .main {
   position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  // width: 100%;
+  // max-width: 1000px;
+  // margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 10px;
+  padding: 12px 12px;
   color: #424242;
 
   .groupBox {
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 12px;
+    margin-bottom: 12px;
 
     ul {
       width: 100%;
@@ -148,7 +148,7 @@
   .main {
     padding-bottom: 28px;
     .groupBox {
-      margin-top: 24px;
+      margin-bottom: 24px;
 
       ul {
         flex-direction: row;
@@ -236,6 +236,7 @@
         border:  none;
         transition: none;
         text-align: left;
+        padding-top: 0;
       }
   
       .systemList {

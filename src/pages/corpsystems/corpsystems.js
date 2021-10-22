@@ -41,7 +41,7 @@ export default class Corpsystems extends Component {
 
   componentWillUnmount() {
     this.setState(this.initialState) 
-    this.props.getSystemName('');
+    // this.props.getSystemName('');
   }
 
   componentDidUpdate(prevProps) {
@@ -59,7 +59,7 @@ export default class Corpsystems extends Component {
     this.service.getDataSystem(url, path, lang)
       .then(systemData => {
         this.setState({systemData});
-        this.props.getSystemName(systemData.system_name);
+        // this.props.getSystemName(systemData.system_name);
         this.noLoading();
       })
       .catch(this.onError)
@@ -131,12 +131,17 @@ export default class Corpsystems extends Component {
   }
 
   render() {
-    const {msgTime, msgData, loading, error} = this.state;
+    const {msgTime, msgData, loading, error, systemData} = this.state;
     
     if (error) return <Error/>;
 
     return (
       <main className={classes.main}>
+
+        {Object.keys(systemData).length !== 0 
+        ? <h3 className={classes.systemName}>{systemData.system_name}</h3>
+        : null}
+
         <form className={classes.mainForm} onSubmit={this.onSubmit}>
           
           <FormSet label="Employee info">            

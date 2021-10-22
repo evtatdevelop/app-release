@@ -1,0 +1,104 @@
+
+.sideBar {
+  // outline: 1px solid lightblue;
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  background-color: rgb(204, 227, 235);
+  background: linear-gradient(to right, rgb(204, 227, 235), 90%, #FFFFFF);
+  // margin-top: 16px;
+  color: #424242;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ownerName {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 12px 0;
+    padding: 0 10px;
+  }
+
+  .menu {
+    position: relative;
+    align-items: center;
+    width: 29px;
+    height: 28px;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  
+    &::before {
+      content: "\2014";
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &::after{
+      content: "\2014";
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      outline: 2px solid lightblue;
+    }
+    // display: none;
+  }
+
+  .langs {
+    width: 29px;
+    height: 28px;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    
+    &:hover,
+    &:focus,
+    &:active {
+      outline: 2px solid lightblue;
+    } 
+  }
+
+  .groupBox {
+    margin-top: 2px;
+    .systemList {
+      margin-top: 20px;
+      li {
+        margin-bottom: 4px;
+        
+        .linkBox {
+          .link {
+            color: #424242;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            min-height: 50px;
+            padding: 0 25px 0 10px;
+          }
+        }
+
+        &:first-child {
+          font-weight: 700;
+        }
+        &:hover {
+          background: linear-gradient(to right, lightblue, 92%, #FFFFFF);
+        }
+      }
+    }
+  }
+}

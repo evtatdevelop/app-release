@@ -1,100 +1,47 @@
 .header {
+  position: relative;
   width: 100%;
   display: flex;
-  padding: 10px;
-  min-height: 80px;
+  min-height: 100px;
+  // margin-bottom: 20px;
 
   .appHeader {
     margin: auto;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
 
-    .leftSide{
-      display: flex;
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      flex-grow: 1;
+      text-align: center;
 
-      .menu {
-        position: relative;
-        align-items: center;
-        width: 29px;
-        height: 28px;
-        background-color: transparent;
-        border: none;
-        margin: 0;
-        margin-top: -3px;
-        margin-right: 5px;
-        padding: 0;
-        cursor: pointer;
-
-        &::before {
-          content: "\2014";
-          position: absolute;
-          top: 0px;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-        &::after{
-          content: "\2014";
-          position: absolute;
-          bottom: 0px;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-        &:hover,
-        &:focus,
-        &:active {
-          outline: 2px solid lightblue;
-        } 
+      a {
+        color: inherit;
       }
-      .systemName {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        min-height: 48px;
-
-        .headerTopLine {
-          display: flex;
-          h1 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 4px;
-
-            a {
-              color: inherit;
-            }
-          }
-          .langs {
-            width: 29px;
-            height: 28px;
-            background-color: transparent;
-            border: none;
-            margin: 0;
-            padding: 0;
-            margin-left: auto;
-            cursor: pointer;
-            
-            &:hover,
-            &:focus,
-            &:active {
-              outline: 2px solid lightblue;
-            } 
-          }
-        }
-        h3 {
-          font-size: 16px;
-          font-weight: 700;
-          color: rgb(84, 86, 87);
-        }      
-      }      
     }
+    .langs {
+      position: absolute;
+      width: 29px;
+      height: 28px;
+      background-color: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+      margin-left: auto;
+      margin-right: 1%;
+      cursor: pointer;
+      top: 5px;
+      right: 5px;
 
-    .ownerName {
-      font-size: 14px;
-      text-align: right;
-      .userIcon {
-        font-size: 12px;
-      }
+      &:hover,
+      &:focus,
+      &:active {
+        outline: 2px solid lightblue;
+      } 
     }
   }
 }
@@ -102,54 +49,54 @@
 
 /* Tablet portrait */
 @media screen and (min-width: 600px) {
-  .header {
-    width: 100%;
-    display: flex;
-    padding: 10px;
-    min-height: 100px;
+  // .header {
+  //   width: 100%;
+  //   display: flex;
+  //   padding: 10px;
+  //   min-height: 100px;
   
-    .appHeader {
-      .leftSide{
-        .menu {
-          width: 29px;
-          height: 25px;
-          margin-top: 4px;
-          margin-right: 12px;
+  //   .appHeader {
+  //     .leftSide{
+  //       .menu {
+  //         width: 29px;
+  //         height: 25px;
+  //         margin-top: 4px;
+  //         margin-right: 12px;
   
-          &::before {
-            top: 10px;
-            }
-          &::after{
-            bottom: 10px;
-          }
-        }
-        .systemName {
-          min-height: 64px;
+  //         &::before {
+  //           top: 10px;
+  //           }
+  //         &::after{
+  //           bottom: 10px;
+  //         }
+  //       }
+  //       .systemName {
+  //         min-height: 64px;
 
-          .headerTopLine {
-            h1 {
-              font-size: 24px;
-            }
-            .langs {
-              margin-left: auto;
-              margin-right: 1%;
-            }
-          }
+  //         .headerTopLine {
+  //           h1 {
+  //             font-size: 24px;
+  //           }
+  //           .langs {
+  //             margin-left: auto;
+  //             margin-right: 1%;
+  //           }
+  //         }
   
-          h3 {
-            font-size: 20px;
-          }      
-        }      
-      }
-      .ownerName {
-        font-size: 16px;
-        padding-right: 1%;
-        .userIcon {
-        font-size: 14px;
-        }
-      }
-    }
-  }
+  //         h3 {
+  //           font-size: 20px;
+  //         }      
+  //       }      
+  //     }
+  //     .ownerName {
+  //       font-size: 16px;
+  //       padding-right: 1%;
+  //       .userIcon {
+  //       font-size: 14px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 /* Tablet landscape */

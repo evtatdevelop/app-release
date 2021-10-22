@@ -5,15 +5,15 @@ import { MainPage, Corpsystems, Workplace, Resource } from './pages';
 import Service from './services';
 import Spinner from './components/spinner';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-
+import SideBar from './components/sideBar/sideBar';
 export default class App extends Component {
 
   service = new Service();
   state = {
-    pageName: 'Automated request management system',
+    pageName: '',
     systemName: "",
     remoteUser: {},
-    lang: 'EN',
+    lang: '',
     loading: false,
     error: false,
   }
@@ -25,8 +25,6 @@ export default class App extends Component {
   componentDidMount() {
     this.getRemoteUser();
   }
-
-
 
   getRemoteUser = () => {
     this.loading();
@@ -80,43 +78,47 @@ export default class App extends Component {
   noLoading = () => this.setState({loading: false})
 
   render() {
-    const {pageName, systemName, remoteUser, loading} = this.state;
-    
-    // const testPath = '/app-release';
-    const testPath = '';
+    const {pageName, remoteUser, loading} = this.state;
 
     return (
       <Router>
         <div className="App"> 
-          <Header
-            pageName = {pageName}
-            systemName = {systemName}
-            remoteUser = {remoteUser}
-            changeLang = {this.changeLang}
+          
+          <SideBar             
+            remoteUser = {remoteUser}              
             lang = {this.state.lang}
+            changeLang = {this.changeLang}
           />
 
-          {/* <Route path={`${testPath}/`} exact component={MainPage}/> */}
-          {/* <Route path={`${testPath}/app-release`} exact render = {
-            () => <MainPage lang={this.state.lang}/>
-          } /> */}
-          <Route path={`${testPath}/`} exact render = {
-            () => <MainPage lang={this.state.lang}/>
-          } />
-          <Route path={`${testPath}/workplace`} component={Workplace} />
-          <Route path={`${testPath}/resource`} component={Resource} />
-          <Route path={`${testPath}/corpsystems/:system`} render = {
-            ({match}) => {
-              const {system} = match.params;
-              return <Corpsystems 
-                system={system}
-                getSystemName = {this.getSystemName}
-                lang = {this.state.lang}
-              />
-            }
-          } />
-          
-          {loading ? <Spinner className="spinner"/> : null}
+          <div className='main'>
+            <Header
+              pageName = {pageName}
+              // systemName = {systemName}
+              remoteUser = {remoteUser}
+              changeLang = {this.changeLang}
+              lang = {this.state.lang}
+            />
+
+
+            {/* <Route path={`/app-release`} exact render = { () => <MainPage lang={this.state.lang}/>} /> */}
+            <Route path={`/`} exact render = {() => <MainPage lang={this.state.lang}/>} />
+            <Route path={`/workplace`} component={Workplace} />
+            <Route path={`/resource`} component={Resource} />
+            <Route path={`/corpsystems/:system`} render = {
+              ({match}) => {
+                return <Corpsystems 
+                  system={match.params.system}
+                  // getSystemName = {this.getSystemName}
+                  lang = {this.state.lang}
+                />
+              }
+            } />          
+            {loading ? <Spinner className="spinner"/> : null}
+            
+          </div>
+
+
+
 
         </div>        
       </Router>
