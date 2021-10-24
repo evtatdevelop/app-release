@@ -78,7 +78,11 @@ export default class SideBar extends Component {
     return(
       <li key={path}>
         <div className={classes.linkBox}>
-          <Link to = {path} className={classes.link}>{system.request_name}</Link>
+          <Link to = {path} className={classes.link}>
+            <div className={classes.visualLink}></div>
+            <div className={classes.labelLink}>{this.goodLabel[system.request_name]}</div>
+          </Link>
+          
         </div>  
       </li>
     )
@@ -86,23 +90,52 @@ export default class SideBar extends Component {
 
   renderSection(section) {
     if (section.id !== '1') return null
+    // console.log(section.systems)
     return(
       <div key={section.id} className={classes.groupBox}>
         <ul className={classes.systemList}>
           <li key='allsystems'>
             <div className={classes.linkBox}>
-              <Link to = '/' className={classes.link}>All applications</Link>
+              <Link to = '/' className={classes.link}>
+                <div className={classes.visualLink}></div>
+                <div className={classes.labelLink}>{this.goodLabel['All applications'][this.props.lang]}</div>
+              </Link>
             </div>  
-          </li>         
+          </li>
           {section.systems.map((system, index) => this.renderLi(system))}
+          <li key='usermanual'>
+            <div className={classes.linkBox}>
+              <Link to = '/' className={classes.link}>
+                <div className={classes.visualLink}></div>
+                <div className={classes.labelLink}>{this.goodLabel['User manual'][this.props.lang]}</div>
+              </Link>
+            </div>  
+          </li>
         </ul>        
       </div>             
     );
   }
 
-  ucFirst(str) {
-    if (!str) return str;
-    return str[0].toUpperCase() + str.slice(1).toLowerCase();
+  // ucFirst(str) {
+  //   if (!str) return str;
+  //   return str[0].toUpperCase() + str.slice(1).toLowerCase();
+  // }
+  goodLabel = {
+    'Все поданные мной заявки в АСУЗ': 'Подданные заявки',
+    'Заявки, находящиеся у меня на согласовании в АСУЗ': 'Ожидают согласования',
+    'Настройки моих согласований/замещений в АСУЗ': 'Настройки',
+    'Заявки, согласованные/отклоненные мной в АСУЗ': 'История согласований',
+    'Requests created by me in ASUZ': 'Мy requests',
+    'Requests waiting for my approval in ASUZ': 'Pending approval',
+    'My approve settings/acting deputies in ASUZ': 'Settings',
+    'History of requests approved/denied by me in ASUZ': 'Request history',
+    'All applications': {
+      'RU': 'Все заявки',
+      'EN': 'All applications',
+    },
+    'User manual': {
+      'RU': 'Инструкция по заполнению',
+      'EN': 'User manual',
+    },
   }
-
 }

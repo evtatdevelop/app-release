@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/header';
-import { MainPage, Corpsystems, Workplace, Resource } from './pages';
+import { MainPage, Corpsystems, Workplace, Resource, PersonalArea } from './pages';
 import Service from './services';
 import Spinner from './components/spinner';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -112,13 +112,15 @@ export default class App extends Component {
                   lang = {this.state.lang}
                 />
               }
-            } />          
+            } />
+            <Route path={`/lk/myorders`} component={PersonalArea} />
+            <Route path={`/lk/myagree`} component={PersonalArea} />
+            <Route path={`/lk/myagree_settings`} component={PersonalArea} />
+            <Route path={`/lk/myagree_arch`} component={PersonalArea} />
+
             {loading ? <Spinner className="spinner"/> : null}
             
           </div>
-
-
-
 
         </div>        
       </Router>
