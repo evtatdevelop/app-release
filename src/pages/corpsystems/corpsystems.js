@@ -10,12 +10,15 @@ import UserData from '../../components/userData';
 import NameSearch from '../../components/nameSearch';
 import RowBox from '../../components/rowBox';
 import AdditionalUsers from '../../components/additionalUsers';
+import SystemSelection from '../../components/systemSelectiobn';
 
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
   supervisorData = React.createRef();
   addUsersData = React.createRef();
+  sapSystem = React.createRef();
+
   service = new Service();
 
   initialState = {
@@ -26,6 +29,7 @@ export default class Corpsystems extends Component {
     msgTime: 0, msgData: {},
     error: false,
     asz01_id: null,
+    asz00_id: null,
   }
 
   state = {...this.initialState}
@@ -48,6 +52,15 @@ export default class Corpsystems extends Component {
     if (this.props.lang !== prevProps.lang) {
       this.getSystemData('', this.props.system, this.props.lang);
     }
+  }
+
+  getSapSystem = asz00_id => {
+    this.setState({asz00_id})
+    const postUserData = {
+      ...this.state.postUserData,
+      asz00_id,
+    }
+    this.setState({postUserData})
   }
 
   getAsz01Id = asz01_id => {
@@ -74,15 +87,22 @@ export default class Corpsystems extends Component {
       .catch(this.onError)
   }
 
-  handlerUserData = (postUserData) => this.setState({postUserData});
+  handlerUserData = (userData) => {
+    const postUserData = {
+      ...this.state.postUserData,
+      ...userData,
+    }
+    this.setState({postUserData})
+  };
   handlerClrUserData = () => {
     this.setState({postUserData: {}});
     this.supervisorData.current.clearSarch();
     this.addUsersData.current.clearUserList();
+    this.sapSystem.current.clearSystemSelection();
   }
 
   addSupervisor = (id) => {
-    console.log(id);
+    // console.log(id);
     const postUserData = {
       ...this.state.postUserData,
       bossId: id,
@@ -91,7 +111,7 @@ export default class Corpsystems extends Component {
   }
 
   addUsers = (ids) => {
-    console.log(ids);
+    // console.log(ids);
     const postUserData = {
       ...this.state.postUserData,
       additionalUsers: ids,
@@ -118,6 +138,7 @@ export default class Corpsystems extends Component {
     this.userData.current.clearUserData();
     this.supervisorData.current.clearSarch();
     this.addUsersData.current.clearUserList();
+    this.sapSystem.current.clearSystemSelection();
   };
 
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
@@ -176,6 +197,16 @@ export default class Corpsystems extends Component {
               handlerAddUsers = {this.addUsers}
             />
           </FormSet>
+
+          <FormSet label="System selection">
+            <SystemSelection
+              ref = {this.sapSystem}
+              asz22_id = {systemData.asz22_id}
+              getSapSystem = {this.getSapSystem}
+            />
+          </FormSet>
+          <FormSet label="Requested rights"></FormSet>
+          <FormSet label="Agreement process"></FormSet>
 
           <Button label = "Apply" type = "submit"/>
           <Message data = {msgData} time = {msgTime}/>

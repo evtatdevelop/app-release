@@ -119,6 +119,13 @@ export default class Service {
     );
   }
 
+  getSystemsList = (asz22_id) => {
+    console.log(asz22_id);
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=sapsystems&asz22_id=${asz22_id}&${this._key}`
+    );
+  }
+
 
   postForm = async (data) =>{
     return await this.postResource(
