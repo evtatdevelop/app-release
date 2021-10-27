@@ -1,0 +1,21 @@
+.roles {
+  width: 100%;
+  
+  .addRole {
+    width: 100%;
+    padding: 3px;
+    border-radius: 3px;
+    background-color: rgb(233, 233, 233);
+    font-weight: 700;
+    color: gray;
+    transition: background-color, color .3s;
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: rgb(204, 227, 235);
+      color: #424242;
+      cursor: pointer;
+    }
+  }
+}

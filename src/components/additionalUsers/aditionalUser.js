@@ -41,6 +41,7 @@ export default class AdditionalUsers extends Component {
     const users = this.state.users.filter(user => user.id !== id)
     const ids = this.state.ids.filter(currId => currId !== id)
     this.setState({users, ids})
+    this.props.handlerAddUsers(ids.join(','));
   }
 
   clearUserList = () => this.setState({

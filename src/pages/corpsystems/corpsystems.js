@@ -11,7 +11,7 @@ import NameSearch from '../../components/nameSearch';
 import RowBox from '../../components/rowBox';
 import AdditionalUsers from '../../components/additionalUsers';
 import SystemSelection from '../../components/systemSelectiobn';
-
+import Roles from '../../components/roles';
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
@@ -25,6 +25,7 @@ export default class Corpsystems extends Component {
     remoteUser: {},
     systemData: {},
     postUserData: {},
+    postRequestData: [],
     loading: false,
     msgTime: 0, msgData: {},
     error: false,
@@ -34,20 +35,12 @@ export default class Corpsystems extends Component {
 
   state = {...this.initialState}
 
-  componentDidCatch() {
-    this.setState({error: true})
-  }
-  
+  componentDidCatch() { this.setState({error: true}) }
   componentDidMount() {
     this.getSystemData('', this.props.system, this.props.lang);
     this.getRemoteUser();
   }
-
-  componentWillUnmount() {
-    this.setState(this.initialState) 
-    // this.props.getSystemName('');
-  }
-
+  componentWillUnmount() { this.setState(this.initialState) }
   componentDidUpdate(prevProps) {
     if (this.props.lang !== prevProps.lang) {
       this.getSystemData('', this.props.system, this.props.lang);
@@ -55,24 +48,19 @@ export default class Corpsystems extends Component {
   }
 
   getSapSystem = asz00_id => {
-    this.setState({asz00_id})
-    const postUserData = {
-      ...this.state.postUserData,
+    const postUserData = { ...this.state.postUserData,
       asz00_id,
     }
-    this.setState({postUserData})
+    this.setState({asz00_id, postUserData})
   }
 
-  getAsz01Id = asz01_id => {
-    this.setState({asz01_id})
-  }
+  getAsz01Id = asz01_id => this.setState({asz01_id});
 
   getSystemData = (url, path, lang) => {
     this.loading();
     this.service.getDataSystem(url, path, lang)
       .then(systemData => {
         this.setState({systemData});
-        // this.props.getSystemName(systemData.system_name);
         this.noLoading();
       })
       .catch(this.onError)
@@ -81,39 +69,27 @@ export default class Corpsystems extends Component {
   getRemoteUser = () => {
     this.service.getRemoteUser()
       .then(remoteUser => {
-        // console.log(remoteUser);
         this.setState({remoteUser})
       })
       .catch(this.onError)
   }
 
   handlerUserData = (userData) => {
-    const postUserData = {
-      ...this.state.postUserData,
+    const postUserData = { ...this.state.postUserData,
       ...userData,
     }
     this.setState({postUserData})
   };
-  handlerClrUserData = () => {
-    this.setState({postUserData: {}});
-    this.supervisorData.current.clearSarch();
-    this.addUsersData.current.clearUserList();
-    this.sapSystem.current.clearSystemSelection();
-  }
 
   addSupervisor = (id) => {
-    // console.log(id);
-    const postUserData = {
-      ...this.state.postUserData,
+    const postUserData = { ...this.state.postUserData,
       bossId: id,
     }
     this.setState({postUserData})
   }
 
   addUsers = (ids) => {
-    // console.log(ids);
-    const postUserData = {
-      ...this.state.postUserData,
+    const postUserData = { ...this.state.postUserData,
       additionalUsers: ids,
     }
     this.setState({postUserData})
@@ -131,21 +107,21 @@ export default class Corpsystems extends Component {
   } 
 
   clearForm = () => {
-    this.setState({
-      loading: false,
-      postUserData: {},
-    });
+    this.setState({loading: false});
     this.userData.current.clearUserData();
+    this.handlerClrUserData();
+  };
+
+  handlerClrUserData = () => {
+    this.setState({postUserData: {}});
     this.supervisorData.current.clearSarch();
     this.addUsersData.current.clearUserList();
     this.sapSystem.current.clearSystemSelection();
-  };
+  }
 
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
-
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
-
   onError = () => {
     this.setState({error: true});
     this.noLoading();
@@ -180,8 +156,6 @@ export default class Corpsystems extends Component {
                 id = "bossName"
                 ref = {this.supervisorData}
                 getUserData = {this.addSupervisor}
-                // clear = {() => {return}}
-                // outClear = {() => {return}}
                 placeholder = "Search for supervisor"
                 arialabel = "Supervisor name"
                 mode = 'supavisor'
@@ -205,7 +179,11 @@ export default class Corpsystems extends Component {
               getSapSystem = {this.getSapSystem}
             />
           </FormSet>
-          <FormSet label="Requested rights"></FormSet>
+
+          <FormSet label="Requested rights">
+            <Roles/>
+          </FormSet>
+
           <FormSet label="Agreement process"></FormSet>
 
           <Button label = "Apply" type = "submit"/>

@@ -1,0 +1,72 @@
+.roleItem {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+  animation: role 500ms ease-in-out;
+
+  .header {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    background: linear-gradient(to right, #FFFFFF, 70%, rgb(204, 227, 235));
+    border-bottom: 1px solid rgb(204, 227, 235);
+    margin-bottom: 10px;
+
+    .closer {
+      width: 30px;
+      height: 30px;
+      color: gray;
+      background-color: transparent;
+      border: none;
+      border-radius: 3px;
+      padding: 0;
+      font-size: 24px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all, .5s;
+      margin-left: auto;
+      margin-top: 2px;
+      z-index: 11;
+      
+      &:hover,
+      &:focus {
+        color: #fc5858;
+
+        ~.cover {
+          display: block;
+          animation: removeRole 200ms;
+        }
+      }
+    }
+
+    .cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba($color: #ff0000, $alpha: .03);
+      z-index: 10;
+      display: none;
+    }
+  }
+}
+
+@keyframes role {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    
+  }
+}
+@keyframes removeRole {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    
+  }
+}
