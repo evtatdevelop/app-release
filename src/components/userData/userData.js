@@ -49,7 +49,8 @@ export default class UserData extends Component {
 
         this.setState({
           userData,
-          postData: { email: email ?? '', 
+          postData: { id: id ?? '', 
+                      email: email ?? '', 
                       ad_user: ad_user ?? '', 
                       company_name: company_name ?? '', 
                       branch_name: branch_name ?? '', 

@@ -16,6 +16,7 @@ export default class App extends Component {
     lang: '',
     loading: false,
     error: false,
+    instanceType: 'PROD',
   }
 
   componentDidCatch() {
@@ -110,6 +111,7 @@ export default class App extends Component {
                   system={match.params.system}
                   // getSystemName = {this.getSystemName}
                   lang = {this.state.lang}
+                  instanceType = {this.state.instanceType}
                 />
               }
             } />

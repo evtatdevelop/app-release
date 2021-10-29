@@ -1,5 +1,6 @@
 import classes from './header.module.scss';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ucFirst } from '../../utils';
 
 const Header = (props) => {
   const {pageName, remoteUser, changeLang, lang} = props;
@@ -18,9 +19,9 @@ const Header = (props) => {
   )
 }
 
-function ucFirst(str) {
-  if (!str) return str;
-  return str[0].toUpperCase() + str.slice(1).toLowerCase();
-}
+// function ucFirst(str) {
+//   if (!str) return str;
+//   return str[0].toUpperCase() + str.slice(1).toLowerCase();
+// }
 
 export default Header;

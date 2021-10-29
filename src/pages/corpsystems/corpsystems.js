@@ -12,6 +12,7 @@ import RowBox from '../../components/rowBox';
 import AdditionalUsers from '../../components/additionalUsers';
 import SystemSelection from '../../components/systemSelectiobn';
 import Roles from '../../components/roles';
+import { generateKey } from '../../utils';
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
@@ -31,6 +32,8 @@ export default class Corpsystems extends Component {
     error: false,
     asz01_id: null,
     asz00_id: null,
+    sessionKey: null,
+    orderType: 'ADD_PRIVS',
   }
 
   state = {...this.initialState}
@@ -39,12 +42,17 @@ export default class Corpsystems extends Component {
   componentDidMount() {
     this.getSystemData('', this.props.system, this.props.lang);
     this.getRemoteUser();
+    this.getSessionKey();
   }
   componentWillUnmount() { this.setState(this.initialState) }
   componentDidUpdate(prevProps) {
     if (this.props.lang !== prevProps.lang) {
       this.getSystemData('', this.props.system, this.props.lang);
     }
+  }
+
+  getSessionKey = () => {
+    this.setState({sessionKey: generateKey()})
   }
 
   getSapSystem = asz00_id => {
@@ -128,7 +136,7 @@ export default class Corpsystems extends Component {
   }
 
   render() {
-    const {msgTime, msgData, loading, error, systemData} = this.state;
+    const {msgTime, msgData, loading, error, systemData, sessionKey, orderType, asz00_id, asz01_id, remoteUser, postUserData} = this.state;
     
     if (error) return <Error/>;
 
@@ -181,7 +189,15 @@ export default class Corpsystems extends Component {
           </FormSet>
 
           <FormSet label="Requested rights">
-            <Roles/>
+            <Roles
+              instanceType = {this.props.instanceType}
+              sessionKey = {sessionKey}
+              orderType = {orderType}
+              asz00_id = {asz00_id}
+              asz01_id = {asz01_id}
+              app12_id = {postUserData.id}
+              app12_id_author = {remoteUser.id}
+            />
           </FormSet>
 
           <FormSet label="Agreement process"></FormSet>

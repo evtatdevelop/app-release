@@ -120,9 +120,20 @@ export default class Service {
   }
 
   getSystemsList = (asz22_id) => {
-    console.log(asz22_id);
     return this.getResource(
       `${this._apiBase}${this._service}/?data=sapsystems&asz22_id=${asz22_id}&${this._key}`
+    );
+  }
+
+  getGroups = (asz00_id, asz01_id, app12_id, app12_id_author, order_type, instance_type) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=groups&asz00_id=${asz00_id}&asz01_id=${asz01_id}&app12_id=${app12_id}&app12_id_author=${app12_id_author}&order_type=${order_type}&instance_type=${instance_type}&${this._key}`
+    );
+  }
+
+  getRoles = (asz00_id, asz01_id, app12_id, app12_id_author, order_type, instance_type, asz02_id) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=roles&asz02_id=${asz02_id}&asz00_id=${asz00_id}&asz01_id=${asz01_id}&app12_id=${app12_id}&app12_id_author=${app12_id_author}&order_type=${order_type}&instance_type=${instance_type}&${this._key}`
     );
   }
 
