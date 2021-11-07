@@ -52,14 +52,14 @@ export default class Service {
     url = 'http://request.sibgenco.local/corpsystems/'; // test data
     path = `/${path}/`;
     return this.getResource(
-      `${this._apiBase}${this._service}/?data=system&url=${url}&path=${path}&lang=${lang}&${this._key}`
+      `${this._apiBase}${this._service}/?data=systemdata&url=${url}&path=${path}&lang=${lang}&${this._key}`
     );
   }
 
   getDataSystemById = (id) => { 
     id = 21; // test data
     return this.getResource(
-      `${this._apiBase}${this._service}/?data=system&asz24_id=${id}&${this._key}`
+      `${this._apiBase}${this._service}/?data=systemdata&asz24_id=${id}&${this._key}`
     );
   }
 
@@ -134,6 +134,18 @@ export default class Service {
   getRoles = (asz00_id, asz01_id, app12_id, app12_id_author, order_type, instance_type, asz02_id) => {
     return this.getResource(
       `${this._apiBase}${this._service}/?data=roles&asz02_id=${asz02_id}&asz00_id=${asz00_id}&asz01_id=${asz01_id}&app12_id=${app12_id}&app12_id_author=${app12_id_author}&order_type=${order_type}&instance_type=${instance_type}&${this._key}`
+    );
+  }
+
+  getRoleGroup = (asz00_id, asz03_id) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=group&asz00_id=${asz00_id}&asz03_id=${asz03_id}&${this._key}`
+    );
+  }
+
+  getLevels = (asz03_id) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=levels&asz03_id=${asz03_id}&${this._key}`
     );
   }
 

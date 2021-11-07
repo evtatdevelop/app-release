@@ -9,20 +9,30 @@ import Error from '../Error';
 
 export default class Roles extends Component {
 
-  state = {
+  
+  initialState = {
     roleNumber: 1,
-    roles: [{id: 1, group: {}, role: {}},],
-    loading: false,
+    currentItem: null,
+    currentField: null,
+    roles: [{
+      id: 1,
+      group: {name: '', id: null},
+      role: {name: '', id: null,code: ''},
+      levels: [],
+    },],
+    loading: false, 
     error: false,
     showWindow: false,
     windowData: [],
   }
 
+  state = {...this.initialState}
+
   service = new Service();
 
   addRole = () => {
     const roleNumber = this.state.roleNumber + 1;
-    const newRole = {id: roleNumber, group: {}, role: {}};
+    const newRole = {id: roleNumber, group: {name: '', id: null}, role: {name: '', id: null, code: ''}, levels: [],};
     const roles = [...this.state.roles, newRole];
     this.setState({roleNumber, roles});
   }
@@ -36,13 +46,14 @@ export default class Roles extends Component {
 
   getGroupList = (id) => {
     const {sessionKey, orderType, instanceType, asz00_id, asz01_id, app12_id, app12_id_author} = this.props;
-    console.log(id, sessionKey, orderType, instanceType, asz00_id, asz01_id, app12_id, app12_id_author);    
+    console.log(sessionKey);    
     this.loading();
     this.service.getGroups(asz00_id, asz01_id, app12_id, app12_id_author, orderType, instanceType)
     .then(windowData => {
-      console.log(windowData);
       this.setState({
         windowData,
+        currentItem: id,
+        currentField: 'group'
       })
       this.showWindow();
       this.noLoading();    
@@ -52,14 +63,15 @@ export default class Roles extends Component {
 
   getRoleList = (id) => {
     const {sessionKey, orderType, instanceType, asz00_id, asz01_id, app12_id, app12_id_author} = this.props;
-    console.log(id, sessionKey, orderType, instanceType, asz00_id, asz01_id, app12_id, app12_id_author); 
-    const asz02_id = null;   
+    console.log(sessionKey); 
+    const asz02_id = this.getAsz02Id(id); 
     this.loading();
     this.service.getRoles(asz00_id, asz01_id, app12_id, app12_id_author, orderType, instanceType, asz02_id)
     .then(windowData => {
-      console.log(windowData);
       this.setState({
         windowData,
+        currentItem: id,
+        currentField: 'role'
       })
       this.showWindow();
       this.noLoading();    
@@ -67,16 +79,65 @@ export default class Roles extends Component {
     .catch(this.onError)
   }
 
+  getAsz02Id = id => this.state.roles.filter(role => role.id === id )[0]['group']['id'];
+
+  clearItemRole = id => {
+    const roles = this.state.roles.map(item => {
+      if ( item.id === id ) item['role'] = {name: '', id: null, code: ''}
+      return true
+    })
+    this.setState({roles});
+  }
+
+  setRoleGroup = (asz00_id, asz03_id, itemId) => {
+    this.loading();
+    this.service.getRoleGroup(asz00_id, asz03_id)
+    .then(roleGroup => {
+      this.state.roles.map(item => {
+        if ( item.id === itemId ) item['group'] = {...roleGroup}
+        return true
+      })
+      this.noLoading();
+    })
+    .catch(this.onError)
+  }
+
+  
+  getLevels = (asz03_id, itemId) => {
+    this.loading();
+    this.service.getLevels(asz03_id)
+    .then(levels => {
+      this.state.roles.map(item => {
+        if ( item.id === itemId ) item['levels'] = [...levels]
+        return true
+      })
+      this.noLoading();
+    })
+    .catch(this.onError)
+  }
+
   handlerWindowClick = (data) => {
     this.hideWindow();
-    console.log(data);
-    // const system = this.getSystemById(data);
-    // const {full_name, asz00_id} = system;
-    // this.setState({
-    //   system,
-    //   value: full_name,
-    // })
-    // this.props.getSapSystem(asz00_id)
+    const {currentItem, currentField} = this.state;
+    const roles = [...this.state.roles];
+    roles.map(item => {
+      if (item.id === currentItem) {
+        switch (currentField) {
+          case 'group': item.group = {...data}; 
+            this.clearItemRole(currentItem);
+            break;
+
+          case 'role': item.role = {...data};
+            this.setRoleGroup(this.props.asz00_id, data.id, currentItem);
+            this.getLevels(data.id, currentItem);
+            break;
+        
+          default: break;
+        }
+      }
+      return true;
+    });
+    this.setState({roles});
   }
 
   handlerWidowKeyUp = (e, set, id) => {
@@ -93,6 +154,19 @@ export default class Roles extends Component {
    }
   };
 
+  clearRoles = () => {
+    this.setState({
+      roleNumber: 1,
+      currentItem: null,
+      currentField: null,
+      roles: [{id: 1, group: {name: '', id: null}, role: {name: '', id: null, code: ''}, levels: [],},],
+      loading: false,
+      error: false,
+      showWindow: false,
+      windowData: [],
+    })
+  }
+
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
   showWindow = () => this.setState({showWindow: true});
@@ -103,7 +177,7 @@ export default class Roles extends Component {
   }
 
   render() {
-    const {loading, showWindow, error, roles, windowData} = this.state;
+    const {loading, showWindow, error, roles, windowData, roleNumber} = this.state;
 
     if (error) return <Error/>;
 
@@ -113,9 +187,11 @@ export default class Roles extends Component {
         {roles.map(role => <RoleItem
           key = {role.id}
           id = {role.id}
+          data = {role}
           handlerCloseRole = {() => this.handlerCloseRole(role.id)}
           getGroupList = {() => this.getGroupList(role.id)}
           getRoleList = {() => this.getRoleList(role.id)}
+          roleNumber = {roleNumber}
         />)}
         
         <RowBox label = {true} name = ''>
@@ -137,8 +213,8 @@ export default class Roles extends Component {
                       key={row.id}
                       tabIndex="0"
                       className={classes.option}
-                      onClick={() => this.handlerWindowClick(row.id)}
-                      onKeyUp={(e) => this.handlerWidowKeyUp(e, row.id)}
+                      onClick={() => this.handlerWindowClick(row)}
+                      onKeyUp={(e) => this.handlerWidowKeyUp(e, row)}
                       aria-label={row.name}
                     >{row.name}</li>
                   )

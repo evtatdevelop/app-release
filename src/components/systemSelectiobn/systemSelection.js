@@ -44,7 +44,8 @@ export default class SystemSelection extends Component {
       system,
       value: full_name,
     })
-    this.props.getSapSystem(asz00_id)
+    this.props.getSapSystem(asz00_id);
+    this.props.clearRoles();
   }
 
   handlerWidowKeyUp = (e, set, id) => {

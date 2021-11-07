@@ -19,6 +19,7 @@ export default class Corpsystems extends Component {
   supervisorData = React.createRef();
   addUsersData = React.createRef();
   sapSystem = React.createRef();
+  roles = React.createRef();
 
   service = new Service();
 
@@ -125,6 +126,11 @@ export default class Corpsystems extends Component {
     this.supervisorData.current.clearSarch();
     this.addUsersData.current.clearUserList();
     this.sapSystem.current.clearSystemSelection();
+    this.roles.current.clearRoles();
+  }
+
+  clearRoles = () => {
+    this.roles.current.clearRoles();
   }
 
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
@@ -185,11 +191,13 @@ export default class Corpsystems extends Component {
               ref = {this.sapSystem}
               asz22_id = {systemData.asz22_id}
               getSapSystem = {this.getSapSystem}
+              clearRoles = {this.clearRoles}
             />
           </FormSet>
 
           <FormSet label="Requested rights">
             <Roles
+              ref = {this.roles}
               instanceType = {this.props.instanceType}
               sessionKey = {sessionKey}
               orderType = {orderType}

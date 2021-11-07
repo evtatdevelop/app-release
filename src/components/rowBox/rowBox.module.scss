@@ -31,20 +31,21 @@
 @media screen and (min-width: 760px) {
   .rowBox {
     .rowLabel {
-      width: 25%;
+      // width: 25%;
       white-space: nowrap;
       /* margin-right: 20px; */
+      overflow: hidden;
     }
   }
 }
 
 /* Desktop */
 @media screen and (min-width: 1024px) {
-  .rowBox {
-    .rowLabel {
-      width: 20%;
-    }
-  }
+  // .rowBox {
+  //   .rowLabel {
+  //     width: 20%;
+  //   }
+  // }
 }
 
 /* WW Desktop */
