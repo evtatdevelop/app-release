@@ -2,7 +2,7 @@ $height: 28px;
 
 .inputBox {
   width: 100%;
-  height: $height;
+  // height: $height;
   position: relative;
   display: flex;
   align-items: center;
@@ -13,7 +13,7 @@ $height: 28px;
   width: 100%;
   padding: 8px $height+1 8px 5px;
   border: 1px solid #978f8f;
-  position: absolute;
+  // position: absolute;
   border-radius: 3px;
   color: #424242;
 
