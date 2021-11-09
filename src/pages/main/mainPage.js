@@ -67,13 +67,18 @@ export default class MainPage extends Component {
     )    
   }    
 
-  renderLi(system) {
+  renderLi(system, sectionId) {
     const path = system.request_url.slice(29);
-    var divStyle = {
-      backgroundImage: `url(./image/${system.icon_filename})`
-    };
+    let liStyle = '';
+    switch (sectionId) {
+      case '2': liStyle = classes.workplace; break;
+      case '3': liStyle = classes.corpsystem; break;
+      case '4': liStyle = classes.application; break;
+      default: liStyle = ''; break;
+    }
+    var divStyle = { backgroundImage: `url(./image/${system.icon_filename})` };
     return(
-      <li key={path}>
+      <li key={path} className={liStyle}>
         <div className={classes.linkBox} style={divStyle}>
           <Link to = {`${this.testPath}${path}`} className={classes.link}>{system.request_name}</Link>
           <div className={classes.visualLink}></div>
@@ -89,7 +94,7 @@ export default class MainPage extends Component {
         <input type="radio" id={section.id} name="groupSystems" value={section.id} className={classes.visuallyHidden}/>
         <label htmlFor={section.id}>{section.name}</label>
         <ul className={classes.systemList}>
-          {section.systems.map((system, index) => this.renderLi(system))}
+          {section.systems.map((system, index) => this.renderLi(system, section.id))}
         </ul>        
       </div>             
     );

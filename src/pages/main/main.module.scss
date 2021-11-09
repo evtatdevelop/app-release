@@ -19,26 +19,37 @@
       width: 100%;
       display: flex;
       flex-direction: column;
+
       li {
         width: 100%;
         margin-bottom: 5px;
         padding-left: 20px;
 
+        // &.workplace{
+          // background: linear-gradient(to right, #FFFFFF, 70%, rgb(204, 227, 235));
+        // }
+
         .linkBox {
           display: inline-block;
+          // background: linear-gradient(to right, #FFFFFF, 70%, rgb(204, 227, 235));
           background-repeat: no-repeat;
-          background-position-x: center;
-          background-size: 50%;
+          background-position: -35px center;
+          filter: grayscale(100%);
+          // background-size: 50%;
+
+          
+
           &:hover,
           &:focus {
-            background-size: 115%;
+            // background-size: 115%;
             transition: all .3s;
+            filter: grayscale(0%);
 
-            .link {
-              color: rgb(97, 170, 194);
-              background-color: rgba($color: #ffffff, $alpha: .9);
-              transition: background-color .3s;             
-            }
+            // .link {
+            //   // color: rgb(97, 170, 194);
+            //   // background-color: rgba($color: #ffffff, $alpha: .9);
+            //   // transition: background-color .3s;             
+            // }
             .visualLink {
               width: 100%;
             }
@@ -50,18 +61,19 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            color: inherit;
+            // color: inherit;
             padding: 4px 0 8px 0;
             font-size: 18px;
             transition: font .3s;
-            background-color: rgba($color: #ffffff, $alpha: 0);
+            // background-color: rgba($color: #ffffff, $alpha: 0);
+            overflow: hidden;
 
             &:hover,
             &:focus,
             &:active {
-              color: rgb(97, 170, 194);
-              background-color: rgba($color: #ffffff, $alpha: .9);
-              transition: background-color .3s;
+              // color: rgb(97, 170, 194);
+              // background-color: rgba($color: #ffffff, $alpha: .9);
+              // transition: background-color .3s;
 
               & ~ .visualLink {
                 width: 100%;
@@ -70,12 +82,15 @@
           }
   
           .visualLink {
-            border-bottom: 3px solid lightblue;
+            // border-bottom: 3px solid lightblue;
             width: 0px;
             transition: width, .3s;
           }
         }
       }
+
+
+
     }
 
     label {
@@ -119,6 +134,54 @@
   }
 }
 
+
+.workplace {
+  background: linear-gradient(to right, #FFFFFF, 70%, rgb(214, 235, 204));
+  border: 1px solid rgb(3, 129, 31);
+  border-radius: 3px;
+  .link {
+    &:hover,
+    &:focus,
+    &:active { 
+      color: rgb(3, 129, 31);
+    }
+  }
+  .visualLink {
+    border-bottom: 8px solid #8AC96A;
+  }  
+}
+.corpsystem {
+  background: linear-gradient(to right, #FFFFFF, 70%, rgb(220, 230, 248));
+  border: 1px solid rgb(4, 112, 148);
+  border-radius: 3px;
+  .link {
+    &:hover,
+    &:focus,
+    &:active {
+      color: rgb(4, 112, 148);
+    }
+  }
+  .visualLink {
+    border-bottom: 8px solid lightblue;
+  }  
+}
+.application {
+  background: linear-gradient(to right, #FFFFFF, 70%, rgb(225, 204, 235));
+  border: 1px solid rgb(126, 30, 150);
+  border-radius: 3px;
+  .link {
+    &:hover,
+    &:focus,
+    &:active {
+      color: rgb(126, 30, 150);
+    }
+  }
+  .visualLink {
+    border-bottom: 8px solid #D7A8EC;
+  }  
+}
+
+
 @keyframes group {
   0% {
     opacity: .3;
@@ -159,13 +222,13 @@
           height: 100px;
           margin: 0px;
           padding: 0px;
-          border:  1px solid gray;
+          // border:  1px solid rgb(97, 170, 194);
           margin-left: 4%;
           margin-bottom: 4%;
           
-          &:hover {
-            border-color: rgb(97, 170, 194);
-          }
+          // &:hover {
+          //   // border-color: rgb(97, 170, 194);
+          // }
 
           .linkBox {
             display: flex;
@@ -174,20 +237,20 @@
             align-items: center;
 
             .link {
-              padding: 0 3px;
-              text-align: center;
-              align-items: flex-end;
+              padding: 0 10px 0 80px;
+              text-align: right;
+              // align-items: flex-end;
               
-              &:hover,
-              &:focus,
-              &:active {
-                color: rgb(53, 143, 173);
-              }
+              // &:hover,
+              // &:focus,
+              // &:active {
+              //   color: rgb(53, 143, 173);
+              // }
               
             }
-            .visualLink {
-              border-bottom: 8px solid lightblue;
-            }
+            // .visualLink {
+            //   // border-bottom: 8px solid lightblue;
+            // }
 
           }
         }
