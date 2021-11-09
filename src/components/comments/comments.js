@@ -1,8 +1,10 @@
 import classes from './comments.module.scss';
 
 const Comments = props => {
+  const {roleNumber} = props;
+
   return( 
-    <textarea className={classes.comments}></textarea>
+    <textarea className={classes.comments} id={`${roleNumber}comment`}></textarea>
   )
 }
 

@@ -7,10 +7,10 @@ import Comments from '../../comments/comments';
 
 export default class RoleItem extends Component {
   
-  onKeyUp = e => {return}
+  handlerKeyUp = () => {return}
 
   render() {
-    const {data, getGroupList, getRoleList, roleNumber} = this.props;
+    const {data:{id, group, role, levels }, getGroupList, getRoleList} = this.props;
 
     return (
       <div className={classes.roleItem}>
@@ -23,11 +23,11 @@ export default class RoleItem extends Component {
           <div className={classes.cover}></div>
         </header>
 
-        <RowBox name = 'Process group' id = {`processGroup${data.id}`} label = {true}>
+        <RowBox name = 'Process group' id = {`processGroup${id}`} label = {true}>
           <Input
-            id = {`processGroup${data.id}`}
-            value = {data.group.name}
-            onKeyUp = {this.onKeyUp}
+            id = {`processGroup${id}`}
+            value = {group.name}
+            onKeyUp = {this.handlerKeyUp}
             placeholder = 'Process group'
             arialabel = 'Process group'
             handlerClick = {() => getGroupList()}
@@ -35,11 +35,11 @@ export default class RoleItem extends Component {
           />          
         </RowBox>
 
-        <RowBox name = 'Role' id = {`role${data.id}`} label = {true} >
+        <RowBox name = 'Role' id = {`role${id}`} label = {true} >
           <Input
-            id = {`role${data.id}`}
-            value = {data.role.name}
-            onKeyUp = {this.onKeyUp}
+            id = {`role${id}`}
+            value = {role.name}
+            onKeyUp = {this.handlerKeyUp}
             placeholder = 'Role'
             arialabel = 'Role'
             handlerClick = {() => getRoleList()}
@@ -47,24 +47,24 @@ export default class RoleItem extends Component {
           /> 
         </RowBox>
 
-        <RowBox name = 'Role ID' id = {`roleId${data.id}`} label = {true} >
+        <RowBox name = 'Role ID' id = {`roleId${id}`} label = {true} >
           <Input
-            id = {`roleId${data.id}`}
-            value = {data.role.code}
+            id = {`roleId${id}`}
+            value = {role.code}
             placeholder = 'Role ID'
             arialabel = 'Role ID'
             readonly
           />          
         </RowBox>
 
-        { renderLevel(data.levels, roleNumber) }
+        { renderLevel(levels, id) }
 
-        <RowBox name = 'Validity' id = 'dateto' label = {true}>
-          <Calendar/>
+        <RowBox name = 'Validity' id = {`${id}datefrom`} label = {true}>
+          <Calendar roleNumber={id} />
         </RowBox>
 
-        <RowBox name = 'Comment' id = 'datefrom' label = {true} >
-          <Comments/>
+        <RowBox name = 'Comment' id = {`${id}comment`} label = {true} >
+          <Comments roleNumber={id} />
         </RowBox>
       </div>
     )
@@ -78,6 +78,7 @@ const renderLevel = (levels, roleNumber) => {
         <Input
           id = {`${roleNumber}${level.id}`}
           value = ''
+          onKeyUp = {() => {return}}
           placeholder = {level.name}
           arialabel = {level.name}
           readonly

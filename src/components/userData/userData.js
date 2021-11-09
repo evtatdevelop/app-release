@@ -94,7 +94,8 @@ export default class UserData extends Component {
     // console.log(prop);
     const postData = this.state.postData;
     postData[prop] = e.target.value;
-    this.setState({postData})
+    this.setState({postData});
+    this.upUserData(this.state.postData);
   };
 
   handlerClr = prop => {

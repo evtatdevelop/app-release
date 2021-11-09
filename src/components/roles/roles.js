@@ -101,8 +101,7 @@ export default class Roles extends Component {
     })
     .catch(this.onError)
   }
-
-  
+ 
   getLevels = (asz03_id, itemId) => {
     this.loading();
     this.service.getLevels(asz03_id)
@@ -177,7 +176,7 @@ export default class Roles extends Component {
   }
 
   render() {
-    const {loading, showWindow, error, roles, windowData, roleNumber} = this.state;
+    const {loading, showWindow, error, roles, windowData} = this.state;
 
     if (error) return <Error/>;
 
@@ -191,7 +190,6 @@ export default class Roles extends Component {
           handlerCloseRole = {() => this.handlerCloseRole(role.id)}
           getGroupList = {() => this.getGroupList(role.id)}
           getRoleList = {() => this.getRoleList(role.id)}
-          roleNumber = {roleNumber}
         />)}
         
         <RowBox label = {true} name = ''>
