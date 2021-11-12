@@ -149,6 +149,12 @@ export default class Service {
     );
   }
 
+  getLevelValues = (asz05_id, session_key, cnt, asz00_id, asz03_id, app12_id, order_type, asz22_id, process_group) => {
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=levelvalues&asz05_id=${asz05_id}&session_key=${session_key}&cnt=${cnt}&asz00_id=${asz00_id}&asz03_id=${asz03_id}&app12_id=${app12_id}&order_type=${order_type}&asz22_id=${asz22_id}&process_group=${process_group}&${this._key}`
+    );
+  }
+
 
   postForm = async (data) =>{
     return await this.postResource(

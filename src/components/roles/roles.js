@@ -24,6 +24,7 @@ export default class Roles extends Component {
     error: false,
     showWindow: false,
     windowData: [],
+    showWindowLevel: false,
   }
 
   state = {...this.initialState}
@@ -115,6 +116,23 @@ export default class Roles extends Component {
     .catch(this.onError)
   }
 
+  getLevelValuesList = (role, level) => {
+    // console.log(role);
+    const {sessionKey, asz00_id, app12_id, orderType, asz22_id} = this.props;
+    // console.log(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name);
+    this.loading();
+    this.service.getLevelValues(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name)
+    .then(windowData => {
+      console.log(windowData);
+      this.setState({
+        windowData
+      })
+      this.showWindowLevel();
+      this.noLoading();
+    })
+    .catch(this.onError)  
+  }
+
   handlerWindowClick = (data) => {
     this.hideWindow();
     const {currentItem, currentField} = this.state;
@@ -153,6 +171,26 @@ export default class Roles extends Component {
    }
   };
 
+
+  handlerWindowClickLevel = (data) => {
+    this.hideWindow();
+      return true;
+  }
+
+  handlerWidowKeyUpLevel = (e, set, id) => {
+    switch (e.code) {
+      case 'Escape': 
+       this.hideWindow();
+       break;
+     case 'Enter':
+       if (e.target.nodeName ==='LI') {
+         this.handlerWindowClickLevel(set, id);
+       }
+       break;  
+     default: return;  
+   }
+  };
+
   clearRoles = () => {
     this.setState({
       roleNumber: 1,
@@ -169,14 +207,15 @@ export default class Roles extends Component {
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
   showWindow = () => this.setState({showWindow: true});
-  hideWindow = () => this.setState({showWindow: false});
+  showWindowLevel = () => this.setState({showWindowLevel: true});
+  hideWindow = () => this.setState({showWindow: false, showWindowLevel: false});
   onError = () => {
     this.setState({error: true});
     this.noLoading();
   }
 
   render() {
-    const {loading, showWindow, error, roles, windowData} = this.state;
+    const {loading, showWindow, error, roles, windowData, showWindowLevel} = this.state;
 
     if (error) return <Error/>;
 
@@ -190,6 +229,7 @@ export default class Roles extends Component {
           handlerCloseRole = {() => this.handlerCloseRole(role.id)}
           getGroupList = {() => this.getGroupList(role.id)}
           getRoleList = {() => this.getRoleList(role.id)}
+          getLevelValuesList = {(level) => this.getLevelValuesList(role, level)}
         />)}
         
         <RowBox label = {true} name = ''>
@@ -215,6 +255,26 @@ export default class Roles extends Component {
                       onKeyUp={(e) => this.handlerWidowKeyUp(e, row)}
                       aria-label={row.name}
                     >{row.name}</li>
+                  )
+                })}
+              </ul>}
+            </Window>
+          : null
+        } 
+        
+        {showWindowLevel 
+          ? <Window handlerCloseWin={this.hideWindow}>
+              {<ul className={classes.systemSelection}>
+                {windowData.map(row => {
+                  return (
+                    <li
+                      key={row.id}
+                      tabIndex="0"
+                      className={classes.option}
+                      onClick={() => this.handlerWindowClickLevel(row)}
+                      onKeyUp={(e) => this.handlerWidowKeyUpLevel(e, row)}
+                      aria-label={row.value}
+                    >{row.value}</li>
                   )
                 })}
               </ul>}

@@ -205,6 +205,7 @@ export default class Corpsystems extends Component {
               asz01_id = {asz01_id}
               app12_id = {postUserData.id}
               app12_id_author = {remoteUser.id}
+              asz22_id = {systemData.asz22_id}
             />
           </FormSet>
 

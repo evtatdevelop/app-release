@@ -10,7 +10,7 @@ export default class RoleItem extends Component {
   handlerKeyUp = () => {return}
 
   render() {
-    const {data:{id, group, role, levels }, getGroupList, getRoleList} = this.props;
+    const {data:{id, group, role, levels }, getGroupList, getRoleList, getLevelValuesList} = this.props;
 
     return (
       <div className={classes.roleItem}>
@@ -57,7 +57,7 @@ export default class RoleItem extends Component {
           />          
         </RowBox>
 
-        { renderLevel(levels, id) }
+        { renderLevel(levels, id, getLevelValuesList) }
 
         <RowBox name = 'Validity' id = {`${id}datefrom`} label = {true}>
           <Calendar roleNumber={id} />
@@ -71,14 +71,15 @@ export default class RoleItem extends Component {
   }
 }
 
-const renderLevel = (levels, roleNumber) => {
+const renderLevel = (levels, roleNumber, getLevelValuesList) => {
   return levels.map(level => {
     return (
       <RowBox key = {`${roleNumber}${level.id}`} name = {level.name} id = {`${roleNumber}${level.id}`} label = {true} >
         <Input
           id = {`${roleNumber}${level.id}`}
           value = ''
-          onKeyUp = {() => {return}}
+          onKeyUp = {() => {return}}          
+          handlerClick = {() => getLevelValuesList(level)}
           placeholder = {level.name}
           arialabel = {level.name}
           readonly
