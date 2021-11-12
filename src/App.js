@@ -101,7 +101,7 @@ export default class App extends Component {
             />
 
 
-            {/* <Route path={`/app-release`} exact render = { () => <MainPage lang={this.state.lang}/>} /> */}
+            {/* <Route path={`/app-release/`} exact render = { () => <MainPage lang={this.state.lang}/>} /> */}
             <Route path={`/`} exact render = {() => <MainPage lang={this.state.lang}/>} />
             <Route path={`/workplace`} component={Workplace} />
             <Route path={`/resource`} component={Resource} />

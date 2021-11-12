@@ -97,7 +97,7 @@ export default class SideBar extends Component {
           <li key='allsystems'>
             <div className={classes.linkBox}>
               <Link to = '/' className={classes.link}>
-              {/* <Link to = '/app-release' className={classes.link}> */}
+              {/* <Link to = '/app-release/' className={classes.link}> */}
                 <div className={classes.visualLink}></div>
                 <div className={classes.labelLink}>{this.goodLabel['All applications'][this.props.lang]}</div>
               </Link>

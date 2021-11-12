@@ -33,15 +33,15 @@
           display: inline-block;
           // background: linear-gradient(to right, #FFFFFF, 70%, rgb(204, 227, 235));
           background-repeat: no-repeat;
-          background-position: -35px center;
+          background-position: left center;
           filter: grayscale(100%);
-          // background-size: 50%;
+          background-size: 30%;
 
           
 
           &:hover,
           &:focus {
-            // background-size: 115%;
+            background-size: 31%;
             transition: all .3s;
             filter: grayscale(0%);
 
@@ -137,7 +137,7 @@
 
 .workplace {
   background: linear-gradient(to right, #FFFFFF, 70%, rgb(214, 235, 204));
-  border: 1px solid rgb(3, 129, 31);
+  border: 2px solid rgb(214, 235, 204);
   border-radius: 3px;
   .link {
     &:hover,
@@ -147,12 +147,12 @@
     }
   }
   .visualLink {
-    border-bottom: 8px solid #8AC96A;
+    border-bottom: 8px solid rgb(3, 129, 31);
   }  
 }
 .corpsystem {
   background: linear-gradient(to right, #FFFFFF, 70%, rgb(220, 230, 248));
-  border: 1px solid rgb(4, 112, 148);
+  border: 2px solid rgb(220, 230, 248);
   border-radius: 3px;
   .link {
     &:hover,
@@ -162,12 +162,12 @@
     }
   }
   .visualLink {
-    border-bottom: 8px solid lightblue;
+    border-bottom: 8px solid rgb(4, 112, 148);
   }  
 }
 .application {
   background: linear-gradient(to right, #FFFFFF, 70%, rgb(225, 204, 235));
-  border: 1px solid rgb(126, 30, 150);
+  border: 2px solid rgb(225, 204, 235);
   border-radius: 3px;
   .link {
     &:hover,
@@ -177,7 +177,7 @@
     }
   }
   .visualLink {
-    border-bottom: 8px solid #D7A8EC;
+    border-bottom: 8px solid rgb(126, 30, 150);
   }  
 }
 
