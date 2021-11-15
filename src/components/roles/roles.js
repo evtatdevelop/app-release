@@ -14,6 +14,7 @@ export default class Roles extends Component {
     roleNumber: 1,
     currentItem: null,
     currentField: null,
+    currentLevel: null,
     roles: [{
       id: 1,
       group: {name: '', id: null},
@@ -118,14 +119,16 @@ export default class Roles extends Component {
 
   getLevelValuesList = (role, level) => {
     // console.log(role);
+    // console.log(level);
     const {sessionKey, asz00_id, app12_id, orderType, asz22_id} = this.props;
     // console.log(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name);
     this.loading();
     this.service.getLevelValues(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name)
     .then(windowData => {
-      console.log(windowData);
+      // console.log(windowData);
       this.setState({
-        windowData
+        windowData,
+        currentLevel: level.id,
       })
       this.showWindowLevel();
       this.noLoading();
@@ -173,7 +176,7 @@ export default class Roles extends Component {
 
 
   handlerWindowClickLevel = (data) => {
-    this.hideWindow();
+    // this.hideWindow();
       return true;
   }
 
@@ -182,11 +185,11 @@ export default class Roles extends Component {
       case 'Escape': 
        this.hideWindow();
        break;
-     case 'Enter':
-       if (e.target.nodeName ==='LI') {
-         this.handlerWindowClickLevel(set, id);
-       }
-       break;  
+    //  case 'Enter':
+    //    if (e.target.nodeName ==='LI') {
+    //      this.handlerWindowClickLevel(set, id);
+    //    }
+    //    break;  
      default: return;  
    }
   };
@@ -204,6 +207,10 @@ export default class Roles extends Component {
     })
   }
 
+  windowAcceptClick = () => {
+    this.hideWindow();
+  }
+
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
   showWindow = () => this.setState({showWindow: true});
@@ -215,7 +222,7 @@ export default class Roles extends Component {
   }
 
   render() {
-    const {loading, showWindow, error, roles, windowData, showWindowLevel} = this.state;
+    const {loading, showWindow, error, roles, windowData, showWindowLevel, currentLevel} = this.state;
 
     if (error) return <Error/>;
 
@@ -244,7 +251,7 @@ export default class Roles extends Component {
         
         {showWindow 
           ? <Window handlerCloseWin={this.hideWindow}>
-              {<ul className={classes.systemSelection}>
+              {<ul className={classes.roleSelection}>
                 {windowData.map(row => {
                   return (
                     <li
@@ -254,7 +261,9 @@ export default class Roles extends Component {
                       onClick={() => this.handlerWindowClick(row)}
                       onKeyUp={(e) => this.handlerWidowKeyUp(e, row)}
                       aria-label={row.name}
-                    >{row.name}</li>
+                    >                    
+                      {row.name}
+                    </li>
                   )
                 })}
               </ul>}
@@ -264,7 +273,8 @@ export default class Roles extends Component {
         
         {showWindowLevel 
           ? <Window handlerCloseWin={this.hideWindow}>
-              {<ul className={classes.systemSelection}>
+              {<div className={classes.windowWrapper}>
+                <ul className={classes.levelValueSelection}>
                 {windowData.map(row => {
                   return (
                     <li
@@ -274,10 +284,28 @@ export default class Roles extends Component {
                       onClick={() => this.handlerWindowClickLevel(row)}
                       onKeyUp={(e) => this.handlerWidowKeyUpLevel(e, row)}
                       aria-label={row.value}
-                    >{row.value}</li>
+                    >
+                      {row.multiple_select === "MULTIPLE_VALUES"
+                      ? <input type='checkbox' id={row.id} name={currentLevel}/>
+                      : <input type='radio' id={row.id} name={currentLevel}/>}
+                      
+                      <label htmlFor={row.id} className={classes.tick}></label>
+                      <label htmlFor={row.id} className={classes.levelValueCode}>{row.code}</label>
+                      <label htmlFor={row.id} className={classes.levelValueName}>{row.value}</label>
+                    
+                    </li>
+                    
                   )
                 })}
-              </ul>}
+              </ul>
+              
+              <button 
+                type='button' 
+                className={classes.windowAccept}
+                onClick={this.windowAcceptClick}
+              >Accept</button>
+            </div>
+              }
             </Window>
           : null
         } 
