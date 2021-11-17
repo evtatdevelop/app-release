@@ -16,6 +16,7 @@ export default class Roles extends Component {
     currentField: null,
     currentLevel: null,
     levelValue: [],
+    asz06idList: [],
     roles: [{
       id: 1,
       group: {name: '', id: null},
@@ -109,8 +110,7 @@ export default class Roles extends Component {
     this.loading();
     this.service.getLevels(asz03_id)
     .then(levels => {
-      levels.map(level => level.value = '');
-      console.log(levels);
+      levels.map(level => {level.value = []; level.asz06idList = []; return true;});
       this.state.roles.map(item => {
         if ( item.id === itemId ) item['levels'] = [...levels]
         return true
@@ -121,14 +121,10 @@ export default class Roles extends Component {
   }
 
   getLevelValuesList = (role, level) => {
-    console.log(role);
-    // console.log(level);
     const {sessionKey, asz00_id, app12_id, orderType, asz22_id} = this.props;
-    // console.log(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name);
     this.loading();
     this.service.getLevelValues(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name)
     .then(windowData => {
-      // console.log(windowData);
       this.setState({
         windowData,
         currentItem: role.id,
@@ -178,17 +174,25 @@ export default class Roles extends Component {
    }
   };
 
-
   handlerWindowClickLevel = (data) => {
-    console.log(data.multiple_select);
-    let levelValue = [];   
+    let levelValue = [];
+    let asz06idList = [];
     if (data.multiple_select === "MULTIPLE_VALUES") {
       levelValue = [...this.state.levelValue];
       const itemKey = levelValue.indexOf(data.code);
       if ( itemKey === - 1 ) levelValue.push(data.code);
       else levelValue.splice(itemKey, 1);
-    } else levelValue = [data.code];
-    this.setState({levelValue});
+
+      asz06idList = [...this.state.asz06idList];
+      const itemKeyId = asz06idList.indexOf(data.id);
+      if ( itemKeyId === - 1 ) asz06idList.push(data.id);
+      else asz06idList.splice(itemKeyId, 1);
+
+    } else {
+      levelValue = [data.code];
+      asz06idList = [data.id];
+    }
+    this.setState({levelValue, asz06idList});
     return true;
   }
 
@@ -221,20 +225,43 @@ export default class Roles extends Component {
 
   windowAcceptClick = () => {
     this.hideWindow();
-    const {currentItem, currentLevel, levelValue} = this.state;
+    const {currentItem, currentLevel, levelValue, asz06idList} = this.state;
     const roles = [...this.state.roles];
-    console.log(roles);
+    // console.log(roles);
+    let asz03_id = null;
     roles.map(role => {
       if (role.id === currentItem) {
         role.levels.map(level => {
           if (level.id === currentLevel) level.value = [...levelValue];
           return true;
         })
+        asz03_id = role.role.id;
       }
       return true;
     });
-    this.setState({levelValue: []})
+
+    this.runLevelValues('add', asz06idList.join(', '), asz03_id);
+
+    this.setState({levelValue: [], asz06idList: []})
   }
+
+
+  runLevelValues = (mode_asz06_id_list, asz06_id_list, asz03_id) => {
+    this.loading();
+    this.service.runLevelValues(
+      mode_asz06_id_list, 
+      asz06_id_list, 
+      this.props.sessionKey, 
+      this.state.currentItem, 
+      asz03_id
+    )
+    .then(result => {
+      console.log(result);
+      this.noLoading();
+    })
+    .catch(this.onError)
+  }
+
 
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
@@ -270,8 +297,7 @@ export default class Roles extends Component {
             onClick={this.addRole}
           >Add role</button>
         </RowBox>
-
-        
+      
         {loading ? <Spinner className="spinner"/> : null}
         
         {showWindow 
@@ -294,7 +320,7 @@ export default class Roles extends Component {
               </ul>}
             </Window>
           : null
-        } 
+        }
         
         {showWindowLevel 
           ? <Window handlerCloseWin={this.hideWindow}>
@@ -342,7 +368,7 @@ export default class Roles extends Component {
               }
             </Window>
           : null
-        } 
+        }
 
       </div>
     )

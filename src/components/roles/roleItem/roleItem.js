@@ -73,6 +73,7 @@ export default class RoleItem extends Component {
 
 const renderLevel = (levels, roleNumber, getLevelValuesList) => {
   return levels.map(level => {
+    // console.log(level.value.join(', '));
     return (
       <RowBox key = {`${roleNumber}${level.id}`} name = {level.name} id = {`${roleNumber}${level.id}`} label = {true} >
         <Input
