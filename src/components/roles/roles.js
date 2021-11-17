@@ -15,6 +15,7 @@ export default class Roles extends Component {
     currentItem: null,
     currentField: null,
     currentLevel: null,
+    levelValue: [],
     roles: [{
       id: 1,
       group: {name: '', id: null},
@@ -108,6 +109,8 @@ export default class Roles extends Component {
     this.loading();
     this.service.getLevels(asz03_id)
     .then(levels => {
+      levels.map(level => level.value = '');
+      console.log(levels);
       this.state.roles.map(item => {
         if ( item.id === itemId ) item['levels'] = [...levels]
         return true
@@ -118,7 +121,7 @@ export default class Roles extends Component {
   }
 
   getLevelValuesList = (role, level) => {
-    // console.log(role);
+    console.log(role);
     // console.log(level);
     const {sessionKey, asz00_id, app12_id, orderType, asz22_id} = this.props;
     // console.log(level.id, sessionKey, role.id, asz00_id, role.role.id, app12_id, orderType, asz22_id, role.group.name);
@@ -128,6 +131,7 @@ export default class Roles extends Component {
       // console.log(windowData);
       this.setState({
         windowData,
+        currentItem: role.id,
         currentLevel: level.id,
       })
       this.showWindowLevel();
@@ -176,8 +180,16 @@ export default class Roles extends Component {
 
 
   handlerWindowClickLevel = (data) => {
-    // this.hideWindow();
-      return true;
+    console.log(data.multiple_select);
+    let levelValue = [];   
+    if (data.multiple_select === "MULTIPLE_VALUES") {
+      levelValue = [...this.state.levelValue];
+      const itemKey = levelValue.indexOf(data.code);
+      if ( itemKey === - 1 ) levelValue.push(data.code);
+      else levelValue.splice(itemKey, 1);
+    } else levelValue = [data.code];
+    this.setState({levelValue});
+    return true;
   }
 
   handlerWidowKeyUpLevel = (e, set, id) => {
@@ -209,6 +221,19 @@ export default class Roles extends Component {
 
   windowAcceptClick = () => {
     this.hideWindow();
+    const {currentItem, currentLevel, levelValue} = this.state;
+    const roles = [...this.state.roles];
+    console.log(roles);
+    roles.map(role => {
+      if (role.id === currentItem) {
+        role.levels.map(level => {
+          if (level.id === currentLevel) level.value = [...levelValue];
+          return true;
+        })
+      }
+      return true;
+    });
+    this.setState({levelValue: []})
   }
 
   loading = () => this.setState({loading: true})
@@ -273,38 +298,47 @@ export default class Roles extends Component {
         
         {showWindowLevel 
           ? <Window handlerCloseWin={this.hideWindow}>
-              {<div className={classes.windowWrapper}>
-                <ul className={classes.levelValueSelection}>
-                {windowData.map(row => {
-                  return (
-                    <li
-                      key={row.id}
-                      tabIndex="0"
-                      className={classes.option}
-                      onClick={() => this.handlerWindowClickLevel(row)}
-                      onKeyUp={(e) => this.handlerWidowKeyUpLevel(e, row)}
-                      aria-label={row.value}
-                    >
-                      {row.multiple_select === "MULTIPLE_VALUES"
-                      ? <input type='checkbox' id={row.id} name={currentLevel}/>
-                      : <input type='radio' id={row.id} name={currentLevel}/>}
-                      
-                      <label htmlFor={row.id} className={classes.tick}></label>
-                      <label htmlFor={row.id} className={classes.levelValueCode}>{row.code}</label>
-                      <label htmlFor={row.id} className={classes.levelValueName}>{row.value}</label>
-                    
-                    </li>
-                    
-                  )
-                })}
-              </ul>
+              {
+                <div className={classes.windowWrapper}>
+                  <ul className={classes.levelValueSelection}>
+                    {windowData.map(row => {
+                      return (
+                        <li
+                          key={row.id}
+                          // tabIndex="0"
+                          className={classes.option}
+                          // onClick={() => this.handlerWindowClickLevel(row)}
+                          // onKeyUp={(e) => this.handlerWidowKeyUpLevel(e, row)}
+                          aria-label={row.value}
+                        >
+                          {row.multiple_select === "MULTIPLE_VALUES"
+                          ? <input 
+                            type='checkbox' 
+                            id={row.id} 
+                            name={currentLevel}
+                            onClick={() => this.handlerWindowClickLevel(row)}
+                          />
+                          : <input 
+                            type='radio' 
+                            id={row.id} 
+                            name={currentLevel}
+                            onClick={() => this.handlerWindowClickLevel(row)}
+                          />}
+                          
+                          <label htmlFor={row.id} className={classes.tick}></label>
+                          <label htmlFor={row.id} className={classes.levelValueCode}>( {row.code} )</label>
+                          <label htmlFor={row.id} className={classes.levelValueName}>{row.value}</label>
+                        </li>
+                      )
+                    })}
+                  </ul>
               
-              <button 
-                type='button' 
-                className={classes.windowAccept}
-                onClick={this.windowAcceptClick}
-              >Accept</button>
-            </div>
+                  <button 
+                    type='button' 
+                    className={classes.windowAccept}
+                    onClick={this.windowAcceptClick}
+                  >Accept</button>
+                </div>
               }
             </Window>
           : null

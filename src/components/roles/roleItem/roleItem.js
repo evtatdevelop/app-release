@@ -77,7 +77,7 @@ const renderLevel = (levels, roleNumber, getLevelValuesList) => {
       <RowBox key = {`${roleNumber}${level.id}`} name = {level.name} id = {`${roleNumber}${level.id}`} label = {true} >
         <Input
           id = {`${roleNumber}${level.id}`}
-          value = ''
+          value = {level.value}
           onKeyUp = {() => {return}}          
           handlerClick = {() => getLevelValuesList(level)}
           placeholder = {level.name}
