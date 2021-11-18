@@ -17,6 +17,7 @@ export default class Roles extends Component {
     currentLevel: null,
     levelValue: [],
     asz06idList: [],
+    asz06idPreviousList: [],
     roles: [{
       id: 1,
       group: {name: '', id: null},
@@ -129,6 +130,9 @@ export default class Roles extends Component {
         windowData,
         currentItem: role.id,
         currentLevel: level.id,
+        levelValue: level.value,
+        asz06idList: level.asz06idList,
+        asz06idPreviousList: level.asz06idList,
       })
       this.showWindowLevel();
       this.noLoading();
@@ -225,14 +229,16 @@ export default class Roles extends Component {
 
   windowAcceptClick = () => {
     this.hideWindow();
-    const {currentItem, currentLevel, levelValue, asz06idList} = this.state;
+    const {currentItem, currentLevel, levelValue, asz06idList, asz06idPreviousList} = this.state;
     const roles = [...this.state.roles];
-    // console.log(roles);
     let asz03_id = null;
     roles.map(role => {
       if (role.id === currentItem) {
         role.levels.map(level => {
-          if (level.id === currentLevel) level.value = [...levelValue];
+          if (level.id === currentLevel) {
+            level.value = [...levelValue];
+            level.asz06idList = [...asz06idList];
+          };
           return true;
         })
         asz03_id = role.role.id;
@@ -240,10 +246,32 @@ export default class Roles extends Component {
       return true;
     });
 
-    this.runLevelValues('add', asz06idList.join(', '), asz03_id);
+    this.runLevelValues('del', asz06idPreviousList.join(', '));
+    
+    if (asz06idList.length > 0) 
+      this.runLevelValues('add', asz06idList.join(', '), asz03_id);
 
     this.setState({levelValue: [], asz06idList: []})
   }
+
+
+  // clearLevelValues(asz06idList) {
+  //   const {currentItem, currentLevel} = this.state;
+  //   const roles = [...this.state.roles];
+  //   roles.map(role => {
+  //     if (role.id === currentItem) {
+  //       role.levels.map(level => {
+  //         if (level.id === currentLevel) {
+  //           level.value = [];
+  //           level.asz06idList = [];
+  //         };
+  //         return true;
+  //       })
+  //     }
+  //     return true;
+  //   });
+  //   this.runLevelValues('del', asz06idList.join(', ')); 
+  // }
 
 
   runLevelValues = (mode_asz06_id_list, asz06_id_list, asz03_id) => {
@@ -274,7 +302,7 @@ export default class Roles extends Component {
   }
 
   render() {
-    const {loading, showWindow, error, roles, windowData, showWindowLevel, currentLevel} = this.state;
+    const {loading, showWindow, error, roles, windowData, showWindowLevel, currentLevel, asz06idList} = this.state;
 
     if (error) return <Error/>;
 
@@ -328,6 +356,7 @@ export default class Roles extends Component {
                 <div className={classes.windowWrapper}>
                   <ul className={classes.levelValueSelection}>
                     {windowData.map(row => {
+                      const checked = asz06idList.includes(row.id);
                       return (
                         <li
                           key={row.id}
@@ -343,6 +372,8 @@ export default class Roles extends Component {
                             id={row.id} 
                             name={currentLevel}
                             onClick={() => this.handlerWindowClickLevel(row)}
+                            
+                            defaultChecked = {checked}
                           />
                           : <input 
                             type='radio' 
