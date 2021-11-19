@@ -233,27 +233,75 @@ export default class Roles extends Component {
     const roles = [...this.state.roles];
     let asz03_id = null;
     roles.map(role => {
-      if (role.id === currentItem) {
+      if ( role.id === currentItem ) {
         role.levels.map(level => {
-          if (level.id === currentLevel) {
+          if ( level.id === currentLevel ) {
             level.value = [...levelValue];
             level.asz06idList = [...asz06idList];
           };
           return true;
-        })
+        });
+
         asz03_id = role.role.id;
+
+        let clean = false;
+        role.levels.forEach(level => {
+          if (clean) {
+            level.value = [];
+            level.asz06idList = [];
+          }
+          if ( level.id === currentLevel ) clean = true;
+        })
       }
       return true;
     });
 
-    this.runLevelValues('del', asz06idPreviousList.join(', '));
-    
-    if (asz06idList.length > 0) 
-      this.runLevelValues('add', asz06idList.join(', '), asz03_id);
+    if ( asz06idList.length > 0 ) this.runLevelValues('add', 
+      asz06idPreviousList.join(','), 
+      asz06idList.join(','), 
+      asz03_id
+    );
+    else this.runLevelValues('del', 
+      asz06idPreviousList.join(',')
+    );
 
     this.setState({levelValue: [], asz06idList: []})
   }
 
+  runLevelValues = (mode_asz06_id_list, asz06_id_previous_list, asz06_id_list='', asz03_id='') => {
+    this.loading();
+    this.service.runLevelValues(
+      this.props.sessionKey, 
+      this.state.currentItem,
+      mode_asz06_id_list,
+      asz06_id_previous_list,
+      asz06_id_list, 
+      asz03_id
+    )
+    .then(result => {
+      console.log(result);
+      this.noLoading();
+    })
+    .catch(this.onError)
+  }
+
+  // clearCildLevels() {
+  //   const {currentItem, currentLevel} = this.state;
+  //   const roles = [...this.state.roles];
+  //   roles.map(role => {
+  //     if ( role.id === currentItem ) {
+  //       let clean = false;
+  //       role.levels.forEach(level => {
+  //         if (clean) {
+  //           level.value = [];
+  //           level.asz06idList = [];
+  //         }
+  //         if ( level.id === currentLevel ) clean = true;
+  //       })
+  //     }
+  //     return true;
+  //   });
+  // }
 
   // clearLevelValues(asz06idList) {
   //   const {currentItem, currentLevel} = this.state;
@@ -274,21 +322,7 @@ export default class Roles extends Component {
   // }
 
 
-  runLevelValues = (mode_asz06_id_list, asz06_id_list, asz03_id) => {
-    this.loading();
-    this.service.runLevelValues(
-      mode_asz06_id_list, 
-      asz06_id_list, 
-      this.props.sessionKey, 
-      this.state.currentItem, 
-      asz03_id
-    )
-    .then(result => {
-      console.log(result);
-      this.noLoading();
-    })
-    .catch(this.onError)
-  }
+
 
 
   loading = () => this.setState({loading: true})

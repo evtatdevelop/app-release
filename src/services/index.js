@@ -156,10 +156,11 @@ export default class Service {
   }
 
 
-  runLevelValues = (mode_asz06_id_list, asz06_id_list, session_key, cnt, asz03_id = null) => {
-    // console.log(mode_asz06_id_list, asz06_id_list, session_key, cnt, asz03_id);
+  runLevelValues = (session_key, cnt, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list='', asz03_id='') => {
+    console.log(session_key, cnt, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz03_id);
+
     return this.getResource(
-      `${this._apiBase}${this._service}/?data=runlevelvalues&mode_asz06_id_list=${mode_asz06_id_list}&asz06_id_list=${asz06_id_list}&session_key=${session_key}&cnt=${cnt}&asz03_id=${asz03_id}&${this._key}`
+      `${this._apiBase}${this._service}/?data=runlevelvalues&mode_asz06_id_list=${mode_asz06_id_list}&asz06_id_previous_list=${asz06_id_previous_list}&asz06_id_list=${asz06_id_list}&session_key=${session_key}&cnt=${cnt}&asz03_id=${asz03_id}&${this._key}`
     );
   }
 
