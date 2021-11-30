@@ -13,6 +13,7 @@ import AdditionalUsers from '../../components/additionalUsers';
 import SystemSelection from '../../components/systemSelectiobn';
 import Roles from '../../components/roles';
 import { generateKey } from '../../utils';
+import Agreements from '../../components/Agreements';
 export default class Corpsystems extends Component {
 
   userData = React.createRef();
@@ -32,7 +33,8 @@ export default class Corpsystems extends Component {
     msgTime: 0, msgData: {},
     error: false,
     asz01_id: null,
-    asz00_id: null,
+    // asz00_id: null,
+    system: {asz00_id: '', name: '', full_name: ''},
     sessionKey: null,
     orderType: 'ADD_PRIVS',
   }
@@ -56,11 +58,17 @@ export default class Corpsystems extends Component {
     this.setState({sessionKey: generateKey()})
   }
 
-  getSapSystem = asz00_id => {
-    const postUserData = { ...this.state.postUserData,
-      asz00_id,
-    }
-    this.setState({asz00_id, postUserData})
+  // getSapSystem = asz00_id => {
+  getSapSystem = system => {
+    // const asz00_id = system.asz00_id;
+    // const postUserData = { ...this.state.postUserData,
+    //   asz00_id,
+    // }
+    this.setState({
+      // asz00_id, 
+      // postUserData,
+      system,
+    })
   }
 
   getAsz01Id = asz01_id => this.setState({asz01_id});
@@ -133,6 +141,10 @@ export default class Corpsystems extends Component {
     this.roles.current.clearRoles();
   }
 
+  handlerRequestData = requestData => {
+    this.setState({postRequestData: requestData});
+  }
+
   showMessage = (msgTime, msgData) => this.setState({msgTime, msgData});
   loading = () => this.setState({loading: true})
   noLoading = () => this.setState({loading: false})
@@ -142,7 +154,9 @@ export default class Corpsystems extends Component {
   }
 
   render() {
-    const {msgTime, msgData, loading, error, systemData, sessionKey, orderType, asz00_id, asz01_id, remoteUser, postUserData} = this.state;
+    const {msgTime, msgData, loading, error, systemData, sessionKey, orderType, 
+      asz01_id, remoteUser, postUserData, postRequestData, system
+    } = this.state;
     
     if (error) return <Error/>;
 
@@ -201,15 +215,22 @@ export default class Corpsystems extends Component {
               instanceType = {this.props.instanceType}
               sessionKey = {sessionKey}
               orderType = {orderType}
-              asz00_id = {asz00_id}
+              asz00_id = {system.asz00_id}
               asz01_id = {asz01_id}
               app12_id = {postUserData.id}
               app12_id_author = {remoteUser.id}
               asz22_id = {systemData.asz22_id}
+              app12_id_boss = {postUserData.bossId}
+              handlerRequestData = {this.handlerRequestData}
             />
           </FormSet>
 
-          <FormSet label="Agreement process"></FormSet>
+          <FormSet label="Agreement process">
+            <Agreements 
+              system = {system} 
+              roles = {postRequestData}
+            />
+          </FormSet>
 
           <Button label = "Apply" type = "submit"/>
           <Message data = {msgData} time = {msgTime}/>

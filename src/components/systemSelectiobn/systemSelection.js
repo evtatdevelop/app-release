@@ -39,12 +39,13 @@ export default class SystemSelection extends Component {
   handlerWindowClick = (data) => {
     this.hideWindow();
     const system = this.getSystemById(data);
-    const {full_name, asz00_id} = system;
+    const {full_name} = system;
     this.setState({
       system,
       value: full_name,
     })
-    this.props.getSapSystem(asz00_id);
+    // this.props.getSapSystem(asz00_id);
+    this.props.getSapSystem(system);
     this.props.clearRoles();
   }
 

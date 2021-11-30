@@ -155,14 +155,22 @@ export default class Service {
     );
   }
 
-
   runLevelValues = (session_key, cnt, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list='', asz03_id='') => {
-    console.log(session_key, cnt, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz03_id);
+    // console.log(session_key, cnt, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz03_id);
 
     return this.getResource(
       `${this._apiBase}${this._service}/?data=runlevelvalues&mode_asz06_id_list=${mode_asz06_id_list}&asz06_id_previous_list=${asz06_id_previous_list}&asz06_id_list=${asz06_id_list}&session_key=${session_key}&cnt=${cnt}&asz03_id=${asz03_id}&${this._key}`
     );
   }
+
+  getRoleAgreements = (asz01_id, asz03_id, session_key, cnt, app12_id_boss, asz22_id) => {
+    console.log(asz01_id, asz03_id, session_key, cnt, app12_id_boss, asz22_id);
+    
+    return this.getResource(
+      `${this._apiBase}${this._service}/?data=getroleagree&asz01_id=${asz01_id}&asz03_id=${asz03_id}&session_key=${session_key}&cnt=${cnt}&app12_id_boss=${app12_id_boss}&asz22_id=${asz22_id}&${this._key}`
+    );
+  }
+  // 
 
 
   postForm = async (data) =>{

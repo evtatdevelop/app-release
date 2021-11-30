@@ -23,6 +23,7 @@ export default class Roles extends Component {
       group: {name: '', id: null},
       role: {name: '', id: null,code: ''},
       levels: [],
+      agreements: [],
     },],
     loading: false, 
     error: false,
@@ -154,6 +155,7 @@ export default class Roles extends Component {
           case 'role': item.role = {...data};
             this.setRoleGroup(this.props.asz00_id, data.id, currentItem);
             this.getLevels(data.id, currentItem);
+            this.getRoleAgreements(data.id, currentItem);
             break;
         
           default: break;
@@ -219,7 +221,7 @@ export default class Roles extends Component {
       roleNumber: 1,
       currentItem: null,
       currentField: null,
-      roles: [{id: 1, group: {name: '', id: null}, role: {name: '', id: null, code: ''}, levels: [],},],
+      roles: [{id: 1, group: {name: '', id: null}, role: {name: '', id: null, code: ''}, levels: [], agreements: [],},],
       loading: false,
       error: false,
       showWindow: false,
@@ -265,6 +267,8 @@ export default class Roles extends Component {
       asz06idPreviousList.join(',')
     );
 
+    this.getRoleAgreements(asz03_id, currentItem);
+    this.props.handlerRequestData(this.state.roles);
     this.setState({levelValue: [], asz06idList: []})
   }
 
@@ -276,51 +280,30 @@ export default class Roles extends Component {
       mode_asz06_id_list,
       asz06_id_previous_list,
       asz06_id_list, 
-      asz03_id
-    )
+      asz03_id)
+    .then(() => this.noLoading())
+    .catch(this.onError)
+  }
+
+  getRoleAgreements = (asz03_id, cnt) => {
+    const {asz01_id, asz22_id, sessionKey, app12_id_boss} = this.props;
+    // console.log(asz01_id, asz22_id, sessionKey, app12_id_boss, asz03_id, cnt);
+    this.loading();
+    this.service.getRoleAgreements(asz01_id, asz03_id, sessionKey, cnt, app12_id_boss, asz22_id)
     .then(result => {
-      console.log(result);
+      // console.log(result);
+      const roles = [...this.state.roles];
+      roles.map(item => {
+        if (item.id === this.state.currentItem) {
+          item.agreements = result;
+        }
+        return true;
+      });
+      this.setState({roles});
       this.noLoading();
     })
     .catch(this.onError)
   }
-
-  // clearCildLevels() {
-  //   const {currentItem, currentLevel} = this.state;
-  //   const roles = [...this.state.roles];
-  //   roles.map(role => {
-  //     if ( role.id === currentItem ) {
-  //       let clean = false;
-  //       role.levels.forEach(level => {
-  //         if (clean) {
-  //           level.value = [];
-  //           level.asz06idList = [];
-  //         }
-  //         if ( level.id === currentLevel ) clean = true;
-  //       })
-  //     }
-  //     return true;
-  //   });
-  // }
-
-  // clearLevelValues(asz06idList) {
-  //   const {currentItem, currentLevel} = this.state;
-  //   const roles = [...this.state.roles];
-  //   roles.map(role => {
-  //     if (role.id === currentItem) {
-  //       role.levels.map(level => {
-  //         if (level.id === currentLevel) {
-  //           level.value = [];
-  //           level.asz06idList = [];
-  //         };
-  //         return true;
-  //       })
-  //     }
-  //     return true;
-  //   });
-  //   this.runLevelValues('del', asz06idList.join(', ')); 
-  // }
-
 
 
 

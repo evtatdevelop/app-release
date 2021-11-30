@@ -1,0 +1,17 @@
+.agreements {
+  font: inherit;
+  width: 100%;
+  
+
+  .oneRoleAgree {
+    margin-bottom: 20px;
+    border: 1px solid gray;
+    border-radius: 3px;
+  }
+
+  .rowTable {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+  }
+}
