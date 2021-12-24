@@ -28,7 +28,13 @@ export default class Corpsystems extends Component {
     remoteUser: {},
     systemData: {},
     postUserData: {},
-    postRequestData: [],
+    postRequestData: [{
+      id: 1,
+      group: {name: '', id: null},
+      role: {name: '', id: null,code: ''},
+      levels: [],
+      agreements: [],
+    },],
     loading: false,
     msgTime: 0, msgData: {},
     error: false,
@@ -155,7 +161,8 @@ export default class Corpsystems extends Component {
 
   render() {
     const {msgTime, msgData, loading, error, systemData, sessionKey, orderType, 
-      asz01_id, remoteUser, postUserData, postRequestData, system
+      asz01_id, remoteUser, postUserData, system,
+      postRequestData
     } = this.state;
     
     if (error) return <Error/>;

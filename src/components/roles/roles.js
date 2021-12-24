@@ -155,7 +155,7 @@ export default class Roles extends Component {
           case 'role': item.role = {...data};
             this.setRoleGroup(this.props.asz00_id, data.id, currentItem);
             this.getLevels(data.id, currentItem);
-            this.getRoleAgreements(data.id, currentItem);
+            // this.getRoleAgreements(data.id, currentItem);
             break;
         
           default: break;
@@ -202,19 +202,19 @@ export default class Roles extends Component {
     return true;
   }
 
-  handlerWidowKeyUpLevel = (e, set, id) => {
-    switch (e.code) {
-      case 'Escape': 
-       this.hideWindow();
-       break;
-    //  case 'Enter':
-    //    if (e.target.nodeName ==='LI') {
-    //      this.handlerWindowClickLevel(set, id);
-    //    }
-    //    break;  
-     default: return;  
-   }
-  };
+  // handlerWidowKeyUpLevel = (e, set, id) => {
+  //   switch (e.code) {
+  //     case 'Escape': 
+  //      this.hideWindow();
+  //      break;
+  //   //  case 'Enter':
+  //   //    if (e.target.nodeName ==='LI') {
+  //   //      this.handlerWindowClickLevel(set, id);
+  //   //    }
+  //   //    break;  
+  //    default: return;  
+  //  }
+  // };
 
   clearRoles = () => {
     this.setState({
@@ -258,40 +258,26 @@ export default class Roles extends Component {
       return true;
     });
 
-    if ( asz06idList.length > 0 ) this.runLevelValues('add', 
-      asz06idPreviousList.join(','), 
-      asz06idList.join(','), 
-      asz03_id
-    );
-    else this.runLevelValues('del', 
-      asz06idPreviousList.join(',')
-    );
-
-    this.getRoleAgreements(asz03_id, currentItem);
-    this.props.handlerRequestData(this.state.roles);
+    if ( asz06idList.length > 0 ) { 
+      // this.runLevelValues('add', asz06idPreviousList.join(','), asz06idList.join(','), asz03_id);
+      this.setLevels('add', asz06idPreviousList.join(','), asz06idList.join(','), asz03_id);
+    } else {
+      // this.runLevelValues('del', asz06idPreviousList.join(','), '', asz03_id );
+      this.setLevels('del', asz06idPreviousList.join(','), '', asz03_id);
+     } 
+    // this.getRoleAgreements(asz03_id, currentItem);
+    // this.props.handlerRequestData(this.state.roles);
+    
     this.setState({levelValue: [], asz06idList: []})
   }
 
-  runLevelValues = (mode_asz06_id_list, asz06_id_previous_list, asz06_id_list='', asz03_id='') => {
-    this.loading();
-    this.service.runLevelValues(
-      this.props.sessionKey, 
-      this.state.currentItem,
-      mode_asz06_id_list,
-      asz06_id_previous_list,
-      asz06_id_list, 
-      asz03_id)
-    .then(() => this.noLoading())
-    .catch(this.onError)
-  }
-
-  getRoleAgreements = (asz03_id, cnt) => {
+  setLevels = (mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz03_id) => {
     const {asz01_id, asz22_id, sessionKey, app12_id_boss} = this.props;
-    // console.log(asz01_id, asz22_id, sessionKey, app12_id_boss, asz03_id, cnt);
     this.loading();
-    this.service.getRoleAgreements(asz01_id, asz03_id, sessionKey, cnt, app12_id_boss, asz22_id)
+    this.service.setlevels(sessionKey, this.state.currentItem, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz01_id, asz03_id, app12_id_boss, asz22_id)
     .then(result => {
-      // console.log(result);
+      console.log(result);
+
       const roles = [...this.state.roles];
       roles.map(item => {
         if (item.id === this.state.currentItem) {
@@ -300,10 +286,53 @@ export default class Roles extends Component {
         return true;
       });
       this.setState({roles});
+      this.props.handlerRequestData(this.state.roles)
       this.noLoading();
     })
+    // .then(
+    //   this.props.handlerRequestData(this.state.roles)
+    // )
     .catch(this.onError)
   }
+
+  // runLevelValues = (mode_asz06_id_list, asz06_id_previous_list, asz06_id_list='', asz03_id='') => {
+  //   this.loading();
+  //   this.service.runLevelValues(
+  //     this.props.sessionKey, 
+  //     this.state.currentItem,
+  //     mode_asz06_id_list,
+  //     asz06_id_previous_list,
+  //     asz06_id_list, 
+  //     asz03_id)
+  //   .then(
+  //     () => this.noLoading()
+  //     // this.getRoleAgreements(asz03_id, this.state.currentItem)
+  //   )
+  //   .catch(this.onError)
+  // }
+
+  // getRoleAgreements = (asz03_id, cnt) => {
+  //   const {asz01_id, asz22_id, sessionKey, app12_id_boss} = this.props;
+  //   // console.log('roles.js', asz01_id, asz03_id, sessionKey, cnt, app12_id_boss, asz22_id);
+  //   this.loading();
+  //   this.service.getRoleAgreements(asz01_id, asz03_id, sessionKey, cnt, app12_id_boss, asz22_id)
+  //   .then(result => {
+  //     // console.log(result);
+  //     const roles = [...this.state.roles];
+  //     roles.map(item => {
+  //       if (item.id === this.state.currentItem) {
+  //         item.agreements = result;
+  //       }
+  //       return true;
+  //     });
+  //     this.setState({roles});
+
+  //     // this.props.handlerRequestData(this.state.roles); // !!! detecting bug
+      
+  //     this.noLoading();
+  //   })
+  //   .catch(this.onError)
+  // }
 
 
 

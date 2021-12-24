@@ -44,13 +44,12 @@ export default class Agreements extends Component {
         <ul>
           {
             this.state.roles.map(role => {
+              if (!role.role.id) return null;
               return(
                 <li key={role.id}>
                   <h3>{`${role.group.name} / ${role.role.name}`}</h3>
                   {console.log(role.agreements.length)}
                   {this.renderRoleAgree(role.agreements)}
-
-
                 </li>
               )
             })
