@@ -2,16 +2,30 @@
   font: inherit;
   width: 100%;
   
+  .systemFullName {
+    font-weight: 700;
+  }
+
+  .roleFullName {
+    margin-top: 8px;
+  }
 
   .oneRoleAgree {
-    margin-bottom: 20px;
-    border: 1px solid gray;
-    border-radius: 3px;
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    
+    .rowTable {
+      display: table-row;
+
+      & > div {
+        display: table-cell;
+        padding: 5px;
+        border: 1px solid gray;
+        
+      }
+    }
   }
 
-  .rowTable {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; 
-  }
+
 }
