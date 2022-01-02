@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classes from './agreements.module.scss';
-
+import Select from '../select';
 export default class Agreements extends Component {
 
   state = {
@@ -16,16 +16,26 @@ export default class Agreements extends Component {
 
 
   renderRoleAgree = (roleAgreements, roleId) => {
-    console.log(roleAgreements);
+    // console.log(roleAgreements);
     return(
       <div className={classes.oneRoleAgree}>
         {roleAgreements.map((agree, index) => {
+
+          const name = agree.person.length === 1
+          ? agree.person[0].name
+          : <Select
+              list = {agree.person}
+              name = {`${roleId}${agree.asz10_order_seq}`}
+            />
+
           return(
             <div key={index} className={classes.rowTable}>
               <div>{agree.asz10_order_seq}</div>
               <div>{agree.asz10_name}</div>
               <div>{agree.asz06_code_value}</div>
-              <div>{this.renderPersonList(agree.person, agree.asz10_order_seq)}</div>
+              <div>
+                {name}
+              </div>
             </div>
           )
         })}
@@ -33,26 +43,28 @@ export default class Agreements extends Component {
     )
   }
 
-  renderPersonList = (personList, rowName) => {
-    return ( 
-      <ul>
-        {personList.map( item => {
-          return (
-          <li key = {item.id}>
-            {/* {item.name} */}
-            <input 
-              type='radio' 
-              id={item.id} 
-              name={rowName}
-              // onClick={() => this.handlerWindowClickLevel(row)}
-            />
-            <label htmlFor={item.id}>{item.name}</label>
-          </li>
-          )
-        })}
-      </ul>
-    )
-  }
+  // renderPersonList = (personList, roleId, numStage) => {
+  //   let initChecked = true;
+  //   return ( 
+  //     <ul>
+  //       {personList.map( item => {
+  //         return (
+  //         <li key = {item.id}>
+  //           <input 
+  //             type='radio' 
+  //             id={`${roleId}${numStage}${item.id}`} 
+  //             name={`${roleId}${numStage}`}
+  //             // onClick={() => this.handlerWindowClickLevel(row)}
+  //             defaultChecked = {initChecked}
+  //           />
+  //           <label htmlFor={`${roleId}${numStage}${item.id}`}>{item.name}</label>
+  //           {initChecked = false}
+  //         </li>
+  //         )
+  //       })}
+  //     </ul>
+  //   )
+  // }
 
   render() {
     const {system} = this.props;
@@ -66,7 +78,7 @@ export default class Agreements extends Component {
               return(
                 <li key={role.id}>
                   <h3 className={classes.roleFullName}>{`${role.group.name} / ${role.role.name}`}</h3>
-                  {console.log(role.agreements.length)}
+                  {/* {console.log(role.agreements.length)} */}
                   {this.renderRoleAgree(role.agreements, role.id)}
                 </li>
               )

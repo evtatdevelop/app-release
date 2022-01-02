@@ -9,7 +9,6 @@ import Error from '../Error';
 
 export default class Roles extends Component {
 
-  
   initialState = {
     roleNumber: 1,
     currentItem: null,
@@ -276,7 +275,7 @@ export default class Roles extends Component {
     this.loading();
     this.service.setlevels(sessionKey, this.state.currentItem, mode_asz06_id_list, asz06_id_previous_list, asz06_id_list, asz01_id, asz03_id, app12_id_boss, asz22_id)
     .then(result => {
-      console.log(result);
+      // console.log(result);
 
       const roles = [...this.state.roles];
       roles.map(item => {
