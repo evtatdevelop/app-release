@@ -39,7 +39,6 @@ export default class Corpsystems extends Component {
     msgTime: 0, msgData: {},
     error: false,
     asz01_id: null,
-    // asz00_id: null,
     system: {asz00_id: '', name: '', full_name: ''},
     sessionKey: null,
     orderType: 'ADD_PRIVS',
@@ -121,7 +120,7 @@ export default class Corpsystems extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.loading();
-    this.service.postForm(this.state.postUserData)
+    this.service.postForm({...this.state.postUserData, ...this.state.system, role: this.state.postRequestData})
       .then(submitRequest => {
         this.showMessage(15000, submitRequest);
         this.clearForm();

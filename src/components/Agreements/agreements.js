@@ -13,8 +13,6 @@ export default class Agreements extends Component {
     }
   }
 
-
-
   renderRoleAgree = (roleAgreements, roleId) => {
     // console.log(roleAgreements);
     return(
@@ -42,29 +40,6 @@ export default class Agreements extends Component {
       </div>
     )
   }
-
-  // renderPersonList = (personList, roleId, numStage) => {
-  //   let initChecked = true;
-  //   return ( 
-  //     <ul>
-  //       {personList.map( item => {
-  //         return (
-  //         <li key = {item.id}>
-  //           <input 
-  //             type='radio' 
-  //             id={`${roleId}${numStage}${item.id}`} 
-  //             name={`${roleId}${numStage}`}
-  //             // onClick={() => this.handlerWindowClickLevel(row)}
-  //             defaultChecked = {initChecked}
-  //           />
-  //           <label htmlFor={`${roleId}${numStage}${item.id}`}>{item.name}</label>
-  //           {initChecked = false}
-  //         </li>
-  //         )
-  //       })}
-  //     </ul>
-  //   )
-  // }
 
   render() {
     const {system} = this.props;
