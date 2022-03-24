@@ -122,7 +122,7 @@ export default class Corpsystems extends Component {
     this.loading();
     this.service.postForm({...this.state.postUserData, ...this.state.system, role: this.state.postRequestData})
       .then(submitRequest => {
-        this.showMessage(15000, submitRequest);
+        this.showMessage(60000, submitRequest);
         this.clearForm();
       })
       .catch(this.onError)
